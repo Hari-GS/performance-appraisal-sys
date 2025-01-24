@@ -1,7 +1,11 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://your-backend-url.com/api",
+  baseURL: "http://localhost:5000/api/auth",
+  withCredentials: true, // Allow sending cookies with requests
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 // Add request interceptor to attach access token
