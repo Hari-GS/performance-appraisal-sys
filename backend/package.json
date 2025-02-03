@@ -4,9 +4,12 @@
   "description": "Backend for the performance appraisal system",
   "main": "server.js",
   "scripts": {
-
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "npm --prefix ../frontend start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "keywords": [
     "[\"performance\"",
@@ -16,10 +19,15 @@
   "author": "\"Sachinkumar\"",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
+    "bcryptjs-react": "^2.4.6",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "msnodesqlv8": "^4.4.0",
-    "mssql": "^11.0.1"
+    "mssql": "^11.0.1",
+    "nodemon": "^3.1.9",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
