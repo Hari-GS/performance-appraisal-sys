@@ -1,24 +1,19 @@
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
+import { useNavigate } from "react-router-dom";
 import stsHomeImage from '../images/StsHomeImage.png';
 import stsLogo from '../images/STSLogo.png';
-import axios from "../authentication/axios";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(''); // To show success/error messages
-  const [error, setError] = useState(false); // To handle error state
-
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/', {
-        username, // Replace with actual username input field
-        password
-      });
-      console.log('Login successful:', response.data);
-    } catch (err) {
-      console.error('Login failed:', err);
-    }
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(username, password);
+    navigate("/dashboard");
   };
 
   return (
@@ -32,7 +27,7 @@ const Login = () => {
       <div className="col-span-2 bg-[#ffefd3] flex justify-center items-center flex-col">
         <img src={stsLogo} alt="stsLogo" className="w-[200px]" />
         <h1 className="text-2xl font-bold text-gray-700 pt-4">Sign In</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           <div className="pt-8">
             <input
               type="text"
@@ -64,7 +59,7 @@ const Login = () => {
             Log In
           </button>
         </form>
-        {message && <p>{message}</p>}
+        {/* {message && <p>{message}</p>} */}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 const port = 5000;
 
+
 app.use(express.json());
 
 // Enable CORS for React frontend (localhost:3000)
@@ -17,8 +18,8 @@ app.use(cors({
 
 // Database configuration
 const db_config = {
-  server: "DESKTOP-UVC16VL\\MSSQLSERVER02",
-  database: "Eng360server",
+  server: "LAPTOP-QQFL6LU0\\SQLEXPRESS",
+  database: "demo11",
   driver: "msnodesqlV8",
   options: {
     trustedConnection: true
