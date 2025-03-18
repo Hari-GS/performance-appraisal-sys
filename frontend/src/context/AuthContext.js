@@ -1,37 +1,51 @@
-import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import { createContext, useContext, useState, useEffect } from "react";
 
-export const AuthContext = createContext();
+// Create Auth Context
+const AuthContext = createContext();
 
+// Auth Provider Component
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Check Authentication on Page Load
+  // Check if user is already logged in (from localStorage)
   useEffect(() => {
-    axios.get("http://localhost:5000/api/check-auth", { withCredentials: true })
-      .then(res => setIsAuthenticated(res.data.authenticated))
-      .catch(() => setIsAuthenticated(false));
-  }, []);
-
-  // Login Function
-  const login = async (username, password) => {
+    const storedUser = localStorage.getItem("user");
     try {
-      await axios.post("http://localhost:5000/api/login", { username, password }, { withCredentials: true });
-      setIsAuthenticated(true);
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
     } catch (error) {
-      alert("Login Failed");
+      console.error("Error parsing user data from localStorage:", error);
+      localStorage.removeItem("user"); // Remove corrupted data
     }
+  }, []);
+  
+
+  // Login function
+  const login = (userData) => {
+    console.log("Logging in user:", userData); // ✅ Debugging
+    if (!userData) {
+      console.error("No user data provided to login function!");
+      return;
+    }
+  
+
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData)); // Store user in localStorage
   };
 
-  // Logout Function
-  const logout = async () => {
-    await axios.post("http://localhost:5000/api/logout", {}, { withCredentials: true });
-    setIsAuthenticated(false);
+  // Logout function
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user"); // Remove from localStorage
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+// Custom Hook to use Auth
+export const useAuth = () => useContext(AuthContext);

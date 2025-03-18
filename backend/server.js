@@ -19,8 +19,8 @@ app.use(cors({
 // Database configuration
 const db_config = {
   server: "LAPTOP-QQFL6LU0\\SQLEXPRESS",
-  database: "demo11",
-  driver: "msnodesqlV8",
+  database: "Eng360server",
+  driver: "ODBC Driver 17 for SQL Server",
   options: {
     trustedConnection: true
   }
