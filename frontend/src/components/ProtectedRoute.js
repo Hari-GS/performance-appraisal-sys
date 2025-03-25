@@ -1,16 +1,11 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
+import { getAuthToken } from "../helpers/axios_helpers";
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
-  const location = useLocation();
+  const authToken = getAuthToken();
 
-  if (!user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  return children;
+  return authToken ? children : <Navigate to="/" replace />;
 };
 
 export default ProtectedRoute;

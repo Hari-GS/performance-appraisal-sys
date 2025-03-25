@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { FaBell, FaCog, FaBars } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext"; // ✅ Use Auth Context
+import { logout } from "../helpers/axios_helpers"; // ✅ Import logout function
 
 const Navbar = (props) => {
   const [showLogout, setShowLogout] = useState(false);
-  const { logout } = useAuth(); // ✅ Get logout function
 
   const handleLogout = () => {
-    logout(); // Call logout function
+    logout();
   };
 
   return (

@@ -9,7 +9,7 @@ import CreateFormButton from "../components/CreateFormButton";
 import PerformanceReport from "../components/PerformanceReport";
 
 const Dashboard = () => {
-  const { logout } = useAuth();
+//   const { logout } = useAuth();
   return (
     <div>
 		<div className="flex min-h-screen">
@@ -17,7 +17,7 @@ const Dashboard = () => {
 			<Sidebar />
 			{/* Main Content */}
 			<div className="flex flex-col flex-grow pl-72 p-6 pt-20 bg-gray-100">
-				<UserInfoCard name="Lingesvaran.R" role="UI/UX Designer" />
+				<UserInfoCard/>
 				<CreateFormButton onClick={() => alert("Create Form Clicked")} />
 				<PerformanceReport />
 			</div>

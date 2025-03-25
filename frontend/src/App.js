@@ -3,14 +3,12 @@ import Home from './pages/Home';
 import Dashboard from "./pages/Dashboard";
 import Employees from './pages/Employees';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ProtectedRoute from "./pages/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext";
-import Employee from './pages/Employee';
 import Reviews from './pages/Reviews';
 
 function App() {
   return (
-    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -40,7 +38,6 @@ function App() {
           />
         </Routes>
       </Router>
-    </AuthProvider>
   );
 }
 
