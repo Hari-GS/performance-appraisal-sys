@@ -22,8 +22,8 @@ const EmployeeX = ({ employee, onClose }) => {
           />
           <div>
             <h2 className="text-xl font-semibold">{employee.name}</h2>
-            <p className="text-gray-600">Employee ID: {employee.id}</p>
-            <p className="text-gray-600">Email: {employee.email}</p>
+            <p className="text-gray-600">Employee ID: {employee.employeeId}</p>
+            <p className="text-gray-600">Email: {employee.personalMail}</p>
             <p className="text-gray-600">Role: {employee.role}</p>
           </div>
         </div>

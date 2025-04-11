@@ -16,7 +16,7 @@ const Sidebar = () => {
     <div className="fixed left-0 top-0 h-screen w-64 bg-orange-500 text-white flex flex-col justify-between py-6">
       {/* Logo Section */}
       <div className="flex items-center justify-center mb-6">
-        <h1 className="text-2xl font-bold">PAP</h1>
+        <h1 className="text-2xl font-bold"></h1>
       </div>
 
       {/* Navigation Links */}

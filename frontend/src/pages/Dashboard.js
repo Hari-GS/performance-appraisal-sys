@@ -1,15 +1,13 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
-
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import UserInfoCard from "../components/UserInfoCard"
-// import { UserInfoCard } from "./components/UserInfoCard";
 import CreateFormButton from "../components/CreateFormButton";
 import PerformanceReport from "../components/PerformanceReport";
+import { getUserId } from "../helpers/axios_helpers";
 
 const Dashboard = () => {
-//   const { logout } = useAuth();
+
   return (
     <div>
 		<div className="flex min-h-screen">

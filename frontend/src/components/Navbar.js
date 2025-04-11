@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaBell, FaCog, FaBars } from "react-icons/fa";
-import { logout } from "../helpers/axios_helpers"; // ✅ Import logout function
+import { logout, setUserId } from "../helpers/axios_helpers"; // ✅ Import logout function
 
 const Navbar = (props) => {
   const [showLogout, setShowLogout] = useState(false);

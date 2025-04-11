@@ -21,9 +21,9 @@ const ProfileCard = ({ employee, onClose }) => {
             className="w-24 h-24 rounded-full object-cover border-2 border-orange-500 mx-10"
           />
           <div>
-            <h2 className="text-xl font-semibold">{employee.name}</h2>
-            <p className="text-gray-600">Employee ID: {employee.id}</p>
-            <p className="text-gray-600">Email: {employee.email}</p>
+            <h2 className="text-xl font-semibold">{employee.firstName} {employee.lastName}</h2>
+            <p className="text-gray-600">Employee ID: {employee.employeeId}</p>
+            <p className="text-gray-600">Email: {employee.personalMail}</p>
             <p className="text-gray-600">Role: {employee.role}</p>
           </div>
         </div>
@@ -34,27 +34,27 @@ const ProfileCard = ({ employee, onClose }) => {
             Personal Details
           </div>
           <div className="grid grid-cols-2 gap-4 p-4 border">
-            <p><strong>Date of Birth:</strong> {employee.dob}</p>
-            <p><strong>Date of Joining:</strong> {employee.doj}</p>
+            <p><strong>Date of Birth:</strong> {employee.dateOfBirth}</p>
+            <p><strong>Date of Joining:</strong> {employee.dateOfJoining}</p>
             <p><strong>Gender:</strong> {employee.gender}</p>
             <p><strong>Marital Status:</strong> {employee.maritalStatus}</p>
             <p><strong>Blood Group:</strong> {employee.bloodGroup}</p>
-            <p><strong>Mobile No:</strong> {employee.mobile}</p>
+            <p><strong>Mobile No:</strong> {employee.mobileNumber}</p>
             <p className="col-span-2"><strong>Address:</strong> {employee.address}</p>
-            <p><strong>Personal Mail:</strong> {employee.personalEmail}</p>
+            <p><strong>Personal Mail:</strong> {employee.personalMail}</p>
           </div>
         </div>
 
         {/* Emergency Contact */}
-<div className="mt-12">
-  <div className="bg-orange-500 text-white px-4 py-2 rounded-t-lg font-semibold">
-    Emergency Contact
-  </div>
-  <div className="p-4 border flex flex-row justify-start space-x-16">
-    <p><strong>Emergency Mobile No:</strong> {employee.emergencyMobile}</p>
-    <p><strong>Holder Name:</strong> {employee.holderName}</p>
-  </div>
-</div>
+        <div className="mt-12">
+          <div className="bg-orange-500 text-white px-4 py-2 rounded-t-lg font-semibold">
+            Emergency Contact
+          </div>
+          <div className="p-4 border flex flex-row justify-start space-x-16">
+            <p><strong>Emergency Mobile No:</strong> {employee.emergencyMobileNumber}</p>
+            <p><strong>Holder Name:</strong> {employee.holderName}</p>
+          </div>
+        </div>
 
       </div>
     </div>
