@@ -27,7 +27,7 @@ const Navbar = (props) => {
         <button className="relative text-gray-700 hover:text-orange-500">
           <FaBell size={24} />
           <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-            1
+            0
           </span>
         </button>
 

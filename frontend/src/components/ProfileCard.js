@@ -1,17 +1,37 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ProfileCard = ({ employee, onClose }) => {
+  const navigate = useNavigate();
+
+  const handleEdit = () => {
+    navigate("/addEmployee", { state: { employee } });
+  };
+
   return (
-    <div className="fixed inset-0 flex items-center pl-[250px] bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-[1000px] h-[700px] relative mx-auto">
-        {/* Close Button */}
-        <button
-          className="absolute top-3 right-3 bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600"
-          onClick={onClose}
-        >
-          <FaTimes />
-        </button>
+    <div className="fixed inset-0 flex items-center pl-[250px] bg-black bg-opacity-50 z-50">
+      <div className="bg-white rounded-3xl shadow-lg p-6 w-[1000px] h-[700px] relative mx-auto overflow-y-auto">
+
+         {/* Top Tab Bar with Edit and Close */}
+  <div className="absolute top-0 right-0 flex rounded-tr-lg overflow-hidden">
+    
+    {/* Edit Tab */}
+    <button
+      onClick={handleEdit}
+      className="bg-orange-500 text-white px-6 py-2 font-semibold rounded-bl-3xl hover:bg-orange-700"
+    >
+      Edit
+    </button>
+
+    {/* Close Tab */}
+    <button
+      onClick={onClose}
+      className="bg-white text-black border-l border-gray-300 px-4 py-2 font-semibold hover:bg-gray-100"
+    >
+      X
+    </button>
+  </div>
 
         {/* Profile Header */}
         <div className="flex items-center space-x-8 pb-4 py-10">

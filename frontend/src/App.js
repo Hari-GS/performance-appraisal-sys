@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import AddEmployee from './components/AddEmployee';
 import EmployeeAddition from './pages/EmployeeAddition';
+import CreateForm from "./pages/Forms/CreateForm"
+import FormsPage from './pages/Forms/FormsPage';
 
 function App() {
   return (
@@ -46,6 +48,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <EmployeeAddition/>
+              </ProtectedRoute>
+
+            }
+          />
+          <Route
+            path='/forms/*'
+            element={
+              <ProtectedRoute>
+                <FormsPage/>
               </ProtectedRoute>
 
             }

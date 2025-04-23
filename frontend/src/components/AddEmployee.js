@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { FaCamera, FaTrash } from "react-icons/fa";
 import defaultPreview from "../images/dp-default-preview.png";
 import { request } from "../helpers/axios_helpers";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const AddEmployee = ({ onClose, onSubmit }) => {
+  const location = useLocation();
+  const [isEdit, setIsEdit] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,6 +25,14 @@ const AddEmployee = ({ onClose, onSubmit }) => {
     emergencyMobileNumber: "",
     holderName: "",
   });
+
+  useEffect(() => {
+    if (location.state?.employee) {
+      setFormData(location.state.employee);
+      setIsEdit(true);
+    }
+  }, [location.state]);
+
 
   const [errors, setErrors] = useState({});
   
@@ -83,17 +95,25 @@ const AddEmployee = ({ onClose, onSubmit }) => {
 
   const handleSubmit = async () => {
     if (!validate()) return;
-
+  
     try {
-      const response = await request("POST", "/employee", formData);
-      console.log("Employee added:", response.data);
-      alert("Employee added successfully!");
+      let response;
+      if (isEdit) {
+        response = await request("PUT", `/employee/${formData.employeeId}`, formData);
+        alert("Employee updated successfully!");
+      } else {
+        response = await request("POST", "/employee", formData);
+        alert("Employee added successfully!");
+      }
+  
+      console.log("Response:", response.data);
       if (onSubmit) onSubmit(formData);
     } catch (error) {
-      console.error("Error adding employee:", error);
-      alert("Something went wrong while adding the employee.");
+      console.error("Error submitting employee data:", error);
+      alert("Something went wrong while submitting the employee data.");
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen mt-8">

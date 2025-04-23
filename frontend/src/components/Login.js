@@ -42,37 +42,40 @@ const Login = () => {
 
       {/* Right Side - Login/Register */}
       <div className="col-span-2 bg-[#ffefd3] flex justify-center items-center flex-col">
-        {/* Login Form */}
-          <form onSubmit={handleLogin} className="w-[300px]">
-            <div className="pt-8">
-              <input
-                type="text"
-                value={userId}
-                placeholder="Enter your username"
-                className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => setUserId(e.target.value)}
-                required
-              />
-            </div>
-            <div className="pt-6">
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 mt-8 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "Log In"}
-            </button>
-          </form>
+        <h1 className="text-2xl font-bold text-gray-800 mb-4 mt-6 text-center">
+          Performance Appraisal Portal
+        </h1>
+
+        <form onSubmit={handleLogin} className="w-[300px]">
+          <div className="pt-8">
+            <input
+              type="text"
+              value={userId}
+              placeholder="Enter your username"
+              className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setUserId(e.target.value)}
+              required
+            />
+          </div>
+          <div className="pt-6">
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 mt-8 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Log In"}
+          </button>
+        </form>
       </div>
     </div>
   );

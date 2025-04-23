@@ -22,7 +22,7 @@ const Sidebar = () => {
       {/* Navigation Links */}
       <nav className="flex flex-col space-y-4">
         {menuItems.map((item) => {
-          const isActive = location.pathname === item.path; // Check if the current route matches the menu path
+          const isActive = location.pathname.startsWith(item.path);// Check if the current route matches the menu path
 
           return (
             <button
