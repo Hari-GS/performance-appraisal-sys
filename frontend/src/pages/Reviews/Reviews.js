@@ -1,7 +1,7 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
-import Navbar from '../components/Navbar'
-import ReviewSection from '../components/ReviewSection'
+import Sidebar from '../../components/Sidebar'
+import Navbar from '../../components/Navbar'
+import ReviewSection from './ReviewSection'
 
 function Reviews() {
     return (

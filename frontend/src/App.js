@@ -5,7 +5,7 @@ import Employees from './pages/Employees';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext";
-import Reviews from './pages/Reviews';
+import Reviews from './pages/Reviews/Reviews';
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import AddEmployee from './components/AddEmployee';

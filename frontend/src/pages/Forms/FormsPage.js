@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar";
 import CreateForm from "./CreateForm"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ParticipantsPage from "./ParticipantsPage";
-import ReviewersPage from "./ReviewersPage";
+import ReviewersPage from "../../components/ReviewersPage";
 
 const FormsPage = () => {
 

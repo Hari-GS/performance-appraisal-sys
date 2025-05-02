@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { request } from "../../helpers/axios_helpers";
+import { request } from "../helpers/axios_helpers";
 
 export default function ReviewersPage() {
   const location = useLocation();
@@ -37,13 +37,16 @@ export default function ReviewersPage() {
     }).filter(Boolean); // removes undefined
   
     const revieweesEmployeeIds = selectedEmployees.map((emp) => emp.employeeId);
-  
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const formData = {
       title,
       welcomeMessage,
       questions,
       revieweesEmployeeIds,
       reviewersEmployeeIds,
+      employeeCreated : user.userId,
+      isCompleted : false
     };
   
     console.log("Sending form data to backend:", formData);
