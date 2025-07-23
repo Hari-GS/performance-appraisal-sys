@@ -65,7 +65,7 @@ const PerformanceReport = () => {
   };
 
   return (
-    <div className="bg-white p-4 ml-14 mt-10 rounded-xl shadow-md w-[50%]">
+    <div className="bg-white p-4 ml-14 mt-10 rounded-xl shadow-md w-[83%]">
       <div className="flex justify-between items-center bg-orange-500 text-white p-2 rounded-t-lg">
         <h3 className="font-bold">Performance Report</h3>
       </div>

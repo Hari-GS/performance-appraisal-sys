@@ -9,7 +9,7 @@ const UserInfoCard = () => {
     <div className="p-14 flex items-center">
       <div>
         <h2 className="text-3xl font-semibold text-gray-800">
-          Hi, {user.firstName || "Guest"}
+          Hi, {user.name || "Guest"}
         </h2>
       </div>
     </div>

@@ -12,6 +12,11 @@ import AddEmployee from './components/AddEmployee';
 import EmployeeAddition from './pages/EmployeeAddition';
 import CreateForm from "./pages/Forms/CreateForm"
 import FormsPage from './pages/Forms/FormsPage';
+import TeamCreation from './pages/TeamCreation';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
+import AppraisalsList from './pages/AppraisalsList';
+import HeirarchyPage from './pages/HeirarchyPage';
 
 function App() {
   return (
@@ -19,6 +24,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/dashboard"
             element={
@@ -39,7 +46,7 @@ function App() {
             path="/reviews"
             element={
               <ProtectedRoute>
-                <Reviews/>
+                <AppraisalsList/>
               </ProtectedRoute>
             }
           />
@@ -57,6 +64,24 @@ function App() {
             element={
               <ProtectedRoute>
                 <FormsPage/>
+              </ProtectedRoute>
+
+            }
+          />
+          <Route
+            path='/add-team/*'
+            element={
+              <ProtectedRoute>
+                <TeamCreation/>
+              </ProtectedRoute>
+
+            }
+          />
+          <Route
+            path='/heirarchy'
+            element={
+              <ProtectedRoute>
+                <HeirarchyPage/>
               </ProtectedRoute>
 
             }

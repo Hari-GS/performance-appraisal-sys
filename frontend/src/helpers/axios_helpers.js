@@ -1,21 +1,20 @@
 import axios from 'axios';
 
-
 export const getAuthToken = () => {
-    return window.localStorage.getItem('auth_token');
+  return window.localStorage.getItem('auth_token');
 };
 
 export const setAuthHeader = (token) => {
-    if (token !== null) {
-      window.localStorage.setItem("auth_token", token);
-    } else {
-      window.localStorage.removeItem("auth_token");
-    }
+  if (token !== null) {
+    window.localStorage.setItem("auth_token", token);
+  } else {
+    window.localStorage.removeItem("auth_token");
+  }
 };
 
-// ===== User ID Handling =====
+// ===== User object Handling =====
 export const getUser = () => {
-  return JSON.parse(window.localStorage.getItem('user'))
+  return JSON.parse(window.localStorage.getItem('user'));
 };
 
 export const setUser = (user) => {
@@ -27,23 +26,33 @@ export const setUser = (user) => {
 };
 
 export const logout = () => {
-  setAuthHeader(null); // Clears token from storage & axios headers
+  setAuthHeader(null);
   setUser(null);
-  window.location.href = "/"; // Redirect to home/login page
+  window.location.href = "/";
 };
 
-
+// Default Axios config
 axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export const request = (method, url, data) => {
-  let headers = { 'Content-Type': 'application/json' };
-
+export const request = (method, url, data, customConfig = {}) => {
   const token = getAuthToken();
-  if (token && token !== "null" && url !== "/login") {
-      headers['Authorization'] = `Bearer ${token}`;
-  }
-  console.log(data);
+  const isFormData = data instanceof FormData;
+
+  const defaultHeaders = {
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+    ...(token && token !== "null" && url !== "/login" ? { 'Authorization': `Bearer ${token}` } : {}),
+  };
+
+  const config = {
+    method,
+    url,
+    data,
+    headers: {
+      ...defaultHeaders,
+      ...(customConfig.headers || {}),
+    },
+    ...customConfig,
+  };
   
-  return axios({ method, url, headers, data });
+  return axios(config);
 };

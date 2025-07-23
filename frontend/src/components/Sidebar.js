@@ -8,29 +8,30 @@ const Sidebar = () => {
   const menuItems = [
     { name: "Home", icon: <FaHome />, path: "/dashboard" },
     { name: "Employees", icon: <FaUsers />, path: "/employees" },
-    { name: "Forms", icon: <FaFolder />, path: "/forms" },
-    { name: "Reviews", icon: <FaCommentDots />, path: "/reviews" }
+    { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy" },
+    { name: "New Appraisal", icon: <FaFolder />, path: "/forms" },
+    { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews" }
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 bg-orange-500 text-white flex flex-col justify-between py-6">
+    <div className="fixed left-0 top-0 h-screen w-64 bg-secondary text-white flex flex-col justify-between py-6">
       {/* Logo Section */}
       <div className="flex items-center justify-center mb-6">
         <h1 className="text-2xl font-bold"></h1>
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex flex-col space-y-4">
+      <nav className="flex flex-col space-y-8">
         {menuItems.map((item) => {
           const isActive = location.pathname.startsWith(item.path);// Check if the current route matches the menu path
 
           return (
             <button
               key={item.name}
-              className={`flex items-center py-3 pl-16 text-lg font-medium transition-all duration-300 ${
+              className={`flex items-center py-1 pl-10 text-lg font-medium transition-all duration-300 ${
                 isActive
-                  ? "bg-gradient-to-r from-white to-orange-500 text-black rounded-l-full ml-10 pl-7"
-                  : "hover:bg-orange-600"
+                  ? "bg-gradient-to-r from-white to-secondary text-secondary rounded-l-full ml-4 pl-4"
+                  : "hover:bg-white hover:text-secondary"
               }`}
               onClick={() => navigate(item.path)}
             >

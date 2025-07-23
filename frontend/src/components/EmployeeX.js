@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 const EmployeeX = ({ employee, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-[700px] relative">
+      <div className="bg-primary rounded-lg shadow-lg p-6 w-[700px] relative">
         {/* Close Button */}
         <button
           className="absolute top-3 right-3 bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600"
@@ -23,7 +23,7 @@ const EmployeeX = ({ employee, onClose }) => {
           <div>
             <h2 className="text-xl font-semibold">{employee.name}</h2>
             <p className="text-gray-600">Employee ID: {employee.employeeId}</p>
-            <p className="text-gray-600">Email: {employee.personalMail}</p>
+            <p className="text-gray-600">Email: {employee.email}</p>
             <p className="text-gray-600">Role: {employee.role}</p>
           </div>
         </div>

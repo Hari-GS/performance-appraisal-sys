@@ -10,21 +10,21 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="w-[100%] bg-white shadow-md px-6 py-4 flex items-center justify-between absolute top-5 left-0">
+    <div className="w-[100%] bg-accent shadow-md px-6 py-4 flex items-center justify-between absolute top-5 left-0">
       {/* Left Section: Logo and Menu */}
       <div className="flex items-center space-x-4">
         {/* Hamburger Menu (for future responsiveness) */}
-        <button className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100">
+        <button className="lg:hidden p-2 rounded-md text-white hover:bg-secondary">
           <FaBars size={24} />
         </button>
         {/* Company Logo */}
-        <h1 className="text-2xl font-bold text-black pl-[305px]">{props.title}</h1>
+        <h1 className="text-2xl font-bold text-white pl-[305px]">{props.title}</h1>
       </div>
 
       {/* Right Section: Icons */}
       <div className="flex items-center space-x-6 relative">
         {/* Notification Icon */}
-        <button className="relative text-gray-700 hover:text-orange-500">
+        <button className="relative text-white hover:text-secondary">
           <FaBell size={24} />
           <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
             0
@@ -34,7 +34,7 @@ const Navbar = (props) => {
         {/* Settings Icon (with Logout Popup) */}
         <div className="relative">
           <button
-            className="text-gray-700 hover:text-orange-500"
+            className="text-white hover:text-secondary"
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaCog size={24} />

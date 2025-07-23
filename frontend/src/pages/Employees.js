@@ -10,7 +10,7 @@ function Employees() {
             <Sidebar />
             
             {/* Main Content */}
-            <div className="flex flex-col flex-grow pl-72 p-6 pt-20 bg-gray-100">
+            <div className="flex flex-col flex-grow pl-72 p-6 pt-20 bg-primary">
                 <Navbar title="Employees"/>
                 <EmployeeProfiles/>
             </div>

@@ -1,9 +1,9 @@
 import React from 'react'
-import EmployeeX from '../components/EmployeeX'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
+import SentAppraisalsList from '../components/SentAppraisalsList'
 
-function Employee() {
+function AppraisalsList() {
     return (
         
         <div>
@@ -13,12 +13,12 @@ function Employee() {
                 
                 {/* Main Content */}
                 <div className="flex flex-col flex-grow pl-72 p-6 bg-primary">
-                    <EmployeeX/>
+                    <SentAppraisalsList/>
                 </div>
             </div>
-            <Navbar title="Employees"/>
+            <Navbar title="Manage Appraisals"/>
         </div>
     )
 }
 
-export default Employee
+export default AppraisalsList

@@ -1,9 +1,10 @@
 import React from 'react'
-import EmployeeX from '../components/EmployeeX'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
+import OrganizationalChart from '../components/OrganizationalChart'
+import OrganizationEditor from '../components/OrganizationEditor'
 
-function Employee() {
+function HeirarchyPage() {
     return (
         
         <div>
@@ -13,7 +14,7 @@ function Employee() {
                 
                 {/* Main Content */}
                 <div className="flex flex-col flex-grow pl-72 p-6 bg-primary">
-                    <EmployeeX/>
+                    <OrganizationEditor/>
                 </div>
             </div>
             <Navbar title="Employees"/>
@@ -21,4 +22,4 @@ function Employee() {
     )
 }
 
-export default Employee
+export default HeirarchyPage

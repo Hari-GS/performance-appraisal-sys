@@ -6,7 +6,7 @@ import { getAuthToken } from "../helpers/axios_helpers";
 import { loginUser } from "../redux/authSlice";
 
 const Login = () => {
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Login = () => {
   // Handle Login
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({ userId, password }));
+    dispatch(loginUser({ email, password }));
   };
 
   // Redirect if user is logged in
@@ -50,10 +50,10 @@ const Login = () => {
           <div className="pt-8">
             <input
               type="text"
-              value={userId}
-              placeholder="Enter your username"
+              value={email}
+              placeholder="Enter your Email Id"
               className="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => setUserId(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -67,6 +67,16 @@ const Login = () => {
               required
             />
           </div>
+          <div className="pt-2 text-right">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-blue-600 hover:underline focus:outline-none"
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <button
             type="submit"

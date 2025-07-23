@@ -1,110 +1,69 @@
 import React, { useEffect, useState } from "react";
-import profilePic from "../../images/profile-placeholder.jpg";
-import { BsCircleFill } from "react-icons/bs";
-import { request } from "../../helpers/axios_helpers";
-import { useNavigate } from "react-router-dom";
+import { request } from "../../helpers/axios_helpers"; // adjust the import based on your file structure
 
 const ReviewSection = () => {
-  const [reviews, setReviews] = useState([]);
+  const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await request("GET", "/api/forms/profiles");
-        setReviews(response.data || []);
-      } catch (error) {
-        console.error("Failed to fetch reviews:", error);
-        setReviews([]);
-      } finally {
+    request("GET", "/api/forms/titles")
+      .then((res) => {
+        setForms(res.data);
         setLoading(false);
-      }
-    };
-
-    fetchReviews();
+      })
+      .catch((err) => {
+        console.error("Error fetching forms:", err);
+        setLoading(false);
+      });
   }, []);
 
-  const handleClick = () => {
-    navigate("/forms");
-  };
+  if (loading) return <p className="text-center mt-10">Loading forms...</p>;
 
   return (
-    <div className="flex flex-col flex-1 p-6 pt-12">
-      {/* Top Buttons */}
-      <div className="flex flex-row justify-between">
-        <div className="border flex flex-row space-x-4 px-4 rounded-lg w-fit">
-          <button className="bg-orange-500 text-white rounded-lg px-4 my-4 w-[180px]">Reviews</button>
-          <button className="bg-gray-200 rounded-lg px-4 my-4 w-[180px]">Responses</button>
-          {/* Search Bar */}
-          <div className="mt-4 flex items-center pl-4 pb-4">
-            <input type="text" placeholder="Search..." className="border p-2 rounded-lg w-[380px]" />
-          </div>
+    <div className="p-6 pt-10 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <button className="bg-orange-400 px-4 py-2 text-white rounded mr-2">All</button>
+          <button className="bg-gray-200 px-4 py-2 rounded">Archived</button>
         </div>
-        <button
-          className="bg-orange-500 rounded-full px-4 my-3 text-white hover:bg-orange-600 shadow-inner"
-          style={{ boxShadow: "inset 0 4px 6px rgba(0, 0, 0, 0.2)" }}
-          onClick={handleClick}
-        >
-          + Create New
-        </button>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            placeholder="Search"
+            className="border px-3 py-2 rounded w-64"
+          />
+          <button className="bg-orange-500 text-white px-4 py-2 rounded">+ Create Form</button>
+        </div>
       </div>
 
-      {/* Reviews Table */}
-      <div className="mt-8 bg-white shadow-lg rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-orange-500 text-white">
-              <th className="py-2 px-4">Reviewee</th>
-              <th className="py-2 px-4">Status</th>
-              <th className="py-2 px-4">Created By</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="3" className="text-center py-6">
-                  Loading...
-                </td>
-              </tr>
-            ) : reviews.length === 0 ? (
-              <tr>
-                <td colSpan="3" className="text-center py-6 text-gray-500">
-                  No data to display
-                </td>
-              </tr>
-            ) : (
-              reviews.map((item, index) => (
-                <tr key={index} className="bg-white shadow-md py-1 my-2">
-                  <td className="py-2 px-4 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <img src={profilePic} alt="User" className="w-8 h-8 rounded-full" />
-                      <span>{item.reviewee}</span>
-                    </div>
-                  </td>
-                  <td className="py-2 px-4 text-center">
-                    <span
-                      className={`flex items-center justify-center gap-2 px-0 py-1 rounded-md font-medium ${
-                        item.submitted
-                          ? "text-green-600"
-                          : "text-yellow-600"
-                      }`}
-                    >
-                      <BsCircleFill
-                        className={`w-3 h-3 ${
-                          item.submitted ? "text-green-500" : "text-yellow-500"
-                        }`}
-                      />
-                      {item.submitted ? "All Submitted" : "Pending"}
-                    </span>
-                  </td>
-                  <td className="py-2 px-4 text-center">{item.createdBy}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      {forms.map((form, index) => (
+        <div
+          key={index}
+          className="bg-white rounded shadow p-4 flex justify-between items-center mb-4"
+        >
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span role="img" aria-label="form-icon">📝</span>
+              <span className="font-bold text-lg">{form.title}</span>
+            </div>
+            <div className="text-sm text-gray-600">
+              updated {form.updatedDate}, {form.owner}
+            </div>
+          </div>
+          <div className="flex items-center gap-12 text-center">
+            <div>
+              <div className="font-semibold">Reviews</div>
+              <div>{form.reviewsCount}</div>
+            </div>
+            <div>
+              <div className="font-semibold">Responses</div>
+              <div>
+                {form.responsesReceived} out of {form.totalResponses}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
