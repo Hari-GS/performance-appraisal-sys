@@ -7,7 +7,7 @@ function Reviews() {
     return (
             <div className="flex min-h-screen">
                 {/* Sidebar */}
-                <Sidebar />
+                <Sidebar role={"hr"}/>
                 {/* Main Content */}
             <div className="flex flex-col flex-grow pl-72 p-6 bg-gray-100 pt-20">
                 <Navbar title="Reviews"/>

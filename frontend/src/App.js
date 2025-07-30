@@ -17,9 +17,14 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import AppraisalsList from './pages/AppraisalsList';
 import HeirarchyPage from './pages/HeirarchyPage';
+import EmployeeDashboard from './components/EmployeeDashboard';
+import ManageAppraisal from './pages/ManageAppraisal';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
+    <AuthProvider>
     <Provider store={store}>
       <Router>
         <Routes>
@@ -27,10 +32,18 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
-            path="/dashboard"
+            path="/hr-dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/employee-dashboard"
+            element={
+              <ProtectedRoute>
+                <EmployeeDashboard />
               </ProtectedRoute>
             }
           />
@@ -47,6 +60,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AppraisalsList/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reviews/manage/:id"
+            element={
+              <ProtectedRoute>
+                <ManageAppraisal/>
               </ProtectedRoute>
             }
           />
@@ -87,8 +108,11 @@ function App() {
             }
           />
         </Routes>
+        {/* ✅ Toast container for global toast access */}
+        <ToastContainer position="top-right" autoClose={3000} />
       </Router>
     </Provider>
+    </AuthProvider>
   );
 }
 

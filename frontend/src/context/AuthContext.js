@@ -1,56 +1,34 @@
-// import { createContext, useContext, useState, useEffect } from "react";
+// context/AuthContext.js
+import { createContext, useContext, useEffect, useState } from "react";
+import { request } from "../helpers/axios_helpers";
 
-// // Create Auth Context
-// const AuthContext = createContext();
+const AuthContext = createContext();
 
-// // Auth Provider Component
-// export const AuthProvider = ({ children }) => {
-//   const [user, setUser] = useState(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // NEW
 
-//   // Load user from localStorage on initial render
-//   useEffect(() => {
-//     const storedUser = localStorage.getItem("user");
-//     console.log("Stored user in localStorage:", storedUser); // Debugging
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await request("GET", "/auth/me");
+        setUser(res.data);
+      } catch (err) {
+        console.error("Failed to fetch user", err);
+        setUser(null);
+      } finally {
+        setLoading(false); // mark loading as complete
+      }
+    };
 
-//     if (storedUser) {
-//       try {
-//         if (storedUser) {
-//           setUser(storedUser); // ✅ Ensure it's an object
-//           console.log("User set from localStorage:", storedUser); // Debugging
-//         }
-//       } catch (error) {
-//         console.error("Error parsing user data:", error);
-//       }
-//     }
-//   }, []);
+    fetchUser();
+  }, []);
 
-//   // Login function
-//   const login = (username) => {
-//     if (!username) {
-//       console.error("No username provided to login function!");
-//       return;
-//     }
+  return (
+    <AuthContext.Provider value={{ user, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-//     const userData = { username };
-//     setUser(userData);
-//     localStorage.setItem("user", userData.username);
-
-//     console.log("User logged in:", userData); // Debugging
-//   };
-
-//   // Logout function
-//   const logout = () => {
-//     console.log("User logged out");
-//     setUser(null);
-//     localStorage.removeItem("user");
-//   };
-
-//   return (
-//     <AuthContext.Provider value={{ user, login, logout }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// // Custom Hook to use Auth
-// export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);

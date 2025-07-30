@@ -7,7 +7,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await request("POST", "/auth/hr/login", { email, password });
+      const response = await request("POST", "/auth/login", { email, password });
 
       if (response.data.token) {
         setAuthHeader(response.data.token); // Store token in headers

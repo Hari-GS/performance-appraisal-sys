@@ -9,7 +9,7 @@ function AppraisalsList() {
         <div>
             <div className="flex min-h-screen">
                 {/* Sidebar */}
-                <Sidebar />
+                <Sidebar role={"hr"}/>
                 
                 {/* Main Content */}
                 <div className="flex flex-col flex-grow pl-72 p-6 bg-primary">

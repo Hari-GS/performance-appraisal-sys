@@ -1,7 +1,7 @@
 import { FaCheckCircle } from 'react-icons/fa';
 
 const StepperTabs = ({ currentStep, setCurrentStep, validatedSteps }) => {
-  const steps = ['Basic Info', 'Participants', 'Roles Mapping', 'Questions', 'Preview'];
+  const steps = ['Basic Info', 'Participants', 'Questions Mapping', 'Preview'];
 
   const handleStepClick = (index) => {
     if (index <= currentStep) {

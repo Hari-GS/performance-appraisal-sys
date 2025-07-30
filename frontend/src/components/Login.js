@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import stsHomeImage from "../images/StsHomeImage.png";
 import { getAuthToken } from "../helpers/axios_helpers";
 import { loginUser } from "../redux/authSlice";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,9 +23,24 @@ const Login = () => {
 
   // Redirect if user is logged in
   useEffect(() => {
-    
-    if (getAuthToken() || user) {
-      navigate("/dashboard");
+    const token = getAuthToken(); // however you store/get your token
+  
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        const role = decoded.role;
+  
+        if (role === "hr") {
+          navigate("/hr-dashboard");
+        } else if (role === "employee") {
+          navigate("/employee-dashboard");
+        } else {
+          console.log("invalid token"); 
+        }
+      } catch (err) {
+        console.error("Invalid token:", err);
+        navigate("/login");
+      }
     }
   }, [user]);
 

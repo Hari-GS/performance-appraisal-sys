@@ -5,6 +5,8 @@ import AppraisalParticipants from './AppraisalParticipants';
 import AssignRoles from './AssignRoles';
 import FormCreation from './FormCreation';
 import AppraisalPreview from './AppraisalPreview';
+import TemplateMapper from './TemplateMapper';
+import AppraisalPreview2 from './AppraisalPreview2';
 
 const CreateAppraisalFormPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -19,13 +21,7 @@ const CreateAppraisalFormPage = () => {
       endDate: '',
       description: '',
     },
-    participants: [],
-    assignedRoles: {
-      hr: { id: null, name: '' },
-      manager: { id: null, name: '' },
-      teamLeader: { id: null, name: '' },
-    },
-    questions: []
+    participants: [] // each should include employeeId, employeeName, and questions
   });
   
 
@@ -38,9 +34,9 @@ const CreateAppraisalFormPage = () => {
     switch (currentStep) {
       case 0: return <BasicInfoForm formData={formData} setFormData={setFormData} onNext={handleNext}/>;
       case 1: return <AppraisalParticipants formData={formData} setFormData={setFormData} onNext={handleNext}/>
-      case 2: return <AssignRoles formData={formData} setFormData={setFormData} onNext={handleNext} />;
-      case 3: return <FormCreation formData={formData} setFormData={setFormData} onNext={handleNext}/>;
-      case 4: return <AppraisalPreview formData={formData}/>;
+      case 2: return <TemplateMapper formData={formData} setFormData={setFormData} onNext={handleNext} />;
+      case 3: return <AppraisalPreview2 formData={formData} setFormData={setFormData} onNext={handleNext}/>;
+      // case 4: return <AppraisalPreview formData={formData}/>;
       default: return null;
     }
   };

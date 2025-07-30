@@ -19,7 +19,7 @@ const Dashboard = () => {
     <div>
 		<div className="flex min-h-screen bg-primary">
 			{/* Sidebar */}
-			<Sidebar />
+			<Sidebar role={"hr"}/>
 			{/* Main Content */}
 			<div className="flex flex-col flex-grow pl-72 p-6 pt-20">
 				<Header/>

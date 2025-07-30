@@ -1,53 +1,65 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaHome, FaUsers, FaCommentDots, FaFolder, FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
-  const location = useLocation(); // Get the current location
-  const navigate = useNavigate(); // Initialize navigation function
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, loading } = useAuth(); // 👈 get loading state
+
+  if (loading) {
+    return (
+      <div className="w-64 h-screen bg-secondary text-white flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (!user) return null;
 
   const menuItems = [
-    { name: "Home", icon: <FaHome />, path: "/dashboard" },
-    { name: "Employees", icon: <FaUsers />, path: "/employees" },
-    { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy" },
-    { name: "New Appraisal", icon: <FaFolder />, path: "/forms" },
-    { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews" }
+    { name: "Home", icon: <FaHome />, path: user.role === 'employee' ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee"] },
+    { name: "Employees", icon: <FaUsers />, path: "/employees", roles: ["hr"] },
+    { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
+    { name: "New Appraisal", icon: <FaFolder />, path: "/forms", roles: ["hr"] },
+    { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr"] },
+    // { name: "My Appraisals", icon: <FaCommentDots />, path: "/employee-appraisals", roles: ["employee"] },
   ];
 
   return (
     <div className="fixed left-0 top-0 h-screen w-64 bg-secondary text-white flex flex-col justify-between py-6">
-      {/* Logo Section */}
       <div className="flex items-center justify-center mb-6">
-        <h1 className="text-2xl font-bold"></h1>
+        <h1 className="text-2xl font-bold">YourApp</h1>
       </div>
 
-      {/* Navigation Links */}
       <nav className="flex flex-col space-y-8">
-        {menuItems.map((item) => {
-          const isActive = location.pathname.startsWith(item.path);// Check if the current route matches the menu path
+        {menuItems
+          .filter((item) => item.roles.includes(user.role.toLowerCase()))
+          .map((item) => {
+            const isActive = location.pathname.startsWith(item.path);
 
-          return (
-            <button
-              key={item.name}
-              className={`flex items-center py-1 pl-10 text-lg font-medium transition-all duration-300 ${
-                isActive
-                  ? "bg-gradient-to-r from-white to-secondary text-secondary rounded-l-full ml-4 pl-4"
-                  : "hover:bg-white hover:text-secondary"
-              }`}
-              onClick={() => navigate(item.path)}
-            >
-              <span className="mr-3">{item.icon}</span>
-              {item.name}
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={item.name}
+                className={`flex items-center py-1 pl-10 text-lg font-medium transition-all duration-300 ${
+                  isActive
+                    ? "bg-gradient-to-r from-white to-secondary text-secondary rounded-l-full ml-4 pl-4"
+                    : "hover:bg-white hover:text-secondary"
+                }`}
+                onClick={() => navigate(item.path)}
+              >
+                <span className="mr-3">{item.icon}</span>
+                {item.name}
+              </button>
+            );
+          })}
       </nav>
 
-      {/* User Profile */}
       <div className="flex items-center space-x-3 pl-12 pb-4">
         <FaUserCircle className="text-4xl" />
         <div>
-          <p className="font-semibold">Grace</p>
-          <p className="text-sm text-gray-200">Developer</p>
+          <p className="font-semibold">{user.name}</p>
+          <p className="text-sm text-gray-200">{user.role}</p>
         </div>
       </div>
     </div>

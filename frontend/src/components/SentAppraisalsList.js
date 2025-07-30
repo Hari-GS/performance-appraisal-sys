@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineCalendar, AiOutlineTag, AiOutlineFileText } from 'react-icons/ai';
 import { request } from '../helpers/axios_helpers';
+import { useNavigate } from 'react-router-dom';
 
 const SentAppraisalsList = () => {
   const [appraisals, setAppraisals] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAppraisals();
@@ -46,7 +48,10 @@ const SentAppraisalsList = () => {
               End: {appraisal.endDate}
             </p>
 
-            <button className="bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark transition">
+            <button
+              onClick={() => navigate(`/reviews/manage/${appraisal.id}`)}
+              className="bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark transition"
+            >
               View / Manage
             </button>
           </div>
