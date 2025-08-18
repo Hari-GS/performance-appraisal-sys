@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaHome, FaUsers, FaCommentDots, FaFolder, FaUserCircle } from "react-icons/fa";
+import { FaHome, FaUsers, FaCommentDots, FaFolder, FaUserCircle, FaWpforms } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
@@ -23,13 +23,14 @@ const Sidebar = () => {
     { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
     { name: "New Appraisal", icon: <FaFolder />, path: "/forms", roles: ["hr"] },
     { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr"] },
+    { name: "Current Appraisal", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee"]}
     // { name: "My Appraisals", icon: <FaCommentDots />, path: "/employee-appraisals", roles: ["employee"] },
   ];
 
   return (
     <div className="fixed left-0 top-0 h-screen w-64 bg-secondary text-white flex flex-col justify-between py-6">
       <div className="flex items-center justify-center mb-6">
-        <h1 className="text-2xl font-bold">YourApp</h1>
+        <h1 className="text-2xl font-bold"></h1>
       </div>
 
       <nav className="flex flex-col space-y-8">

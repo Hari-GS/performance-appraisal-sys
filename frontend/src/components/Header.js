@@ -11,7 +11,7 @@ export default function Header() {
         const fetchUser = async () => {
           try {
             const response = await request("GET", "/auth/me");
-            setUserInfo(response.data.email);
+            setUserInfo(response.data);
           } catch (error) {
             console.error("Failed to fetch user info", error);
           }
@@ -23,13 +23,12 @@ export default function Header() {
   return (
     <div className="flex flex-row justify-between">
       <div className=" mt-6 ml-6">
-      <h1 className="text-2xl font-semibold">Hello {userInfo}, Welcome Back!</h1>
-      {/* <p className="text-gray-600">{userInfo.designation}</p> */}
+      <h1 className="text-2xl font-semibold">Hello {userInfo.name}, Welcome Back!</h1>
+      <p className="text-gray-600">{userInfo.designation}</p>
     </div>
-    <div className="bg-blue-100 px-4 h-12 mt-6 rounded-md flex items-center space-x-3 text-sm">
+    {/* <div className="bg-blue-100 px-4 h-12 mt-6 rounded-md flex items-center space-x-3 text-sm">
       <span className="font-semibold">Appraisal :</span>
-      
-      {/* Year Dropdown */}
+   
       <select
         value={year}
         onChange={(e) => setYear(e.target.value)}
@@ -40,7 +39,6 @@ export default function Header() {
         <option value="2023">2023</option>
       </select>
 
-      {/* Cycle Dropdown */}
       <select
         value={cycle}
         onChange={(e) => setCycle(e.target.value)}
@@ -51,7 +49,7 @@ export default function Header() {
         <option value="Q2">Q2 Cycle</option>
         <option value="MidYear">Mid-Year Cycle</option>
       </select>
-    </div>
+    </div> */}
     </div>
   );
 }

@@ -21,6 +21,10 @@ import EmployeeDashboard from './components/EmployeeDashboard';
 import ManageAppraisal from './pages/ManageAppraisal';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EmployeeCurrentAppraisal from './pages/EmployeeCurrentAppraisal';
+import AppraisalDetailsForEmployee from './components/AppraisalDetailsForEmployee';
+import AppraisalDetails from './pages/AppraisalDetails';
+import SelfAppraisalPage from './pages/SelfAppraisalPage';
 
 function App() {
   return (
@@ -105,6 +109,30 @@ function App() {
                 <HeirarchyPage/>
               </ProtectedRoute>
 
+            }
+          />
+          <Route
+            path='/employee/appraisal'
+            element={
+              <ProtectedRoute>
+                <EmployeeCurrentAppraisal/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/employee/appraisal/:appraisalId'
+            element={
+              <ProtectedRoute>
+                <AppraisalDetails/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/employee/self-appraisal/:appraisalId'
+            element={
+              <ProtectedRoute>
+                <SelfAppraisalPage/>
+              </ProtectedRoute>
             }
           />
         </Routes>

@@ -5,44 +5,68 @@ import stsHomeImage from "../images/StsHomeImage.png";
 import { getAuthToken } from "../helpers/axios_helpers";
 import { loginUser } from "../redux/authSlice";
 import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { fetchUser } = useAuth();
 
-  // Get authentication state from Redux
-  const { user, error, loading } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
-  // Handle Login
+  // ✅ Handle Login and redirect
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
+    const resultAction = await dispatch(loginUser({ email, password }));
+
+    if (loginUser.fulfilled.match(resultAction)) {
+      try {
+        // ✅ Refresh the AuthContext with latest user data
+        await fetchUser();
+
+        // ✅ Decode the token to determine role
+        const token = getAuthToken();
+        const decoded = jwtDecode(token);
+        const role = decoded.role;
+
+        // ✅ Navigate based on role
+        if (role === "hr") {
+          navigate("/hr-dashboard");
+        } else if (role === "employee") {
+          navigate("/employee-dashboard");
+        } else {
+          console.log("Invalid token role");
+          navigate("/login");
+        }
+      } catch (err) {
+        console.error("Post-login error:", err);
+      }
+    }
   };
 
-  // Redirect if user is logged in
   useEffect(() => {
-    const token = getAuthToken(); // however you store/get your token
+    const token = getAuthToken();
   
     if (token) {
       try {
         const decoded = jwtDecode(token);
         const role = decoded.role;
   
+        // Already logged in? Redirect to correct dashboard
         if (role === "hr") {
           navigate("/hr-dashboard");
         } else if (role === "employee") {
           navigate("/employee-dashboard");
-        } else {
-          console.log("invalid token"); 
         }
       } catch (err) {
-        console.error("Invalid token:", err);
-        navigate("/login");
+        console.error("Invalid token format:", err);
+        // Optional: clear token or show error
       }
     }
-  }, [user]);
+  }, []);
+  
 
   return (
     <div className="min-h-screen grid grid-cols-5">
