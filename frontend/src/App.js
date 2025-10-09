@@ -25,6 +25,8 @@ import EmployeeCurrentAppraisal from './pages/EmployeeCurrentAppraisal';
 import AppraisalDetailsForEmployee from './components/AppraisalDetailsForEmployee';
 import AppraisalDetails from './pages/AppraisalDetails';
 import SelfAppraisalPage from './pages/SelfAppraisalPage';
+import PendingComments from './pages/PendingComments';
+import SelfAppraisalCommentsPage from './pages/SelfAppraisalCommentsPage';
 
 function App() {
   return (
@@ -132,6 +134,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <SelfAppraisalPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/employee/self-appraisal/comments/:appraisalId'
+            element={
+              <ProtectedRoute>
+                <PendingComments/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/employee/self-appraisal/comments/:appraisalId/:employeeId'
+            element={
+              <ProtectedRoute>
+                <SelfAppraisalCommentsPage/>
               </ProtectedRoute>
             }
           />

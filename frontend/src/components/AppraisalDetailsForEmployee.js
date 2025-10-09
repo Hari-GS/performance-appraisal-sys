@@ -17,7 +17,7 @@ const AppraisalDetailsForEmployee = ({ appraisal }) => {
     if (appraisal.stage === "SELF_REVIEW") {
       navigate(`/employee/self-appraisal/${appraisal.appraisalId}`, { state: { appraisal } });
     } else if (appraisal.stage === "REPORTING_REVIEW") {
-      navigate(`/employee/reporting-review/${appraisal.appraisalId}`, { state: { appraisal } });
+      navigate(`/employee/self-appraisal/comments/${appraisal.appraisalId}`, { state: { appraisal } });
     }
   };
 

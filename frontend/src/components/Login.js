@@ -20,7 +20,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const resultAction = await dispatch(loginUser({ email, password }));
-
+    
     if (loginUser.fulfilled.match(resultAction)) {
       try {
         // ✅ Refresh the AuthContext with latest user data

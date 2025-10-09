@@ -103,6 +103,7 @@ export default function AppraisalOverview({ appraisal , setAppraisal}) {
                   <th className="px-4 py-2">Name</th>
                   <th className="px-4 py-2">Role</th>
                   <th className="px-4 py-2">Manager</th>
+                  <th className="px-4 py-2">Status</th>
                 </tr>
               </thead>
               <tbody>
