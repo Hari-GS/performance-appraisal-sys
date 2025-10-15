@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaBell, FaCog, FaBars } from "react-icons/fa";
 import { logout, setUserId } from "../helpers/axios_helpers"; // ✅ Import logout function
+import { FiLogOut } from "react-icons/fi";
 
 const Navbar = (props) => {
   const [showLogout, setShowLogout] = useState(false);
@@ -23,14 +24,6 @@ const Navbar = (props) => {
 
       {/* Right Section: Icons */}
       <div className="flex items-center space-x-6 relative">
-        {/* Notification Icon */}
-        <button className="relative text-white hover:text-secondary">
-          <FaBell size={24} />
-          <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-            0
-          </span>
-        </button>
-
         {/* Settings Icon (with Logout Popup) */}
         <div className="relative">
           <button
@@ -45,8 +38,9 @@ const Navbar = (props) => {
             <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 shadow-lg rounded-lg p-2">
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-red-500 hover:text-white rounded-lg transition duration-200"
+                className="w-full flex items-center gap-2 text-left px-4 py-2 text-gray-700 hover:bg-accent hover:text-white rounded-lg transition duration-200"
               >
+                <FiLogOut className="text-lg" />
                 Logout
               </button>
             </div>

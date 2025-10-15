@@ -14,7 +14,6 @@ const PendingCommentsList = () => {
 
   const fetchPeople = async () => {
     try {
-      // Replace with your API endpoint that returns the JSON data for pending comments
       const response = await request('GET', `/api/reporting/summary/${appraisalId}`);
       setPeople(response.data || []);
     } catch (error) {
@@ -28,11 +27,27 @@ const PendingCommentsList = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {people.map((person) => (
-          <div key={person.id} className="bg-primary-dark rounded-xl shadow-lg p-5 transition">
-            <h2 className="text-black text-xl font-semibold mb-2 flex items-center">
-              <AiOutlineUser className="mr-2 text-accent" />
-              {person.employeeName}
-            </h2>
+          <div
+            key={person.id}
+            className="bg-primary-dark rounded-xl shadow-lg p-5 transition border border-gray-200"
+          >
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-black text-xl font-semibold flex items-center">
+                <AiOutlineUser className="mr-2 text-accent" />
+                {person.employeeName}
+              </h2>
+
+              {/* ✅ Status badge */}
+              {person.reviewAppraisalStatus === 'SUBMITTED' ? (
+                <span className="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  Completed
+                </span>
+              ) : (
+                <span className="bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full">
+                  Pending
+                </span>
+              )}
+            </div>
 
             <p className="text-black text-sm mb-1 flex items-center">
               <AiOutlineIdcard className="mr-2 text-accent" />
@@ -43,12 +58,9 @@ const PendingCommentsList = () => {
               <AiOutlineIdcard className="mr-2 text-accent" />
               Designation: {person.designation}
             </p>
-
-            <button
-              onClick={() => navigate(`/employee/self-appraisal/comments/${appraisalId}/${person.employeeId}`)}
-              className="bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark transition"
-            >
-              Give Comment
+            <button onClick={() => navigate(`/employee/self-appraisal/comments/${appraisalId}/${person.employeeId}`)} 
+            className="bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark transition" > 
+              Give Comment 
             </button>
           </div>
         ))}

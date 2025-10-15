@@ -27,6 +27,9 @@ import AppraisalDetails from './pages/AppraisalDetails';
 import SelfAppraisalPage from './pages/SelfAppraisalPage';
 import PendingComments from './pages/PendingComments';
 import SelfAppraisalCommentsPage from './pages/SelfAppraisalCommentsPage';
+import AppraisalReports from './components/AppraisalReports';
+import AppraisalParticipantsPage from './pages/AppraisalParticipantsPage';
+import ParticipantReportPage from './pages/ParticipantReportPage';
 
 function App() {
   return (
@@ -150,6 +153,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <SelfAppraisalCommentsPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/reports'
+            element={
+              <ProtectedRoute>
+                <AppraisalReports/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/reports/:appraisalId'
+            element={
+              <ProtectedRoute>
+                <AppraisalParticipantsPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/reports/:appraisalId/:participantId'
+            element={
+              <ProtectedRoute>
+                <ParticipantReportPage/>
               </ProtectedRoute>
             }
           />

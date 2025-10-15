@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProgressBar from './ProgressBar';
 import ForceMoveModel from './ForceMoveModel';
 import { request } from '../helpers/axios_helpers';
@@ -14,9 +14,11 @@ const stageDisplayMap = {
 
 const stageOrder = ['CREATED', 'SELF_REVIEW', 'REPORTING_REVIEW', 'HR_REVIEW', 'CLOSED'];
 
-export default function AppraisalOverview({ appraisal , setAppraisal}) {
+export default function AppraisalOverview({ appraisal, setAppraisal }) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [reportingReviewData, setReportingReviewData] = useState([]); // ⬅️ state for backend data
+  const [loadingReviewData, setLoadingReviewData] = useState(false);
 
   if (!appraisal) return null;
 
@@ -26,23 +28,61 @@ export default function AppraisalOverview({ appraisal , setAppraisal}) {
   const handleForceMove = async () => {
     await forceMoveAppraisal(appraisal.id);
     setShowModal(false);
-    // maybe refresh appraisal data here
   };
 
   const forceMoveAppraisal = async () => {
     setLoading(true);
-  try {
-    await request('PUT', `/api/appraisals/${appraisal.id}/force-move`);
-    const res = await request('GET', `/api/appraisals/${appraisal.id}`);
-    setAppraisal(res.data);
-    setShowModal(false);
-    toast.success('Appraisal moved to next stage successfully');
-  } catch (error) {
-    console.error(error);
-    toast.error('Failed to move appraisal. Please try again.');
-  } finally {
-    setLoading(false);
-  }
+    try {
+      await request('PUT', `/api/appraisals/${appraisal.id}/force-move`);
+      const res = await request('GET', `/api/appraisals/${appraisal.id}`);
+      setAppraisal(res.data);
+      setShowModal(false);
+      toast.success('Appraisal moved to next stage successfully');
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to move appraisal. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🧩 Fetch Reporting Review Data from Backend (only when stage is REPORTING_REVIEW)
+  useEffect(() => {
+    const fetchReportingReviewData = async () => {
+      if (appraisal?.stage !== 'REPORTING_REVIEW' && appraisal?.stage !== 'HR_REVIEW' && appraisal?.stage !== 'CLOSED') return;
+      setLoadingReviewData(true);
+      try {
+        const res = await request('GET', `/api/reporting/reviewers-summary/${appraisal.id}`);
+        setReportingReviewData(res.data || []);
+      } catch (error) {
+        console.error('Failed to fetch reporting review data:', error);
+      } finally {
+        setLoadingReviewData(false);
+      }
+    };
+
+    fetchReportingReviewData();
+  }, [appraisal?.id, appraisal?.stage]);
+
+  // Helper function for colored status badge
+  const renderStatusBadge = (status) => {
+    const formattedStatus =
+      status
+        ?.replaceAll('_', ' ')
+        ?.toLowerCase()
+        ?.replace(/\b\w/g, (char) => char.toUpperCase()) || 'Unknown';
+
+    return (
+      <span
+        className={`px-3 py-1 rounded-full text-sm font-semibold 
+          ${status === 'NOT_STARTED' && 'bg-red-100 text-red-700'}
+          ${status === 'IN_PROGRESS' && 'bg-yellow-100 text-yellow-700'}
+          ${status === 'SUBMITTED' && 'bg-green-100 text-green-700'}
+        `}
+      >
+        {formattedStatus}
+      </span>
+    );
   };
 
   return (
@@ -70,7 +110,7 @@ export default function AppraisalOverview({ appraisal , setAppraisal}) {
         </div>
 
         <div className="mt-6">
-          <ProgressBar currentStage={appraisal.stage}/>
+          <ProgressBar currentStage={appraisal.stage} />
         </div>
 
         {/* Force Move Button */}
@@ -87,14 +127,66 @@ export default function AppraisalOverview({ appraisal , setAppraisal}) {
       </div>
 
       {/* Confirmation Modal */}
-      {showModal && 
-        <ForceMoveModel handleForceMove={handleForceMove}  stageDisplayMap={stageDisplayMap} appraisal={appraisal} stageOrder={stageOrder} setShowModal={setShowModal}/>
-      }
+      {showModal && (
+        <ForceMoveModel
+          handleForceMove={handleForceMove}
+          stageDisplayMap={stageDisplayMap}
+          appraisal={appraisal}
+          stageOrder={stageOrder}
+          setShowModal={setShowModal}
+        />
+      )}
 
-      {/* Participants Table */}
+      {/* 🧾 Reporting Review Table (only in REPORTING_REVIEW stage) */}
+      {appraisal.stage === 'REPORTING_REVIEW' || appraisal.stage === 'HR_REVIEW' || appraisal?.stage === 'CLOSED' && (
+        <div className="bg-primary-dark rounded-2xl p-6 shadow-lg mb-8">
+          <h2 className="text-2xl font-semibold mb-4 text-black">Reporting Person Review</h2>
+          {loadingReviewData ? (
+            <p className="text-gray-600 text-sm">Loading...</p>
+          ) : reportingReviewData.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-left border-separate border-spacing-y-3">
+                <thead>
+                  <tr className="text-black">
+                    <th className="px-4 py-2">Reviewer Emp ID</th>
+                    <th className="px-4 py-2">Reviewer Name</th>
+                    <th className="px-4 py-2">Designation</th>
+                    <th className="px-4 py-2">Total Assigned</th>
+                    <th className="px-4 py-2">Completed</th>
+                    <th className="px-4 py-2">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportingReviewData.map((rev, index) => {
+                    const status = rev.allReviewsSubmitted
+                      ? 'SUBMITTED'
+                      : rev.completed > 0
+                      ? 'IN_PROGRESS'
+                      : 'NOT_STARTED';
+                    return (
+                      <tr key={index} className="bg-primary rounded-xl">
+                        <td className="px-4 py-3">{rev.reviewerId}</td>
+                        <td className="px-4 py-3">{rev.reviewerName}</td>
+                        <td className="px-4 py-3">{rev.designation}</td>
+                        <td className="px-4 py-3">{rev.totalAssigned}</td>
+                        <td className="px-4 py-3">{rev.completed}</td>
+                        <td className="px-4 py-3">{renderStatusBadge(status)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-gray-600 text-sm">No reviewer data found.</p>
+          )}
+        </div>
+      )}
+
+      {/* Employee Appraisals Table */}
       {appraisal.participants && (
         <div className="bg-primary-dark rounded-2xl p-6 shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-black">Employee Appraisals</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-black">Employee Self Appraisals</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full text-left border-separate border-spacing-y-3">
               <thead>
@@ -113,6 +205,9 @@ export default function AppraisalOverview({ appraisal , setAppraisal}) {
                     <td className="px-4 py-3">{emp.employeeName}</td>
                     <td className="px-4 py-3">{emp.designation}</td>
                     <td className="px-4 py-3">{emp.managerName}</td>
+                    <td className="px-4 py-3">
+                      {renderStatusBadge(emp.selfAppraisalStatus)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
