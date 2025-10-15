@@ -4,13 +4,12 @@
   "description": "frontend for the performance appraisal system",
   "main": "Login.js",
   "scripts": {
-    "start": "concurrently \"npm run client\"",
-    "server": "npm --prefix ../frontend start",
-    "client": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+}
+,
   "keywords": [
     "[\"performance\"",
     "\"appraisal\"",
