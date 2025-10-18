@@ -21,7 +21,7 @@ export default function Header() {
     }, []);
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-between pb-10">
       <div className=" mt-6 ml-6">
       <h1 className="text-2xl font-semibold">Hello {userInfo.name}, Welcome Back!</h1>
       <p className="text-gray-600">{userInfo.designation}</p>

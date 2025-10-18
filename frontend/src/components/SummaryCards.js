@@ -3,15 +3,12 @@ import SummaryCard from "./SummaryCard";
 import { request } from "../helpers/axios_helpers";
 import { FaUsers } from "react-icons/fa";
 import { MdDoneAll } from "react-icons/md";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { BsStarFill } from "react-icons/bs";
 
 export default function SummaryCards() {
   const [summary, setSummary] = useState({
     totalEmployees: 0,
-    completedReviews: 0,
-    pendingReviews: 0,
-    averageScore: 0,
+    selfReviewsCompleted: 0,
+    reportingReviewsCompleted: 0,
   });
 
   useEffect(() => {
@@ -27,35 +24,40 @@ export default function SummaryCards() {
     fetchSummary();
   }, []);
 
+  const { totalEmployees, selfReviewsCompleted, reportingReviewsCompleted, totalReportingReviewsToDo } = summary;
+
+  const selfCompletionRate =
+    totalEmployees > 0
+      ? ((selfReviewsCompleted / totalEmployees) * 100).toFixed(1)
+      : 0;
+
+  const reportingCompletionRate =
+    totalEmployees > 0
+      ? ((reportingReviewsCompleted / totalReportingReviewsToDo) * 100).toFixed(1)
+      : 0;
+
   const cards = [
     {
-      title: "Total Employee",
-      value: summary.totalEmployees,
-      sub: "+15 From last cycle",
+      title: "Total Participants",
+      value: totalEmployees,
       icon: <FaUsers size={24} className="text-blue-600" />,
     },
     {
-      title: "Review Completed",
-      value: summary.completedReviews,
-      sub: "75% completion rate",
+      title: "Self Reviews Completed",
+      value: selfReviewsCompleted,
+      sub: `${selfReviewsCompleted} of ${totalEmployees} | ${selfCompletionRate}% completion`,
       icon: <MdDoneAll size={24} className="text-green-600" />,
     },
     {
-      title: "Pending Reviews",
-      value: summary.pendingReviews,
-      sub: "Due in 5 days",
-      icon: <AiOutlineClockCircle size={24} className="text-yellow-600" />,
-    },
-    {
-      title: "Avg Score",
-      value: summary.averageScore.toFixed(1),
-      sub: "+0.5 from last cycle",
-      icon: <BsStarFill size={24} className="text-orange-500" />,
+      title: "Reporting Reviews Completed",
+      value: reportingReviewsCompleted,
+      sub: `${reportingReviewsCompleted} of ${totalReportingReviewsToDo} | ${reportingCompletionRate}% completion`,
+      icon: <MdDoneAll size={24} className="text-green-600" />,
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {cards.map((card, idx) => (
         <SummaryCard key={idx} {...card} />
       ))}

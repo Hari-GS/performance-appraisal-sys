@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FaRegCalendarAlt,
   FaClipboardList,
@@ -9,15 +9,34 @@ import {
   FaHourglassStart,
 } from "react-icons/fa";
 import ProgressBar from "./ProgressBar";
+import { request } from "../helpers/axios_helpers";
 
-const AppraisalDetailsForEmployee = ({ appraisal }) => {
+const AppraisalDetailsForEmployee = () => {
+  const { appraisalId } = useParams();
   const navigate = useNavigate();
+  const [appraisal, setAppraisal] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAppraisal = async () => {
+      try {
+        const response = await request("GET", `/api/appraisals/${appraisalId}`);
+        setAppraisal(response.data);
+      } catch (error) {
+        console.error("Failed to fetch appraisal details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAppraisal();
+  }, [appraisalId]);
 
   const handleNavigate = () => {
     if (appraisal.stage === "SELF_REVIEW") {
-      navigate(`/employee/self-appraisal/${appraisal.appraisalId}`, { state: { appraisal } });
+      navigate(`/employee/self-appraisal/${appraisalId}`, { state: { appraisal } });
     } else if (appraisal.stage === "REPORTING_REVIEW") {
-      navigate(`/employee/self-appraisal/comments/${appraisal.appraisalId}`, { state: { appraisal } });
+      navigate(`/employee/self-appraisal/comments/${appraisalId}`, { state: { appraisal } });
     }
   };
 
@@ -26,6 +45,22 @@ const AppraisalDetailsForEmployee = ({ appraisal }) => {
     if (appraisal.stage === "REPORTING_REVIEW") return "Go to Reporting Review";
     return null;
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-600">
+        Loading appraisal details...
+      </div>
+    );
+  }
+
+  if (!appraisal) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-600">
+        No appraisal found.
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 mt-14 w-full mx-auto">

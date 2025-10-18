@@ -11,6 +11,26 @@ import { request } from "../helpers/axios_helpers";
 
 const Dashboard = () => {
   const [recentAppraisal, setRecentAppraisal] = useState(null);
+  const [summary, setSummary] = useState({
+    totalEmployees: 0,
+    selfReviewsCompleted: 0,
+    reportingReviewsCompleted: 0,
+  });
+
+  useEffect(() => {
+    const fetchSummary = async () => {
+      try {
+        const response = await request("GET", "/api/dashboard/summary");
+        setSummary(response.data);
+      } catch (error) {
+        console.error("Failed to fetch dashboard summary", error);
+      }
+    };
+
+    fetchSummary();
+  }, []);
+
+  const { totalEmployees, selfReviewsCompleted, reportingReviewsCompleted, totalReportingReviewsToDo } = summary;
 
   useEffect(() => {
     const fetchRecentAppraisal = async () => {
@@ -36,9 +56,9 @@ const Dashboard = () => {
 
         {/* ✅ Recent Appraisal Summary Section */}
         {recentAppraisal && (
-          <div className="bg-primary-dark rounded-xl shadow-md p-6 mb-6">
+          <div className="bg-primary-dark rounded-xl shadow-md p-6 mt-6">
             <h2 className="text-2xl font-semibold mb-2">Recent Appraisal</h2>
-            <div className="text-gray-200 space-y-1">
+            <div className="space-y-1">
               <p>
                 <span className="font-semibold text-accent">Title:</span>{" "}
                 {recentAppraisal.title}
@@ -72,12 +92,19 @@ const Dashboard = () => {
 
         {/* Charts Section */}
         <div className="flex flex-row justify-between bg-primary-dark p-6 rounded-xl mt-6 space-x-4">
-          <DepartmentProgressChart />
-          <ReviewCompletionChart />
+          <ReviewCompletionChart
+            title="Self Reviews Completion"
+            completionValue={(selfReviewsCompleted/totalEmployees) * 100 || 0}
+          />
+          <ReviewCompletionChart
+            title="Reporting Reviews Completion"
+            completionValue={(reportingReviewsCompleted/totalReportingReviewsToDo) * 100 || 0}
+          />
         </div>
 
+
         {/* Additional Sections */}
-        <RecentActivity />
+        {/* <RecentActivity /> */}
         <QuickActions />
       </div>
 

@@ -7,7 +7,6 @@ import { useLocation } from "react-router-dom";
 function AppraisalDetails() {
     const location = useLocation();
     const { appraisal } = location.state || {};
-    console.log(appraisal);
     
     return (
         
