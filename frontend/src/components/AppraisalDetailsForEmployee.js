@@ -7,6 +7,8 @@ import {
   FaClock,
   FaCheckCircle,
   FaHourglassStart,
+  FaInfoCircle,
+  FaArrowRight 
 } from "react-icons/fa";
 import ProgressBar from "./ProgressBar";
 import { request } from "../helpers/axios_helpers";
@@ -130,7 +132,7 @@ const AppraisalDetailsForEmployee = () => {
           <ProgressBar currentStage={appraisal.stage} />
         </div>
 
-        <div>
+        {/* <div>
           <p className="text-sm text-gray-500 mb-1">Self Appraisal Questions Answered</p>
           <p className="text-base font-semibold">{appraisal.selfQnsAnswered ?? "0"}</p>
         </div>
@@ -138,20 +140,32 @@ const AppraisalDetailsForEmployee = () => {
         <div>
           <p className="text-sm text-gray-500 mb-1">Total Self Appraisal Questions</p>
           <p className="text-base font-semibold">{appraisal.totalSelfQns}</p>
-        </div>
+        </div> */}
 
         {/* Action Button */}
         {getButtonLabel() && (
-          <div className="sm:col-span-2 mt-6">
+          <div className="sm:col-span-2 mt-6 flex justify-center">
             <button
               onClick={handleNavigate}
-              className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className="flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold text-base rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 transform hover:scale-105"
             >
               {getButtonLabel()}
+              <FaArrowRight className="w-5 h-5" />
             </button>
           </div>
         )}
       </div>
+      {/* Note for CREATED stage */}
+      {appraisal.stage === "CREATED" && (
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+          <FaInfoCircle className="text-blue-600 mt-1" />
+          <p className="text-gray-700 text-sm">
+            <strong>Note:</strong> During the <em>Self Review</em> and{" "}
+            <em>Reporting Person Review</em> stages (if assigned), a <strong>“Go To”</strong>{" "}
+            button will appear to take you to your appraisal form.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

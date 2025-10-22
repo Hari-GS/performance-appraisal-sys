@@ -6,16 +6,35 @@ import { MdDoneAll } from "react-icons/md";
 
 export default function SummaryCards() {
   const [summary, setSummary] = useState({
-    totalEmployees: 0,
-    selfReviewsCompleted: 0,
-    reportingReviewsCompleted: 0,
+    totalEmployees: "_",
+    selfReviewsCompleted: "_",
+    reportingReviewsCompleted: "_",
+    totalReportingReviewsToDo: "_",
   });
 
   useEffect(() => {
     const fetchSummary = async () => {
       try {
         const response = await request("GET", "/api/dashboard/summary");
-        setSummary(response.data);
+        const data = response.data || {};
+
+        // Replace null or undefined with "_"
+        const cleanedData = {
+          totalEmployees:
+            data.totalEmployees != null ? data.totalEmployees : "_",
+          selfReviewsCompleted:
+            data.selfReviewsCompleted != null ? data.selfReviewsCompleted : "_",
+          reportingReviewsCompleted:
+            data.reportingReviewsCompleted != null
+              ? data.reportingReviewsCompleted
+              : "_",
+          totalReportingReviewsToDo:
+            data.totalReportingReviewsToDo != null
+              ? data.totalReportingReviewsToDo
+              : "_",
+        };
+
+        setSummary(cleanedData);
       } catch (error) {
         console.error("Failed to fetch dashboard summary", error);
       }
@@ -24,17 +43,24 @@ export default function SummaryCards() {
     fetchSummary();
   }, []);
 
-  const { totalEmployees, selfReviewsCompleted, reportingReviewsCompleted, totalReportingReviewsToDo } = summary;
+  const {
+    totalEmployees,
+    selfReviewsCompleted,
+    reportingReviewsCompleted,
+    totalReportingReviewsToDo,
+  } = summary;
 
+  // Safely compute completion rates only if values are numbers
   const selfCompletionRate =
-    totalEmployees > 0
+    typeof totalEmployees === "number" && totalEmployees > 0
       ? ((selfReviewsCompleted / totalEmployees) * 100).toFixed(1)
-      : 0;
+      : "_";
 
   const reportingCompletionRate =
-    totalEmployees > 0
+    typeof totalReportingReviewsToDo === "number" &&
+    totalReportingReviewsToDo > 0
       ? ((reportingReviewsCompleted / totalReportingReviewsToDo) * 100).toFixed(1)
-      : 0;
+      : "_";
 
   const cards = [
     {
@@ -45,13 +71,19 @@ export default function SummaryCards() {
     {
       title: "Self Reviews Completed",
       value: selfReviewsCompleted,
-      sub: `${selfReviewsCompleted} of ${totalEmployees} | ${selfCompletionRate}% completion`,
+      sub:
+        selfCompletionRate === "_"
+          ? "_"
+          : `${selfReviewsCompleted} of ${totalEmployees} | ${selfCompletionRate}% completion`,
       icon: <MdDoneAll size={24} className="text-green-600" />,
     },
     {
       title: "Reporting Reviews Completed",
       value: reportingReviewsCompleted,
-      sub: `${reportingReviewsCompleted} of ${totalReportingReviewsToDo} | ${reportingCompletionRate}% completion`,
+      sub:
+        reportingCompletionRate === "_"
+          ? "_"
+          : `${reportingReviewsCompleted} of ${totalReportingReviewsToDo} | ${reportingCompletionRate}% completion`,
       icon: <MdDoneAll size={24} className="text-green-600" />,
     },
   ];

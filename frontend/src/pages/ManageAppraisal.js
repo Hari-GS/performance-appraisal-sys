@@ -35,7 +35,7 @@ function ManageAppraisal() {
             )}
           </div>
     
-          <Navbar title="Manage" />
+          <Navbar title="Manage Appraisals" />
         </div>
       );
 }

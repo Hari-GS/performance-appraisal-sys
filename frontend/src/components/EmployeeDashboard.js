@@ -22,7 +22,7 @@ function EmployeeDashboard() {
 					<EvaluatorsCard/>
 			    </div>
 		    </div>
-		    <Navbar title="Employee Dashboard"/>
+		    <Navbar title="Dashboard"/>
         </div>
     )
 }

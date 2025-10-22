@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaHome, FaUsers, FaCommentDots, FaFolder, FaUserCircle, FaWpforms } from "react-icons/fa";
+import { FaHome, FaUsers, FaCommentDots, FaFolder, FaUserCircle, FaWpforms, FaClipboardCheck, FaTachometerAlt } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
@@ -18,13 +18,14 @@ const Sidebar = () => {
   if (!user) return null;
 
   const menuItems = [
-    { name: "Home", icon: <FaHome />, path: user.role === 'employee' ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee"] },
-    { name: "Employees", icon: <FaUsers />, path: "/employees", roles: ["hr"] },
-    { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
+    { name: "Dashboard", icon: <FaTachometerAlt />, path: user.role === 'employee' ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee"] },
+    { name: "Participants", icon: <FaUsers />, path: "/employees", roles: ["hr"] },
+    // { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
     { name: "New Appraisal", icon: <FaFolder />, path: "/forms", roles: ["hr"] },
     { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr"] },
-    { name: "Current Appraisal", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee"]},
-    { name: "Reports", icon: <FaWpforms/>, path: "/reports", roles:["hr"]}
+    { name: "Active Appraisals", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee"]},
+    { name: "Reports", icon: <FaWpforms/>, path: "/reports", roles:["hr"]},
+    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles:["employee"]},
     // { name: "My Appraisals", icon: <FaCommentDots />, path: "/employee-appraisals", roles: ["employee"] },
   ];
 
@@ -61,7 +62,9 @@ const Sidebar = () => {
         <FaUserCircle className="text-4xl" />
         <div>
           <p className="font-semibold">{user.name}</p>
-          <p className="text-sm text-gray-200">{user.role}</p>
+          <p className="text-sm text-gray-200">
+            {user.role.toLowerCase() === "employee" ? "Participant" : "HR Manager"}
+          </p>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import { FiUserPlus, FiFilter, FiUpload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import UploadCSVModal from "./UploadCSVModal";
 import { SyncLoader } from "react-spinners";
+import { FaSitemap } from "react-icons/fa";
 
 
 const EmployeeProfiles = () => {
@@ -114,7 +115,7 @@ const EmployeeProfiles = () => {
           onSearch={handleSearch}
           placeholder={
             viewMode === "Employee"
-              ? "Search by Employee name / ID"
+              ? "Search by Employee name or Id"
               : "Search by Team name"
           }
         />
@@ -143,8 +144,17 @@ const EmployeeProfiles = () => {
             </button>
           </div> */}
         </div>
+      <div className="flex flex-row gap-8">
+  
+  <button
+    className="flex items-center gap-2 text-white hover:bg-accent-dark px-4 py-2 rounded-3xl bg-accent transition mt-9"
+    style={{ boxShadow: "inset 2px 2px 6px rgba(0, 0, 0, 0.1)" }}
+    onClick={() => navigate("/heirarchy")}
+  >
+    <FaSitemap size={18} />
+    View Heirarchy
+  </button>
 
-        <div className="flex flex-row gap-8">
   {/* Add Button (Always shown) */}
   <button
     className="flex items-center gap-2 text-white hover:bg-accent-dark px-4 py-2 rounded-3xl bg-accent transition mt-9"
@@ -230,7 +240,7 @@ const EmployeeProfiles = () => {
             alt={`${employee.name}`}
             className="w-full h-32 object-cover rounded-lg"
           />
-          <h3 className="text-lg font-semibold mt-2">{employee.name}</h3>
+          <h3 className="text-lg font-semibold mt-2 capitalize">{employee.name}</h3>
           <p className="text-gray-500">{employee.designation}</p>
           <p className="text-gray-500">{employee.employeeId}</p>
         </div>

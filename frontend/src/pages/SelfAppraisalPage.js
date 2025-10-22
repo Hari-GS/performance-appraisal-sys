@@ -21,7 +21,7 @@ function SelfAppraisalPage() {
                     <SelfAppraisal currentAppraisal={appraisal}/>
                 </div>
             </div>
-            <Navbar title="Self Appraisal"/>
+            <Navbar title="Active Appraisals"/>
         </div>
     )
 }

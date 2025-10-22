@@ -48,16 +48,16 @@ const EmployeeAppraisalOverviewCard = () => {
 
   if (loading) {
     return (
-      <div className="bg-primary-dark rounded-2xl shadow-md p-6 mt-6 w-[50%] text-gray-500">
-        Loading current appraisal...
+      <div className="bg-primary-dark rounded-2xl shadow-md p-6 mt-6 w-[50%] text-gray-500 justify-center items-center">
+        <p>Loading current appraisal...</p>
       </div>
     );
   }
 
   if (!appraisal) {
     return (
-      <div className="bg-primary-dark rounded-2xl shadow-md p-6 mt-6 w-[50%] text-gray-500">
-        No active appraisal found.
+      <div className="bg-primary-dark rounded-2xl shadow-md p-6 mt-6 w-[50%] h-[200px] text-gray-500 flex justify-center items-center">
+        <p>No active appraisal</p>
       </div>
     );
   }
@@ -66,7 +66,7 @@ const EmployeeAppraisalOverviewCard = () => {
     <div className="bg-primary-dark rounded-2xl shadow-md p-6 flex flex-col gap-4 mt-6 w-[50%]">
       <div className="flex items-center gap-3">
         <FaRegFileAlt className="text-black text-2xl" />
-        <h2 className="text-xl font-bold text-black">Current Appraisal</h2>
+        <h2 className="text-xl font-bold text-black">Latest Appraisal</h2>
       </div>
 
       <div className="space-y-2 pl-1">

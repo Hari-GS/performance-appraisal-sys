@@ -8,7 +8,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-const EmployeeCurrentAppraisalsCards = () => {
+const ClosedAppraisals = () => {
   const [appraisals, setAppraisals] = useState([]);
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const EmployeeCurrentAppraisalsCards = () => {
   useEffect(() => {
     const fetchAppraisals = async () => {
       try {
-        const response = await request("GET", "api/new-employees/active-appraisals");
+        const response = await request("GET", "api/new-employees/closed-appraisals");
         setAppraisals(response.data);
       } catch (error) {
         console.error("Failed to fetch appraisals", error);
@@ -46,12 +46,12 @@ const EmployeeCurrentAppraisalsCards = () => {
   };
 
   return (
-    <div className="p-6 w-full mt-5">
+    <div className="p-6 w-full mt-16">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3 mb-5">
         <FaRegFileAlt className="text-accent text-2xl" />
         <h2 className="text-xl font-bold text-gray-900">
-          Current Active Appraisals For You
+          Closed Appraisals Of You
         </h2>
       </div>
 
@@ -96,12 +96,6 @@ const EmployeeCurrentAppraisalsCards = () => {
                     <span>{appraisal.stage.replaceAll("_", " ")}</span>
                   </div>
                 </div>
-
-                {/* CTA Button */}
-                <button className="mt-4 flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-4 py-2 rounded-lg font-semibold transition-all group" onClick={() => handleGoTo(appraisal)}>
-                  Go to Appraisal
-                  <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
               </div>
             );
           })}
@@ -111,4 +105,4 @@ const EmployeeCurrentAppraisalsCards = () => {
   );
 };
 
-export default EmployeeCurrentAppraisalsCards;
+export default ClosedAppraisals;

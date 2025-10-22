@@ -3,6 +3,8 @@ import ProgressBar from './ProgressBar';
 import ForceMoveModel from './ForceMoveModel';
 import { request } from '../helpers/axios_helpers';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { SyncLoader } from 'react-spinners';
 
 const stageDisplayMap = {
   CREATED: 'Created',
@@ -19,6 +21,7 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
   const [loading, setLoading] = useState(false);
   const [reportingReviewData, setReportingReviewData] = useState([]); // ⬅️ state for backend data
   const [loadingReviewData, setLoadingReviewData] = useState(false);
+  const navigate = useNavigate();
 
   if (!appraisal) return null;
 
@@ -31,13 +34,17 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
   };
 
   const forceMoveAppraisal = async () => {
+    setShowModal(false);
     setLoading(true);
     try {
       await request('PUT', `/api/appraisals/${appraisal.id}/force-move`);
       const res = await request('GET', `/api/appraisals/${appraisal.id}`);
       setAppraisal(res.data);
-      setShowModal(false);
-      toast.success('Appraisal moved to next stage successfully');
+
+      if(appraisal?.stage!=='CLOSED'){
+        toast.success('Appraisal moved to next stage successfully');
+      }
+    
     } catch (error) {
       console.error(error);
       toast.error('Failed to move appraisal. Please try again.');
@@ -45,12 +52,16 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
       setLoading(false);
     }
   };
-
+  
   // 🧩 Fetch Reporting Review Data from Backend (only when stage is REPORTING_REVIEW)
   useEffect(() => {
     const fetchReportingReviewData = async () => {
       if (appraisal?.stage !== 'REPORTING_REVIEW' && appraisal?.stage !== 'HR_REVIEW' && appraisal?.stage !== 'CLOSED') return;
       setLoadingReviewData(true);
+      if(appraisal?.stage=='CLOSED'){
+        toast.success('Appraisal closed. View reports tab for report');
+        navigate("/reviews")
+      }
       try {
         const res = await request('GET', `/api/reporting/reviewers-summary/${appraisal.id}`);
         setReportingReviewData(res.data || []);
@@ -87,6 +98,17 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
 
   return (
     <div className="bg-primary min-h-screen text-black font-sans p-6 pt-28">
+      
+      {/* Loader Overlay */}
+      {loading && (
+        <div className="fixed  inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center z-50">
+          <SyncLoader color="#ff9700" size={12} />
+          <p className="text-white mt-4 text-lg font-semibold">
+            Moving appraisal to next stage, please wait...
+          </p>
+        </div>
+      )}
+
       {/* Header */}
       <div className="bg-primary-dark rounded-2xl p-6 shadow-lg mb-8">
         <div className="text-black space-y-3">
@@ -138,7 +160,7 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
       )}
 
       {/* 🧾 Reporting Review Table (only in REPORTING_REVIEW stage) */}
-      {appraisal.stage === 'REPORTING_REVIEW' || appraisal.stage === 'HR_REVIEW' || appraisal?.stage === 'CLOSED' && (
+      {(appraisal.stage === 'REPORTING_REVIEW' || appraisal.stage === 'HR_REVIEW' || appraisal?.stage === 'CLOSED') && (
         <div className="bg-primary-dark rounded-2xl p-6 shadow-lg mb-8">
           <h2 className="text-2xl font-semibold mb-4 text-black">Reporting Person Review</h2>
           {loadingReviewData ? (

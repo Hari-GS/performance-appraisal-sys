@@ -46,7 +46,7 @@ const AppraisalParticipants = ({ formData, setFormData, onNext }) => {
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold text-black">Appraisal Participants:</h3>
           <span className="text-green-600 font-semibold">
-            Total {participants.length} Participants
+            Total {participants.length} Participants Found
           </span>
         </div>
         <div className="border-white border-2"></div>
@@ -84,7 +84,7 @@ const AppraisalParticipants = ({ formData, setFormData, onNext }) => {
 
         {/* Footer */}
         <div className="flex justify-between items-center mt-3 text-sm">
-          <span className="text-green-600">{participants.length} Employees Found</span>
+          {/* <span className="text-green-600">{participants.length} Employees Found</span> */}
         </div>
       </div>
 
@@ -94,7 +94,7 @@ const AppraisalParticipants = ({ formData, setFormData, onNext }) => {
           onClick={handleNext}
           className="bg-accent text-white px-5 py-2 rounded flex items-center gap-2 hover:bg-orange-600"
         >
-          Next: Review Mapping <FaArrowRight />
+          Next: Questions Mapping <FaArrowRight />
         </button>
       </div>
     </div>

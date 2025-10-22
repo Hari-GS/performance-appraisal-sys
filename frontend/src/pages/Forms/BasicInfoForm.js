@@ -80,7 +80,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
 
           {/* Type */}
           <div>
-            <label className="text-sm font-medium text-black">Cycle type:</label>
+            <label className="text-sm font-medium text-black">Cycle Type:</label>
             <input
               type="text"
               name="type"
@@ -91,7 +91,6 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
             />
             {errors.type && <p className="text-red-500 text-xs mt-1">{errors.type}</p>}
           </div>
-
           {/* Start Date */}
           <div>
             <label className="text-sm font-medium text-black">Start Date:</label>
@@ -105,22 +104,9 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
             {errors.startDate && <p className="text-red-500 text-xs mt-1">{errors.startDate}</p>}
           </div>
 
-          {/* End Date */}
-          <div>
-            <label className="text-sm font-medium text-black">End Date:</label>
-            <input
-              type="date"
-              name="endDate"
-              value={basicInfo.endDate}
-              onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
-            />
-            {errors.endDate && <p className="text-red-500 text-xs mt-1">{errors.endDate}</p>}
-          </div>
-
           {/* Self-Appraisal End Date */}
-          <div className="md:col-span-2">
-            <label className="text-sm font-medium text-black">Self-Appraisal End Date:</label>
+          <div>
+            <label className="text-sm font-medium text-black">Self-Appraisal End / Reporting Review Start Date :</label>
             <input
               type="date"
               name="selfAppraisalEndDate"
@@ -135,6 +121,18 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               This marks the deadline for employees to complete their self-appraisals. reporting person reviews begins after this date.
             </p>
           </div>
+          {/* End Date */}
+          <div>
+            <label className="text-sm font-medium text-black">End Date:</label>
+            <input
+              type="date"
+              name="endDate"
+              value={basicInfo.endDate}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+            />
+            {errors.endDate && <p className="text-red-500 text-xs mt-1">{errors.endDate}</p>}
+          </div>
 
           {/* Description */}
           <div className="md:col-span-2">
@@ -146,7 +144,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               value={basicInfo.description}
               onChange={handleChange}
               placeholder="Brief welcome message and description guide to attend this appraisal"
-              rows={4}
+              rows={8}
               className="w-full mt-1 px-3 py-2 border rounded text-sm"
             ></textarea>
           </div>
@@ -159,7 +157,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
           onClick={handleNext}
           className="bg-accent text-white px-5 py-2 rounded flex items-center gap-2 hover:bg-orange-600"
         >
-          Next: Select Participants <FaArrowRight />
+          Next: View Participants <FaArrowRight />
         </button>
       </div>
     </div>

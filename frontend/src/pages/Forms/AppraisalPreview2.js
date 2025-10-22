@@ -5,10 +5,12 @@ import {
 } from 'react-icons/fa';
 import ConfirmationModal from '../../components/ConfirmationModel';
 import { request } from '../../helpers/axios_helpers';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
   const { basicInfo, participants } = formData;
-
+  const navigate = useNavigate();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,15 +41,17 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
     try {
       const res = await request('POST', '/api/appraisals', payload);
       if (res.status === 200) {
-        alert("Appraisal created successfully!");
         console.log('Appraisal Created:', res.data);
+        // ✅ Show success toast
+        toast.success('Appraisal created successfully!');
+        setTimeout(() => navigate('/reviews'), 1000);
         onSubmit?.(); // optional callback
       } else {
-        alert("Failed to create appraisal.");
+        toast.error('Failed to create appraisal.');
       }
     } catch (err) {
       console.error("Submission failed:", err);
-      alert("An error occurred.");
+      toast.error('An unexpected error occurred.');
     } finally {
       setIsSubmitting(false);
       setShowConfirmModal(false);
@@ -73,8 +77,9 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
         <p className="text-gray-600"><strong>Title:</strong> {basicInfo.title || '-'}</p>
         <p className="text-gray-600"><strong>Type:</strong> {basicInfo.type || '-'}</p>
         <p className="text-gray-600"><strong>Start Date:</strong> {basicInfo.startDate || '-'}</p>
+        <p className="text-gray-600"><strong>Self Review End / Reporting Review Start Date:</strong> {basicInfo.selfAppraisalEndDate || '-'}</p>
         <p className="text-gray-600"><strong>End Date:</strong> {basicInfo.endDate || '-'}</p>
-        <p className="text-gray-600"><strong>Description:</strong> {basicInfo.description || '-'}</p>
+        <p className="text-gray-600"><strong>Welcome Message:</strong> {basicInfo.description || '-'}</p>
       </div>
 
       {/* Participants */}
@@ -140,24 +145,24 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
       {/* Action Buttons */}
       <div className="flex justify-end gap-4 mt-6">
         <button
-          onClick={onBack}
+          onClick={()=>navigate("/forms")}
           className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-sm font-medium"
         >
-          Back
+          Cancel
         </button>
         <button
           onClick={() => setShowConfirmModal(true)}
           className="bg-accent text-white px-5 py-2 rounded text-sm font-medium hover:bg-orange-600"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Confirm & Submit"}
+          {isSubmitting ? "Creating..." : "Confirm & Create"}
         </button>
       </div>
 
       {showConfirmModal && (
         <ConfirmationModal
-          title="Confirm Submission"
-          message="Are you sure you want to submit this appraisal? This action cannot be undone."
+          title="Confirm Creation"
+          message="Are you sure you want to create this appraisal?"
           onConfirm={handleSubmit}
           onCancel={() => setShowConfirmModal(false)}
         />

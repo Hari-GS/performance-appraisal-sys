@@ -30,14 +30,19 @@ import SelfAppraisalCommentsPage from './pages/SelfAppraisalCommentsPage';
 import AppraisalReports from './components/AppraisalReports';
 import AppraisalParticipantsPage from './pages/AppraisalParticipantsPage';
 import ParticipantReportPage from './pages/ParticipantReportPage';
+import Signup from './pages/SignUp';
+import ClosedAppraisalsPage from './pages/ClosedAppraisalsPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <AuthProvider>
     <Provider store={store}>
       <Router>
+      <ScrollToTop/>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/sign-up" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
@@ -177,6 +182,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ParticipantReportPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/employee/closed-appraisals'
+            element={
+              <ProtectedRoute>
+                <ClosedAppraisalsPage/>
               </ProtectedRoute>
             }
           />

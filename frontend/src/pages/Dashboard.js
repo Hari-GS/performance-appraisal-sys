@@ -8,6 +8,8 @@ import ReviewCompletionChart from "../components/ReviewCompletionChart";
 import RecentActivity from "../components/RecentActivity";
 import QuickActions from "../components/QuickActions";
 import { request } from "../helpers/axios_helpers";
+import { FaPlusCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [recentAppraisal, setRecentAppraisal] = useState(null);
@@ -15,8 +17,11 @@ const Dashboard = () => {
     totalEmployees: 0,
     selfReviewsCompleted: 0,
     reportingReviewsCompleted: 0,
+    totalReportingReviewsToDo: 0,
   });
+  const navigate = useNavigate();
 
+  // --- Fetch Dashboard Summary ---
   useEffect(() => {
     const fetchSummary = async () => {
       try {
@@ -32,6 +37,7 @@ const Dashboard = () => {
 
   const { totalEmployees, selfReviewsCompleted, reportingReviewsCompleted, totalReportingReviewsToDo } = summary;
 
+  // --- Fetch Recent Appraisal ---
   useEffect(() => {
     const fetchRecentAppraisal = async () => {
       try {
@@ -54,18 +60,19 @@ const Dashboard = () => {
       <div className="flex flex-col flex-grow pl-72 p-6 pt-20">
         <Header />
 
-        {/* ✅ Recent Appraisal Summary Section */}
-        {recentAppraisal && (
-          <div className="bg-primary-dark rounded-xl shadow-md p-6 mt-6">
-            <h2 className="text-2xl font-semibold mb-2">Recent Appraisal</h2>
-            <div className="space-y-1">
+        {/* ✅ Recent Appraisal Section */}
+        <div className="bg-primary-dark rounded-xl shadow-md p-6 mt-6">
+          <h2 className="text-2xl font-semibold mb-2">Latest Appraisal</h2>
+
+          {recentAppraisal ? (
+            <div className="space-y-1 text-black capitalize">
               <p>
                 <span className="font-semibold text-accent">Title:</span>{" "}
-                {recentAppraisal.title}
+                {recentAppraisal.title || "_"}
               </p>
               <p>
                 <span className="font-semibold text-accent">Type:</span>{" "}
-                {recentAppraisal.type}
+                {recentAppraisal.type || "_"}
               </p>
               <p>
                 <span className="font-semibold text-accent">Stage:</span>{" "}
@@ -76,35 +83,53 @@ const Dashboard = () => {
                       : "bg-yellow-200 text-yellow-800"
                   }`}
                 >
-                  {recentAppraisal.stage}
+                  {recentAppraisal.stage || "_"}
                 </span>
               </p>
               <p>
                 <span className="font-semibold text-accent">Duration:</span>{" "}
-                {recentAppraisal.startDate} → {recentAppraisal.endDate}
+                {recentAppraisal.startDate || "_"} → {recentAppraisal.endDate || "_"}
               </p>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center py-8">
+              <p className="text-gray-600 text-lg mb-4">
+                No recent or ongoing appraisals found.
+              </p>
+              <button
+                onClick={() => navigate("/forms")}
+                className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-5 py-2 rounded-lg font-semibold transition-all duration-300"
+              >
+                <FaPlusCircle /> Start Your First Appraisal
+              </button>
+            </div>
+          )}
+        </div>
 
-        {/* Summary Cards */}
-        <SummaryCards />
+        {/* Summary Cards (shows underscore placeholders) */}
+        <SummaryCards/>
 
         {/* Charts Section */}
         <div className="flex flex-row justify-between bg-primary-dark p-6 rounded-xl mt-6 space-x-4">
           <ReviewCompletionChart
             title="Self Reviews Completion"
-            completionValue={(selfReviewsCompleted/totalEmployees) * 100 || 0}
+            completionValue={
+              totalEmployees > 0
+                ? (selfReviewsCompleted / totalEmployees) * 100
+                : 0
+            }
           />
           <ReviewCompletionChart
             title="Reporting Reviews Completion"
-            completionValue={(reportingReviewsCompleted/totalReportingReviewsToDo) * 100 || 0}
+            completionValue={
+              totalReportingReviewsToDo > 0
+                ? (reportingReviewsCompleted / totalReportingReviewsToDo) * 100
+                : 0
+            }
           />
         </div>
 
-
         {/* Additional Sections */}
-        {/* <RecentActivity /> */}
         <QuickActions />
       </div>
 

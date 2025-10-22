@@ -82,8 +82,8 @@ const Login = () => {
 
       {/* Right Side - Login/Register */}
       <div className="col-span-2 bg-[#ffefd3] flex justify-center items-center flex-col">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4 mt-6 text-center">
-          Performance Appraisal Portal
+        <h1 className="text-2xl font-bold text-gray-800 mb-4 mt-6 text-center w-[400px]">
+          CIT's Internal Performance Appraisal Portal
         </h1>
 
         <form onSubmit={handleLogin} className="w-[300px]">
@@ -120,12 +120,22 @@ const Login = () => {
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 mt-8 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
+            className="w-full bg-accent text-white py-2 mt-8 px-4 rounded-lg hover:bg-accent-dark transition duration-200"
             disabled={loading}
           >
             {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
+        {/* Login Redirect */}
+        <p className="text-sm text-gray-600 mt-6">
+          Don't have an account?{" "}
+          <button
+            onClick={() => navigate("/sign-up")}
+            className="text-blue-600 hover:underline"
+          >
+            Sign Up
+          </button>
+        </p>
       </div>
     </div>
   );

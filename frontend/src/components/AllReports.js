@@ -62,10 +62,10 @@ const AllReports = () => {
   }
 
   return (
-    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-28">
+    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-24">
       {/* Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold mb-2">Appraisal Reports</h1>
+        <h1 className="text-black text-2xl font-bold mb-0 mt-0">Closed Appraisals</h1>
         <p className="text-gray-700">
           View and access detailed reports of completed appraisal cycles.
         </p>

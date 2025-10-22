@@ -80,7 +80,7 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
               <p className="text-gray-600">Employee ID: <span className="font-medium">{employee.employeeId}</span></p>
               <p className="text-gray-600">Email: <span className="font-medium">{employee.email}</span></p>
               <p className="text-gray-600">Designation: <span className="font-medium">{employee.designation || "Not specified"}</span></p>
-              <p className="text-gray-600">Reporting to: <span className="font-medium">{employee.managerId || "Not specified"}</span></p>
+              <p className="text-gray-600">Reporting to: <span className="font-medium">{employee.managerId || "Not anyone"}</span></p>
             </div>
           </div>
 
@@ -97,7 +97,7 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
               <p className="col-span-2"><strong>Address:</strong> {employee.address||"N/A"}</p>
             </div>
             <p className="text-sm text-gray-500 italic mt-3">
-              Personal details can be edited only by the account holder.
+              Profile image and personal details can be edited only by the account holder.
             </p>
           </div>
         </div>

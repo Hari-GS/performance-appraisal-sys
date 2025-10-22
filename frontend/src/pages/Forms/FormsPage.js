@@ -31,7 +31,7 @@ const FormsPage = () => {
                 </Routes>
 			</div>
 		</div>
-		<Navbar title="Forms"/>
+		<Navbar title="New Appraisal"/>
     </div>
     
   );

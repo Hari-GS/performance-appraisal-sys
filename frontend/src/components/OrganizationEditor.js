@@ -56,9 +56,9 @@ export default function OrganizationEditor() {
         onEdgesChange={onEdgesChange}
         fitView
       >
-        <MiniMap />
-        <Controls />
-        <Background />
+        {/* <MiniMap />
+        <Controls /> */}
+        {/* <Background /> */}
       </ReactFlow>
     </div>
   );

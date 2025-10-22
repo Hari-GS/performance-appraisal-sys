@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaSpinner, FaCheckCircle } from "react-icons/fa";
+import { FaSpinner, FaCheckCircle, FaArrowLeft, FaArrowRight, FaInfoCircle  } from "react-icons/fa";
 import { request } from "../helpers/axios_helpers";
+import { toast } from 'react-toastify';
 
 const QUESTIONS_PER_PAGE = 5;
 
@@ -79,11 +80,10 @@ const SelfAppraisal = ({ currentAppraisal }) => {
         `/api/self-appraisal/${appraisalId}/submit`,
         answersArray
       );
-
-      alert("Appraisal submitted successfully!");
+      toast.success("Your answers saved successfully!")
       navigate(`/employee/appraisal/${appraisalId}`, { state: { appraisal } });
     } catch (err) {
-      alert("Failed to submit appraisal.");
+      toast.error("Unexpected error: could'nt save answers")
     } finally {
       setSubmitting(false);
     }
@@ -107,9 +107,18 @@ const SelfAppraisal = ({ currentAppraisal }) => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-4xl p-4 mt-14 relative">
-      <h2 className="text-xl font-bold mb-4">Self Appraisal</h2>
-
+    <div className="relative max-w-4xl p-4 mt-20">
+      <h2 className="text-xl font-bold mb-4">Self Appraisal Questions For You</h2>
+      {/* Info Note */}
+      {
+        currentPage==1 ?
+        (<div className="mb-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-md text-sm flex items-center gap-2">
+          <FaInfoCircle className="text-yellow-600" />
+          <span>
+            Saving with blank text fields will be treated as no answers. You can exit the appraisal and come back later to complete it.
+          </span>
+        </div>):""
+      }
       {paginatedQuestions.map((q, index) => {
         const isAnswered =
           q.showPoints === true
@@ -164,34 +173,39 @@ const SelfAppraisal = ({ currentAppraisal }) => {
       })}
 
       {/* Pagination + Save */}
-      <div className="sticky bottom-0 bg-white p-3 border-t flex justify-between items-center">
-        <button
-          type="button"
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-4 py-2 border rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <p className="text-sm text-gray-600">
-          Page {currentPage} of {totalPages}
-        </p>
+      <div className=" sticky bottom-0 bg-white p-4 border-t flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+        
+        {/* Pagination */}
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium text-base rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 disabled:opacity-50"
+          >
+            <FaArrowLeft/> Previous
+          </button>
+          <p className="text-sm text-gray-700">
+            Page <span className="font-semibold">{currentPage}</span> of <span className="font-semibold">{totalPages}</span>
+          </p>
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium text-base rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 disabled:opacity-50"
+            
+          >
+            Next <FaArrowRight/>
+          </button>
+        </div>
 
+        {/* Save Button */}
         <button
-          type="button"
-          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 border rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-
-        <button
-          className="bg-accent text-white px-4 py-2 rounded-lg flex items-center justify-center"
+          className="flex items-center justify-center gap-2 px-6 py-2 bg-accent text-white font-semibold rounded-xl shadow hover:bg-accent-dark transition-all duration-300"
           disabled={submitting}
           onClick={() => handleSubmit(appraisal)}
         >
-          {submitting && <FaSpinner className="animate-spin mr-2" />}
+          {submitting && <FaSpinner className="animate-spin" />}
           {submitting ? "Saving..." : "Save"}
         </button>
       </div>

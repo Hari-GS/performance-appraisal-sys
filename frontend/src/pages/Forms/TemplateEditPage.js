@@ -193,7 +193,7 @@ const TemplateEditPage = () => {
                                 saveAll();
                               }}
                             />
-                            Show Points
+                            Numerical Rating Question
                           </label>
                           <button
                             onClick={() => removeQuestion(idx)}
@@ -240,7 +240,7 @@ const TemplateEditPage = () => {
                       saveAll();
                     }}
                   />
-                  Show Points
+                  Numerical Rating Question
                 </label>
                 <button
                   onClick={() => removeQuestion(idx)}

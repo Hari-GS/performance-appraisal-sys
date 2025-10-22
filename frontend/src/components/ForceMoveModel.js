@@ -7,7 +7,7 @@ function ForceMoveModel({handleForceMove, stageDisplayMap, appraisal, stageOrder
 
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
         <div className="bg-white text-black p-6 rounded-xl shadow-2xl w-full max-w-lg">
           <h2 className="text-xl font-bold mb-4 text-red-600">Are you sure?</h2>
           <p className="mb-3">

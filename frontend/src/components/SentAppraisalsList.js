@@ -22,7 +22,7 @@ const SentAppraisalsList = () => {
 
   return (
     <div className="p-6 min-h-screen">
-      <h1 className="text-black text-2xl font-bold mb-6 mt-16">Sent Appraisals</h1>
+      <h1 className="text-black text-2xl font-bold mb-6 mt-16">Active Appraisals</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {appraisals.map((appraisal) => (
@@ -59,7 +59,7 @@ const SentAppraisalsList = () => {
       </div>
 
       {appraisals.length === 0 && (
-        <p className="text-black text-center mt-10">No appraisals found.</p>
+        <p className="text-black text-center mt-10">No active appraisals found. View reports tab for closed ones</p>
       )}
     </div>
   );

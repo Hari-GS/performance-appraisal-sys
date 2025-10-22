@@ -15,7 +15,7 @@ function AppraisalReports() {
                     <AllReports/>
                 </div>
             </div>
-            <Navbar title="Appraisal Reports"/>
+            <Navbar title="Reports"/>
         </div>
     )
 }

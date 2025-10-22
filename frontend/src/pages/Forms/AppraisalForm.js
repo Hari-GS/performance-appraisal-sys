@@ -24,7 +24,7 @@ const AppraisalForm = () => {
               <span className="font-semibold text-black text-xl">Start New Appraisal</span>
               <p className="text-sm text-gray-600 mt-1">Launch a performance review</p>
             </div>
-            <FaArrowRight className="text-orange-500 text-2xl group-hover:translate-x-1 transition-transform" />
+            <FaArrowRight className="text-accent text-2xl group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
 
@@ -40,7 +40,7 @@ const AppraisalForm = () => {
               <span className="font-semibold text-black text-xl">Templates</span>
               <p className="text-sm text-gray-600 mt-1">Use or modify saved questions</p>
             </div>
-            <FaFileAlt className="text-orange-500 text-2xl group-hover:rotate-[8deg] transition-transform" />
+            <FaFileAlt className="text-accent text-2xl group-hover:rotate-[8deg] transition-transform" />
           </div>
         </div>
       </div>

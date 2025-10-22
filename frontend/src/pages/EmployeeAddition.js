@@ -11,7 +11,7 @@ function EmployeeAddition() {
             
             {/* Main Content */}
             <div className="flex flex-col flex-grow pl-72 p-6 pt-20 bg-gray-100">
-                <Navbar title="Employees"/>
+                <Navbar title="Participants"/>
                 <AddEmployee/>
             </div>
         </div>
