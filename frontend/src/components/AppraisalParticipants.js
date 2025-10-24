@@ -42,10 +42,10 @@ const AppraisalParticipants = () => {
   };
 
   return (
-    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-28">
+    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-24">
       {/* Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold mb-2">Appraisal Participants</h1>
+        <h1 className="text-2xl font-bold mb-0 mt-0">Appraisal Participants</h1>
         <p className="text-gray-700">
           List of all employees participating in this appraisal cycle.
         </p>
@@ -94,7 +94,7 @@ const AppraisalParticipants = () => {
               </div>
               <div className="flex items-center">
                 <AiOutlineCheckCircle className="text-accent mr-2" />
-                <span className="font-semibold text-sm mr-2">Manager Review:</span>
+                <span className="font-semibold text-sm mr-2">Reporting Manager Review:</span>
                 {renderStatusBadge(p.reviewAppraisalStatus)}
               </div>
             </div>

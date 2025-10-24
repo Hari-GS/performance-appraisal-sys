@@ -15,7 +15,7 @@ function AppraisalParticipantsPage() {
                     <AppraisalParticipants/>
                 </div>
             </div>
-            <Navbar title="Appraisal Participants"/>
+            <Navbar title="Reports"/>
         </div>
     )
 }

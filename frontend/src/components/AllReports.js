@@ -79,9 +79,9 @@ const AllReports = () => {
             className="bg-primary-dark rounded-2xl shadow-lg p-6 transition-transform transform hover:scale-[1.02] hover:shadow-xl"
           >
             {/* Title */}
-            <h2 className="text-xl font-semibold mb-3 flex items-center">
+            <h2 className="text-xl font-semibold mb-3 flex items-center capitalize">
               <AiOutlineFileText className="text-accent mr-2" />
-              {appraisal.title}
+              {appraisal.title} - {appraisal.type}
             </h2>
 
             {/* Dates */}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { request } from "../helpers/axios_helpers";
 import { AiOutlineUser, AiOutlineIdcard } from "react-icons/ai";
+import { FiDownload } from "react-icons/fi";
 
 const ParticipantReport = () => {
   const { participantId } = useParams();
@@ -58,39 +59,6 @@ const ParticipantReport = () => {
     }
   };
   
-  const handleDownload = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/reporting/participant/${participantId}/download-styled`,
-        {
-          responseType: "blob", // 👈 very important
-        }
-      );
-
-      // Create blob link to download
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-
-      // Optional: use backend filename header if present
-      const contentDisposition = response.headers["content-disposition"];
-      let fileName = "AppraisalReport.pdf";
-      if (contentDisposition) {
-        const match = contentDisposition.match(/filename="?(.+)"?/);
-        if (match && match[1]) fileName = match[1];
-      }
-
-      link.setAttribute("download", fileName);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
-
   if (loading)
     return <p className="text-center text-black mt-10">Loading report...</p>;
 
@@ -120,7 +88,7 @@ const ParticipantReport = () => {
 
         <p className="text-sm flex items-center mb-1">
           <AiOutlineIdcard className="mr-2 text-accent" />
-          Appraisal Title: {report.appraisalTitle}
+          Appraisal Title: {report.appraisalTitle} - {report.appraisalType}
         </p>
 
         <p className="text-sm flex items-center">
@@ -129,13 +97,25 @@ const ParticipantReport = () => {
         </p>
       </div>
       <div className="flex justify-end">
+      
       <button
         onClick={downloadPdf}
-        className="bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark mb-6"
+        className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark transition mb-6"
         disabled={loadingPdf}
       >
-        {loadingPdf ? "Downloading..." : "Download as PDF"}
+        {loadingPdf ? (
+          <>
+            <FiDownload className="animate-bounce" size={18} />
+            Downloading...
+          </>
+        ) : (
+          <>
+            <FiDownload size={18} />
+            Download as PDF
+          </>
+        )}
       </button>
+      
       </div>
 
       {/* Question & Answers Section */}

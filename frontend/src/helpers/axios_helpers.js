@@ -33,7 +33,7 @@ export const logout = () => {
 
 // Default Axios config
 // axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.baseURL = 'http://18.141.93.210:8080';
+axios.defaults.baseURL = 'http://18.141.93.210:8082';
 
 export const request = (method, url, data, customConfig = {}) => {
   const token = getAuthToken();
