@@ -83,7 +83,7 @@ const ParticipantReport = () => {
 
         <p className="text-sm flex items-center mb-1">
           <AiOutlineIdcard className="mr-2 text-accent" />
-          Manager: {report.managerName}
+          Reporting Manager: {report.managerName}
         </p>
 
         <p className="text-sm flex items-center mb-1">
@@ -91,10 +91,6 @@ const ParticipantReport = () => {
           Appraisal Title: {report.appraisalTitle} - {report.appraisalType}
         </p>
 
-        <p className="text-sm flex items-center">
-          <AiOutlineIdcard className="mr-2 text-accent" />
-          Stage: {report.appraisalStage}
-        </p>
       </div>
       <div className="flex justify-end">
       

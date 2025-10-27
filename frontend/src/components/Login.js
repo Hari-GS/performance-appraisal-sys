@@ -83,7 +83,7 @@ const Login = () => {
       {/* Right Side - Login/Register */}
       <div className="col-span-2 bg-[#ffefd3] flex justify-center items-center flex-col">
         <h1 className="text-2xl font-bold text-gray-800 mb-4 mt-6 text-center w-[400px]">
-          CIT's Internal Performance Appraisal Portal
+          CIT's Performance Appraisal Portal
         </h1>
 
         <form onSubmit={handleLogin} className="w-[300px]">

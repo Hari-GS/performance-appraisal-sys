@@ -4,10 +4,12 @@ import stsHomeImage from "../images/StsHomeImage.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { request } from "../helpers/axios_helpers";
+import { FaSpinner } from "react-icons/fa";
+
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("participant"); // "hr" | "participant"
+  const [activeTab, setActiveTab] = useState("hr"); // "hr" | "participant"
 
   // HR signup fields
   const [hrData, setHrData] = useState({
@@ -19,11 +21,12 @@ const Signup = () => {
   });
 
   // Participant signup fields
-  const [participantData, setParticipantData] = useState({
-    employeeId: "",
-    email: "",
-    newPassword: "",
-    confirmPassword: "",
+  const [organizationData, setOrganizationData] = useState({
+    organizationName: "",
+    companyEmail: "",
+    industryType: "",
+    contactEmail: "",
+    password: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -33,9 +36,9 @@ const Signup = () => {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
   const validateHr = () => {
-    const { name, email, password, confirmPassword, organizationPublicId } =
+    const { name, email, password, confirmPassword, organizationId } =
       hrData;
-    if (!name || !email || !password || !confirmPassword || !organizationPublicId)
+    if (!name || !email || !password || !confirmPassword || !organizationId)
       return toast.error("All fields are required!");
     if (!isValidEmail(email)) return toast.error("Enter a valid email address!");
     if (password.length < 6)
@@ -45,14 +48,15 @@ const Signup = () => {
     return true;
   };
 
-  const validateParticipant = () => {
-    const { employeeId, email, newPassword, confirmPassword } = participantData;
-    if (!employeeId || !email || !newPassword || !confirmPassword)
+  const validateOrganization = () => {
+    const { organizationName, companyEmail, industryType, contactEmail, password, confirmPassword } = organizationData;
+    if (!organizationName || !companyEmail || !industryType || !contactEmail || !password || !confirmPassword)
       return toast.error("All fields are required!");
-    if (!isValidEmail(email)) return toast.error("Enter a valid email address!");
-    if (newPassword.length < 6)
+    if (!isValidEmail(companyEmail)) return toast.error("Enter a valid Official Company Email!");
+    if (!isValidEmail(contactEmail)) return toast.error("Enter a valid contact email!");
+    if (password.length < 6)
       return toast.error("Password must be at least 6 characters!");
-    if (newPassword !== confirmPassword)
+    if (password !== confirmPassword)
       return toast.error("Passwords do not match!");
     return true;
   };
@@ -67,7 +71,7 @@ const Signup = () => {
       const response = await request("POST", "/auth/hr/register", hrData);
       if (response.status === 200 || response.status === 201) {
         toast.success("HR account created successfully!");
-        setTimeout(() => navigate("/"), 1000);
+        navigate("/")
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Signup failed!");
@@ -76,16 +80,16 @@ const Signup = () => {
     }
   };
 
-  const handleParticipantSignup = async (e) => {
+  const handleOrganizationSignup = async (e) => {
     e.preventDefault();
-    if (!validateParticipant()) return;
+    if (!validateOrganization()) return;
     setLoading(true);
 
     try {
-      const response = await request("POST", "auth/employee/set-password", participantData);
+      const response = await request("POST", "/auth/organization", organizationData);
       if (response.status === 200 || response.status === 201) {
-        toast.success("Participant account created successfully!");
-        setTimeout(() => navigate("/"), 1000);
+        toast.success("Verification Email Sent! Please Check");
+        navigate("/")
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Signup failed!");
@@ -125,14 +129,14 @@ const Signup = () => {
             HR
           </button>
           <button
-            onClick={() => setActiveTab("participant")}
+            onClick={() => setActiveTab("organization")}
             className={`px-6 py-2 font-medium rounded-full transition-all duration-300 ${
-              activeTab === "participant"
+              activeTab === "organization"
                 ? "bg-accent text-white"
                 : "text-gray-600 hover:bg-gray-100"
             }`}
           >
-            Participant
+            Organization
           </button>
         </div>
 
@@ -188,12 +192,12 @@ const Signup = () => {
             />
             <input
               type="text"
-              placeholder="Organization Public ID"
-              value={hrData.organizationPublicId}
+              placeholder="Organization ID"
+              value={hrData.organizationId}
               onChange={(e) =>
                 setHrData((prev) => ({
                   ...prev,
-                  organizationPublicId: e.target.value,
+                  organizationId: e.target.value,
                 }))
               }
               className="w-full mt-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -210,47 +214,84 @@ const Signup = () => {
           </form>
         )}
 
-        {/* Participant Signup Form */}
-        {activeTab === "participant" && (
+        {/* Organization Signup Form */}
+        {activeTab === "organization" && (
           <form
-            onSubmit={handleParticipantSignup}
+            onSubmit={handleOrganizationSignup}
             className="w-[300px] animate-fadeIn"
             autoComplete="off"
           >
             <input
               type="text"
-              placeholder="Employee ID"
-              value={participantData.employeeId}
+              placeholder="Organization Name"
+              value={organizationData.organizationName}
               onChange={(e) =>
-                setParticipantData((prev) => ({
+                setOrganizationData((prev) => ({
                   ...prev,
-                  employeeId: e.target.value,
+                  organizationName: e.target.value,
                 }))
               }
               className="w-full mt-2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               required
             />
             <input
-              type="email"
-              placeholder="Email"
-              value={participantData.email}
+              type="text"
+              placeholder="Official Company Email"
+              value={organizationData.companyEmail}
               onChange={(e) =>
-                setParticipantData((prev) => ({
+                setOrganizationData((prev) => ({
                   ...prev,
-                  email: e.target.value,
+                  companyEmail: e.target.value,
                 }))
               }
               className="w-full mt-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               required
             />
             <input
-              type="password"
-              placeholder="Set Password"
-              value={participantData.newPassword}
+              type="text"
+              placeholder="Contact Email (for notifications)"
+              value={organizationData.contactEmail}
               onChange={(e) =>
-                setParticipantData((prev) => ({
+                setOrganizationData((prev) => ({
                   ...prev,
-                  newPassword: e.target.value,
+                  contactEmail: e.target.value,
+                }))
+              }
+              className="w-full mt-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            
+            {/* Industry Type Dropdown */}
+            <select
+              value={organizationData.industryType}
+              onChange={(e) =>
+                setOrganizationData((prev) => ({ ...prev, industryType: e.target.value }))
+              }
+              className="w-full mt-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            >
+              <option value="" disabled>
+                Select Industry Type
+              </option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Finance">Finance</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Education">Education</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Retail">Retail</option>
+              <option value="Telecommunications">Telecommunications</option>
+              <option value="Energy">Energy</option>
+              <option value="others">others</option>
+            </select>
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={organizationData.password}
+              onChange={(e) =>
+                setOrganizationData((prev) => ({
+                  ...prev,
+                  password: e.target.value,
                 }))
               }
               className="w-full mt-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -259,9 +300,9 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Confirm Password"
-              value={participantData.confirmPassword}
+              value={organizationData.confirmPassword}
               onChange={(e) =>
-                setParticipantData((prev) => ({
+                setOrganizationData((prev) => ({
                   ...prev,
                   confirmPassword: e.target.value,
                 }))
@@ -269,13 +310,21 @@ const Signup = () => {
               className="w-full mt-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               required
             />
-
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-accent text-white py-2 mt-8 rounded-lg hover:bg-accent-dark transition"
+              className={`w-full flex items-center justify-center gap-2 bg-accent text-white py-2 mt-8 rounded-lg hover:bg-accent-dark transition ${
+                loading ? "opacity-80 cursor-not-allowed" : ""
+              }`}
             >
-              {loading ? "Signing up..." : "Sign Up"}
+              {loading ? (
+                <>
+                  <FaSpinner className="animate-spin text-lg" />
+                  Signing up...
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </form>
         )}

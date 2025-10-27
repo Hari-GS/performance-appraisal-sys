@@ -33,6 +33,7 @@ import ParticipantReportPage from './pages/ParticipantReportPage';
 import Signup from './pages/SignUp';
 import ClosedAppraisalsPage from './pages/ClosedAppraisalsPage';
 import ScrollToTop from './components/ScrollToTop';
+import ParticipantSignup from './pages/ParticipantSignup';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path='/signup-participant' element={<ParticipantSignup/>} />
           <Route
             path="/hr-dashboard"
             element={

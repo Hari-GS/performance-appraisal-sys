@@ -219,7 +219,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
       <ConfirmDialog
         isOpen={isDialogOpen}
         title={isEdit ? "Confirm the edit" : "Send Invitation?"}
-        message={isEdit ? "Are you sure you want to edit this participant's detail?" : "This will send an email to the participant with a link to create their access account and join the performance appraisal portal."}
+        message={isEdit ? "Are you sure you want to edit this participant's detail?" : "This will send an email to the participant with a invite link to create their access account and join the performance appraisal portal."}
         onConfirm={handleConfirmSubmit}
         onCancel={() => setIsDialogOpen(false)}
       />
