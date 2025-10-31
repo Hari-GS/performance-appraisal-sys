@@ -23,6 +23,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
     designation: "",
     email: "",
     managerId: "",  // <-- New field
+    isDirector:false
   });
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
         designation: employee.designation || "",
         email: employee.email || "",
         managerId: employee.managerId || "",  // Assuming managerId is sent
+        isDirector: employee.isDirector || false
       });
     }
   }, [employee]);
@@ -169,6 +171,29 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
             )}
           </div>
         ))}
+
+        {/* Director Checkbox */}
+        <div className="mt-0 space-y-5">
+          <label className="block text-gray-700 font-medium mb-2">
+            Director Status
+          </label>
+          <div className="flex items-center space-x-3 ">
+            <input
+              type="checkbox"
+              name="isDirector"
+              checked={formData.isDirector || false}
+              onChange={(e) =>
+                setFormData({ ...formData, isDirector: e.target.checked })
+              }
+              className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+            />
+            <span className="text-gray-800">He/She is a Director</span>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Select this option if the employee holds a director-level role, where he/she can able to see all people's live status and reports of the appraisal
+          </p>
+        </div>
+
 
         {/* Reporting Manager Dropdown */}
         <div>

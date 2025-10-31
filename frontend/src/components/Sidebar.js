@@ -23,7 +23,7 @@ const Sidebar = () => {
     // { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
     { name: "New Appraisal", icon: <FaFolder />, path: "/forms", roles: ["hr"] },
     { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr"] },
-    { name: "Active Appraisals", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee"]},
+    { name: "Active Appraisals", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee","hr"]},
     { name: "Reports", icon: <FaWpforms/>, path: "/reports", roles:["hr"]},
     { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles:["employee"]},
     // { name: "My Appraisals", icon: <FaCommentDots />, path: "/employee-appraisals", roles: ["employee"] },

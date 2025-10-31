@@ -4,7 +4,7 @@ import profilePlaceholder from '../images/profile-placeholder.jpg';
 import { FaTimes } from "react-icons/fa";
 import { request } from "../helpers/axios_helpers";
 
-const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
+const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted, reloadInactive }) => {
   const navigate = useNavigate();
   const [employee, setEmployee] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -15,9 +15,9 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
       try {
         const response = await request("get", `/api/new-employees/${employeeId}`);
         setEmployee(response.data);
+        
       } catch (error) {
         console.error("Error fetching employee:", error);
-        alert("Failed to fetch employee details.");
       } 
     };
 
@@ -32,11 +32,10 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
     setLoading(true);
     try {
       await request("delete", `/api/new-employees/${employeeId}`);
-      onEmployeeDeleted();  // refresh parent list
       onClose(); // Close the modal or trigger list refresh from parent
+      reloadInactive();
     } catch (error) {
-      console.error("Error deleting employee:", error);
-      alert("Failed to delete employee.");
+      console.error("Error deactivating employee:", error);
     } finally {
       setLoading(false);
       setShowConfirm(false);
@@ -114,7 +113,7 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
             onClick={() => setShowConfirm(true)}
             className="bg-red-500 text-white px-6 py-2 font-semibold rounded-3xl hover:bg-red-600"
           >
-            Delete
+            Deactivate
           </button>
         </div>
 
@@ -122,9 +121,9 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
         {showConfirm && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-3xl shadow-lg p-6 w-80">
-              <h3 className="text-lg font-semibold mb-4">Confirm Deletion</h3>
+              <h3 className="text-lg font-semibold mb-4">Confirm Deactivation</h3>
               <p className="text-sm text-gray-600 mb-6">
-                Are you sure you want to delete this employee?
+                Are you sure you want to deactivate this employee?
               </p>
               <div className="flex justify-end gap-4">
                 <button
@@ -139,7 +138,7 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted }) => {
                   className="px-4 py-2 bg-red-500 text-white rounded-3xl hover:bg-red-600"
                   disabled={loading}
                 >
-                  {loading ? "Deleting..." : "Delete"}
+                  {loading ? "Deactivating..." : "Deactivate"}
                 </button>
               </div>
             </div>

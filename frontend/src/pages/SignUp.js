@@ -15,6 +15,7 @@ const Signup = () => {
   const [hrData, setHrData] = useState({
     name: "",
     email: "",
+    employeeId:"",
     password: "",
     confirmPassword: "",
     organizationPublicId: "",
@@ -36,9 +37,9 @@ const Signup = () => {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
   const validateHr = () => {
-    const { name, email, password, confirmPassword, organizationId } =
+    const { name, email, password, confirmPassword, organizationId, employeeId } =
       hrData;
-    if (!name || !email || !password || !confirmPassword || !organizationId)
+    if (!name || !email || !password || !confirmPassword || !organizationId || !employeeId)
       return toast.error("All fields are required!");
     if (!isValidEmail(email)) return toast.error("Enter a valid email address!");
     if (password.length < 6)
@@ -153,6 +154,16 @@ const Signup = () => {
               value={hrData.name}
               onChange={(e) =>
                 setHrData((prev) => ({ ...prev, name: e.target.value }))
+              }
+              className="w-full mt-2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Employee ID"
+              value={hrData.employeeId}
+              onChange={(e) =>
+                setHrData((prev) => ({ ...prev, employeeId: e.target.value }))
               }
               className="w-full mt-2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               required

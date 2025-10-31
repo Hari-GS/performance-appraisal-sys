@@ -11,7 +11,7 @@ const SearchBar = ({ onSearch, placeholder }) => {
   };
 
   return (
-    <div className="flex items-center bg-orange-100 p-2 rounded-3xl w-[400px] max-w-md mt-8" style={{ boxShadow: "inset 2px 2px 6px rgba(0, 0, 0, 0.1)" }}>
+    <div className="flex items-center bg-orange-100 p-2 rounded-3xl w-[400px] max-w-md mt-6" style={{ boxShadow: "inset 2px 2px 6px rgba(0, 0, 0, 0.1)" }}>
       <FaSearch className="ml-2 text-gray-500" size={18} />
       <input
         type="text"
