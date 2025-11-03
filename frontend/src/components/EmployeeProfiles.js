@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ActiveEmployees from "./ActiveEmployees";
 import InactiveEmployees from "./InactiveEmployees";
 import { toast } from "react-toastify";
+import ProtectedView from "./ProtectedView";
 
 const EmployeeProfiles = () => {
   const [employees, setEmployees] = useState([]);
@@ -97,13 +98,15 @@ const EmployeeProfiles = () => {
             <FaSitemap size={18} />
             View Hierarchy
           </button>
-          <button
-            className="flex items-center gap-2 text-white hover:bg-accent-dark px-4 py-2 rounded-3xl bg-accent transition mt-1"
-            onClick={() => navigate("/addEmployee", { state: { employees } })}
-          >
-            <FiUserPlus size={18} />
-            Add
-          </button>
+          <ProtectedView allowedRoles={["hr"]}>
+            <button
+              className="flex items-center gap-2 text-white hover:bg-accent-dark px-4 py-2 rounded-3xl bg-accent transition mt-1"
+              onClick={() => navigate("/addEmployee", { state: { employees } })}
+            >
+              <FiUserPlus size={18} />
+              Add
+            </button>
+          </ProtectedView>
         </div>
       </div>
       {/* Employees Section */}

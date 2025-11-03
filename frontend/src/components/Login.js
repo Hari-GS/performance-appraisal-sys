@@ -34,11 +34,11 @@ const Login = () => {
         // ✅ Navigate based on role
         if (role === "hr") {
           navigate("/hr-dashboard");
-        } else if (role === "employee") {
+        } else if (role === "employee" || "director") {
           navigate("/employee-dashboard");
         } else {
           console.log("Invalid token role");
-          navigate("/login");
+          navigate("/");
         }
       } catch (err) {
         console.error("Post-login error:", err);

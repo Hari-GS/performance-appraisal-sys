@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import profilePlaceholder from '../images/profile-placeholder.jpg';
 import { FaTimes } from "react-icons/fa";
 import { request } from "../helpers/axios_helpers";
+import { useAuth } from "../context/AuthContext";
+import ProtectedView from "./ProtectedView";
 
 const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted, reloadInactive }) => {
   const navigate = useNavigate();
   const [employee, setEmployee] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth(); 
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -100,22 +103,24 @@ const ProfileCard = ({ employeeId, onClose, onEmployeeDeleted, reloadInactive })
             </p>
           </div>
         </div>
-
+        
         {/* Footer Buttons */}
-        <div className="flex justify-end gap-4 px-10 py-4 border-t">
-          <button
-            onClick={handleEdit}
-            className="bg-accent text-white px-6 py-2 font-semibold rounded-3xl hover:bg-accent-dark"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => setShowConfirm(true)}
-            className="bg-red-500 text-white px-6 py-2 font-semibold rounded-3xl hover:bg-red-600"
-          >
-            Deactivate
-          </button>
-        </div>
+        <ProtectedView allowedRoles={["hr"]}>
+          <div className="flex justify-end gap-4 px-10 py-4 border-t">
+            <button
+              onClick={handleEdit}
+              className="bg-accent text-white px-6 py-2 font-semibold rounded-3xl hover:bg-accent-dark"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => setShowConfirm(true)}
+              className="bg-red-500 text-white px-6 py-2 font-semibold rounded-3xl hover:bg-red-600"
+            >
+              Deactivate
+            </button>
+          </div>
+        </ProtectedView>
 
         {/* Confirm Deletion Modal */}
         {showConfirm && (

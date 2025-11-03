@@ -18,14 +18,14 @@ const Sidebar = () => {
   if (!user) return null;
 
   const menuItems = [
-    { name: "Dashboard", icon: <FaTachometerAlt />, path: user.role === 'employee' ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee"] },
-    { name: "Participants", icon: <FaUsers />, path: "/employees", roles: ["hr"] },
+    { name: "Dashboard", icon: <FaTachometerAlt />, path: user.role === 'employee' || 'director' ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee","director"] },
+    { name: "Participants", icon: <FaUsers />, path: "/employees", roles: ["hr","director"] },
     // { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
     { name: "New Appraisal", icon: <FaFolder />, path: "/forms", roles: ["hr"] },
-    { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr"] },
-    { name: "Active Appraisals", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee","hr"]},
-    { name: "Reports", icon: <FaWpforms/>, path: "/reports", roles:["hr"]},
-    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles:["employee"]},
+    { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr","director"] },
+    { name: "Active Appraisals", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee","hr","director"]},
+    { name: "Reports", icon: <FaWpforms/>, path: "/reports", roles:["hr","director"]},
+    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles:["employee","director"]},
     // { name: "My Appraisals", icon: <FaCommentDots />, path: "/employee-appraisals", roles: ["employee"] },
   ];
 

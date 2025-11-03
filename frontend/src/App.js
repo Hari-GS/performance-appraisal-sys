@@ -34,6 +34,7 @@ import Signup from './pages/SignUp';
 import ClosedAppraisalsPage from './pages/ClosedAppraisalsPage';
 import ScrollToTop from './components/ScrollToTop';
 import ParticipantSignup from './pages/ParticipantSignup';
+import TopHeader from './components/TopHeader';
 
 function App() {
   return (
@@ -194,6 +195,10 @@ function App() {
                 <ClosedAppraisalsPage/>
               </ProtectedRoute>
             }
+          />
+          <Route
+            path='/test'
+            element={<TopHeader/>}
           />
         </Routes>
         {/* ✅ Toast container for global toast access */}
