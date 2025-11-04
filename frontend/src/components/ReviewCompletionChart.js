@@ -1,62 +1,78 @@
 import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 
-export default function ReviewCompletionChart({ title, completionValue }) {
+export default function ReviewCompletionChart({
+  title,
+  totalEmployees,
+  completionValue,
+}) {
   const hasValidData =
     typeof completionValue === "number" &&
     !isNaN(completionValue) &&
     completionValue > 0;
 
-  // Only build data if valid
-  const completionData = hasValidData
+  // Prevent invalid data
+  const inProgress = hasValidData ? completionValue : 0;
+  const completed = hasValidData ? 100 - completionValue : 0;
+
+  const data = hasValidData
     ? [
-        { name: "Completion", value: completionValue, color: "#007AFF" },
-        { name: "Pending", value: 100 - completionValue, color: "#FF3B30" },
+        { name: "In progress", value: inProgress, color: "#FF6B6B" },
+        { name: "Completed", value: completed, color: "#00FF66" },
       ]
     : [];
 
   return (
-    <div
-      className={`bg-white p-4 shadow-md text-center rounded-xl w-full ${
-        !hasValidData ? "opacity-50 pointer-events-none" : ""
-      }`}
-    >
-      <h3 className="font-semibold mb-2">{title}</h3>
+    <div className="bg-white border border-gray-200 shadow-sm p-6 w-[640px] h-[380px]">
+      {/* Title */}
+      <h2 className="text-lg font-semibold text-gray-900 mb-2">{title}</h2>
 
       {hasValidData ? (
         <>
-          <ResponsiveContainer width="100%" height={350}>
-            <PieChart>
+          {/* Semi-Circle Chart */}
+          <div className="relative flex justify-center items-center mt-10">
+            <PieChart width={350} height={180}>
               <Pie
-                data={completionData}
-                dataKey="value"
+                data={data}
                 cx="50%"
-                cy="50%"
-                innerRadius={20}
-                outerRadius={120}
-                paddingAngle={2}
-                label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                cy="100%"
+                startAngle={180}
+                endAngle={0}
+                innerRadius={120}
+                outerRadius={160}
+                dataKey="value"
                 stroke="none"
               >
-                {completionData.map((entry, index) => (
+                {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
             </PieChart>
-          </ResponsiveContainer>
 
-          <div className="flex justify-center gap-4 mt-4 text-sm">
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 bg-[#007AFF] rounded-full"></span>{" "}
-              Completion
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 bg-red-500 rounded-full"></span> Pending
-            </span>
+            {/* Center Text */}
+            <div className="absolute top-[110px] text-center">
+              <p className="text-gray-500 text-sm">Total Participants</p>
+              <p className="text-2xl font-semibold text-black">{totalEmployees}</p>
+            </div>
+          </div>
+
+          {/* Legend */}
+          <div className="flex justify-center gap-10 mt-5 text-gray-600 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-sm bg-[#FF6B6B]" />
+              <span>In progress</span>
+              <span className="ml-1">{inProgress}%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-sm bg-[#00FF66]" />
+              <span>Completed</span>
+              <span className="ml-1">{completed}%</span>
+            </div>
           </div>
         </>
       ) : (
-        <div className="flex items-center justify-center h-[350px] text-gray-500 font-medium">
+        // No data fallback
+        <div className="flex items-center justify-center h-[220px] text-gray-500 font-medium mt-5">
           No data available yet
         </div>
       )}

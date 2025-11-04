@@ -7,7 +7,17 @@ import { useAuth } from "../context/AuthContext";
 
 
 export default function TopHeader() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
+
+    if (loading) {
+        return (
+        <div className="w-64 h-screen bg-white text-gray-700 flex items-center justify-center">
+            <p>Loading...</p>
+        </div>
+        );
+    }
+
+    if (!user) return null;
     
     return (
         <header className="flex justify-end items-center px-6 py-3 bg-primary shadow-sm border-b border-gray-200">

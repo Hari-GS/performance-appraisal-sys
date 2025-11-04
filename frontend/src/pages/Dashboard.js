@@ -11,6 +11,7 @@ import { request } from "../helpers/axios_helpers";
 import { FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import TopHeader from "../components/TopHeader";
+import { ReactComponent as ChartBarHorizontal } from "../images/Appraisal-Icons/ChartBarHorizontal.svg";
 
 const Dashboard = () => {
   const [recentAppraisal, setRecentAppraisal] = useState(null);
@@ -21,6 +22,12 @@ const Dashboard = () => {
     totalReportingReviewsToDo: 0,
   });
   const navigate = useNavigate();
+
+  const appraisal = {
+    startDate: "25 Oct",
+    endDate: "20 Nov",
+    status: "Active",
+  };
 
   // --- Fetch Dashboard Summary ---
   useEffect(() => {
@@ -56,68 +63,71 @@ const Dashboard = () => {
     <div>
       <TopHeader/>
     
-      <div className="flex min-h-screen bg-primary">
+      <div className="flex bg-primary">
         {/* Sidebar */}
         <Sidebar role={"hr"} /> 
 
         {/* Main Content */}
-        <div className="flex flex-col flex-grow pl-72 p-6 pt-0">
-          
+        <div className="flex flex-col flex-grow pl-64 pt-0">          
           <Header />
+          <div className="flex flex-row">
+            <div className="bg-white border border-gray-200 shadow-sm py-5 w-80">
+              {recentAppraisal ? 
+              (
+                <div className=" pl-6">
+                {/* Icon */}
+                <ChartBarHorizontal/>
 
-          {/* ✅ Recent Appraisal Section */}
-          <div className="bg-primary-dark rounded-xl shadow-md p-6 mt-6">
-            <h2 className="text-2xl font-semibold mb-2">Latest Appraisal</h2>
+                {/* Title */}
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  Appraisal Details
+                </h2>
 
-            {recentAppraisal ? (
-              <div className="space-y-1 text-black capitalize">
-                <p>
-                  <span className="font-semibold text-accent">Title:</span>{" "}
-                  {recentAppraisal.title || "_"}
+                {/* Dates */}
+                <p className="text-sm text-gray-800">
+                  <span className="font-medium">Start Date</span> - {recentAppraisal.startDate}
                 </p>
-                <p>
-                  <span className="font-semibold text-accent">Type:</span>{" "}
-                  {recentAppraisal.type || "_"}
+                <p className="text-sm text-gray-800 mb-4">
+                  <span className="font-medium">End Date</span> - {recentAppraisal.endDate}
                 </p>
-                <p>
-                  <span className="font-semibold text-accent">Stage:</span>{" "}
-                  <span
-                    className={`px-2 py-1 rounded-md text-sm font-medium ${
-                      recentAppraisal.stage === "CLOSED"
-                        ? "bg-green-200 text-green-800"
-                        : "bg-yellow-200 text-yellow-800"
-                    }`}
-                  >
-                    {recentAppraisal.stage || "_"}
-                  </span>
-                </p>
-                <p>
-                  <span className="font-semibold text-accent">Duration:</span>{" "}
-                  {recentAppraisal.startDate || "_"} → {recentAppraisal.endDate || "_"}
-                </p>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center text-center py-8">
-                <p className="text-gray-600 text-lg mb-4">
-                  No recent or ongoing appraisals found.
-                </p>
-                <button
-                  onClick={() => navigate("/forms")}
-                  className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-5 py-2 rounded-lg font-semibold transition-all duration-300"
+
+                {/* Stage Badge */}
+                <span
+                  className={`px-3 py-1 text-sm font-medium rounded-md ${
+                    appraisal.status === "Active"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-200 text-gray-600"
+                  }`}
                 >
-                  <FaPlusCircle /> Start Your First Appraisal
-                </button>
-              </div>
-            )}
-          </div>
+                  {recentAppraisal.stage}
+                </span>
+                </div>
+              ):
+              (
+                <div className="p-6 w-80 h-40 flex items-center justify-center text-center">
+                  <p className="text-gray-600 text-sm font-medium">
+                    No recent or ongoing appraisals found.
+                  </p>
+                </div>
+              )
 
-          {/* Summary Cards (shows underscore placeholders) */}
-          <SummaryCards/>
+              }
+              
+              
+            </div>
+            {/* Summary Cards (shows underscore placeholders) */}
+            <SummaryCards/>
+          </div>
+          
+    
+
+          
 
           {/* Charts Section */}
-          <div className="flex flex-row justify-between bg-primary-dark p-6 rounded-xl mt-6 space-x-4">
+          <div className="flex flex-row justify-between">
             <ReviewCompletionChart
               title="Self Reviews Completion"
+              totalEmployees={totalEmployees}
               completionValue={
                 totalEmployees > 0
                   ? (selfReviewsCompleted / totalEmployees) * 100
@@ -135,7 +145,7 @@ const Dashboard = () => {
           </div>
 
           {/* Additional Sections */}
-          <QuickActions />
+          {/* <QuickActions /> */}
         </div>
       </div>
     </div>

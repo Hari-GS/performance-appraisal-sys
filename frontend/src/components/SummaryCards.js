@@ -3,6 +3,9 @@ import SummaryCard from "./SummaryCard";
 import { request } from "../helpers/axios_helpers";
 import { FaUsers } from "react-icons/fa";
 import { MdDoneAll } from "react-icons/md";
+import { ReactComponent as UsersThree } from "../images/Appraisal-Icons/UsersThree.svg";
+import { ReactComponent as ChartPieSlice } from "../images/Appraisal-Icons/ChartPieSlice.svg";
+import { ReactComponent as CardsThree } from "../images/Appraisal-Icons/CardsThree.svg";
 
 export default function SummaryCards() {
   const [summary, setSummary] = useState({
@@ -66,7 +69,7 @@ export default function SummaryCards() {
     {
       title: "Total Participants",
       value: totalEmployees,
-      icon: <FaUsers size={24} className="text-blue-600" />,
+      icon: <UsersThree/>,
     },
     {
       title: "Self Reviews Completed",
@@ -75,7 +78,7 @@ export default function SummaryCards() {
         selfCompletionRate === "_"
           ? "_"
           : `${selfReviewsCompleted} of ${totalEmployees} | ${selfCompletionRate}% completion`,
-      icon: <MdDoneAll size={24} className="text-green-600" />,
+      icon: <ChartPieSlice/>,
     },
     {
       title: "Reporting Reviews Completed",
@@ -84,12 +87,12 @@ export default function SummaryCards() {
         reportingCompletionRate === "_"
           ? "_"
           : `${reportingReviewsCompleted} of ${totalReportingReviewsToDo} | ${reportingCompletionRate}% completion`,
-      icon: <MdDoneAll size={24} className="text-green-600" />,
+      icon: <CardsThree/>,
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
       {cards.map((card, idx) => (
         <SummaryCard key={idx} {...card} />
       ))}

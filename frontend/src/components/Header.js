@@ -1,55 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { FaPlus, FaSyncAlt, FaCalendarAlt, FaCaretDown } from "react-icons/fa";
 import { request } from "../helpers/axios_helpers";
-import {useState, useEffect} from "react";
+import { ReactComponent as PlusIcon } from "../images/Appraisal-Icons/PlusSquare.svg";
+import { ReactComponent as CloudIcon } from "../images/Appraisal-Icons/CloudArrowDown.svg";
 
 export default function Header() {
-    const [userInfo, setUserInfo] = useState("");
-    const [year, setYear] = useState("2025");
-    const [cycle, setCycle] = useState("");
+  const [userInfo, setUserInfo] = useState("");
+  const [year, setYear] = useState("2025");
 
-    useEffect(() => {
-        const fetchUser = async () => {
-          try {
-            const response = await request("GET", "/auth/me");
-            setUserInfo(response.data);
-          } catch (error) {
-            console.error("Failed to fetch user info", error);
-          }
-        };
-    
-        fetchUser();
-    }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await request("GET", "/auth/me");
+        setUserInfo(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user info", error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
-    <div className="flex flex-row justify-between pb-10">
-      <div className=" mt-6 ml-6">
-      <h1 className="text-2xl font-semibold">Hello {userInfo.name}, Welcome Back!</h1>
-      <p className="text-gray-600">{userInfo.designation}</p>
-    </div>
-    {/* <div className="bg-blue-100 px-4 h-12 mt-6 rounded-md flex items-center space-x-3 text-sm">
-      <span className="font-semibold">Appraisal :</span>
-   
-      <select
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-        className="px-2 py-1 border rounded-md bg-white focus:outline-none"
-      >
-        <option value="2025">2025</option>
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
-      </select>
+    <div className="flex justify-between items-center px-6 py-4 bg-white border border-gray-200 shadow-sm">
+      {/* Left: Greeting */}
+      <div>
+        <h1 className="text-xl font-semibold text-gray-900">
+          Hello {userInfo.name}, Welcome Back!
+        </h1>
+        <p className="text-gray-500 text-sm">{userInfo.designation}</p>
+      </div>
 
-      <select
-        value={cycle}
-        onChange={(e) => setCycle(e.target.value)}
-        className="px-2 py-1 border rounded-md bg-white focus:outline-none"
-      >
-        <option value="">Cycle Name</option>
-        <option value="Q1">Q1 Cycle</option>
-        <option value="Q2">Q2 Cycle</option>
-        <option value="MidYear">Mid-Year Cycle</option>
-      </select>
-    </div> */}
+      {/* Right: Action Buttons */}
+      <div className="flex items-center space-x-3">
+        {/* Add New Cycle */}
+        <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-100 transition">
+          <PlusIcon/>
+          <span className="text-gray-500 font-medium text-sm">Add New Cycle</span>
+        </button>
+
+        {/* Export */}
+        <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-50 transition">
+          <CloudIcon/>
+          <span className="text-gray-500 font-medium text-sm">Export</span>
+        </button>
+
+        {/* Year Selector */}
+        {/* <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-50 transition">
+          <FaCalendarAlt className="text-orange-500" />
+          <span className="text-gray-500 font-medium text-sm">{year}</span>
+          <FaCaretDown className="text-gray-500 text-xs" />
+        </button> */}
+      </div>
     </div>
   );
 }

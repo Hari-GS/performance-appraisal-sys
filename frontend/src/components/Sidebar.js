@@ -1,15 +1,24 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaHome, FaUsers, FaCommentDots, FaFolder, FaUserCircle, FaWpforms, FaClipboardCheck, FaTachometerAlt } from "react-icons/fa";
+import {
+  FaWpforms,
+  FaClipboardCheck
+} from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+import citLogo from "../images/cit-logo.jpg";
+import { ReactComponent as CubeIcon } from "../images/Appraisal-Icons/3dcube.svg";
+import { ReactComponent as DashIcon } from "../images/Appraisal-Icons/element-3.svg";
+import { ReactComponent as Profile2Icon } from "../images/Appraisal-Icons/profile-2user.svg";
+import { ReactComponent as EditIcon } from "../images/Appraisal-Icons/edit.svg";
+import { ReactComponent as ReportIcon } from "../images/Appraisal-Icons/directbox-default-2.svg";
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, loading } = useAuth(); // 👈 get loading state
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="w-64 h-screen bg-secondary text-white flex items-center justify-center">
+      <div className="w-64 h-screen bg-white text-gray-700 flex items-center justify-center">
         <p>Loading...</p>
       </div>
     );
@@ -18,24 +27,24 @@ const Sidebar = () => {
   if (!user) return null;
 
   const menuItems = [
-    { name: "Dashboard", icon: <FaTachometerAlt />, path: user.role === 'employee' || 'director' ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee","director"] },
-    { name: "Participants", icon: <FaUsers />, path: "/employees", roles: ["hr","director"] },
-    // { name: "Heirarchy", icon: <FaUsers />, path: "/heirarchy", roles: ["hr"] },
-    { name: "New Appraisal", icon: <FaFolder />, path: "/forms", roles: ["hr"] },
-    { name: "Manage Appraisals", icon: <FaCommentDots />, path: "/reviews", roles: ["hr","director"] },
-    { name: "Active Appraisals", icon: <FaWpforms/>, path: "/employee/appraisal", roles:["employee","hr","director"]},
-    { name: "Reports", icon: <FaWpforms/>, path: "/reports", roles:["hr","director"]},
-    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles:["employee","director"]},
-    // { name: "My Appraisals", icon: <FaCommentDots />, path: "/employee-appraisals", roles: ["employee"] },
+    { name: "Dashboard", icon: <DashIcon />, path: user.role === ("employee" || "director") ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee", "director"] },
+    { name: "Participants", icon: <Profile2Icon />, path: "/employees", roles: ["hr", "director"] },
+    { name: "New Appraisal", icon: <CubeIcon />, path: "/forms", roles: ["hr"] },
+    { name: "Manage Appraisals", icon: <EditIcon />, path: "/reviews", roles: ["hr", "director"] },
+    { name: "Active Appraisals", icon: <FaWpforms />, path: "/employee/appraisal", roles: ["employee", "hr", "director"] },
+    { name: "Reports", icon: <ReportIcon />, path: "/reports", roles: ["hr", "director"] },
+    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles: ["employee", "director"] },
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 bg-secondary text-white flex flex-col justify-between py-6">
-      <div className="flex items-center justify-center mb-6">
-        <h1 className="text-2xl font-bold"></h1>
+    <div className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col justify-start py-4">
+      {/* Logo */}
+      <div className="flex items-center justify-center space-x-1 w-[200px] h-[26px] ">
+        <img src={citLogo} alt="cit-logo" className="h-[28px] w-auto pl-16"/>
       </div>
-
-      <nav className="flex flex-col space-y-8">
+      <div className="border border-gray-200 shadow-sm mt-3.5"></div>
+      {/* Navigation */}
+      <nav className="flex flex-col space-y-2 mt-8">
         {menuItems
           .filter((item) => item.roles.includes(user.role.toLowerCase()))
           .map((item) => {
@@ -44,29 +53,40 @@ const Sidebar = () => {
             return (
               <button
                 key={item.name}
-                className={`flex items-center py-1 pl-10 text-lg font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-gradient-to-r from-white to-secondary text-secondary rounded-l-full ml-4 pl-4"
-                    : "hover:bg-white hover:text-secondary"
-                }`}
                 onClick={() => navigate(item.path)}
+                className={`relative flex items-center py-3 pl-12 pr-8 text-[15px] font-medium transition-all duration-300 overflow-visible 
+                  ${isActive
+                    ? "text-accent hover:bg-orange-50"
+                    : "text-gray-800 hover:text-accent hover:bg-orange-50"
+                  }`}
               >
-                <span className="mr-3">{item.icon}</span>
-                {item.name}
+                {/* left curved pill (outside the button) */}
+                {isActive && (
+                  <span
+                    aria-hidden
+                    className="absolute -left-0 top-1/2 -translate-y-1/2 w-1 h-11 rounded-l-full rounded-r-[50%] bg-accent"
+                  />
+                )}
+
+                {/* icon */}
+                <span className={`mr-3 text-lg ${isActive ? "text-accent" : "text-gray-700"}`}>
+                  {item.icon}
+                </span>
+
+                {/* label */}
+                <span className="flex-1 text-left">{item.name}</span>
+
+                {/* right curved pill (outside the button) */}
+                {isActive && (
+                  <span
+                    aria-hidden
+                    className="absolute -right-0 top-1/2 -translate-y-1/2 w-1 h-11 rounded-r-full rounded-l-[50%] bg-accent"
+                  />
+                )}
               </button>
             );
           })}
       </nav>
-
-      <div className="flex items-center space-x-3 pl-12 pb-4">
-        <FaUserCircle className="text-4xl" />
-        <div>
-          <p className="font-semibold">{user.name}</p>
-          <p className="text-sm text-gray-200">
-            {user.role.toLowerCase() === "employee" ? "Participant" : "HR Manager"}
-          </p>
-        </div>
-      </div>
     </div>
   );
 };
