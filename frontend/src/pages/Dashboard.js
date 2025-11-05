@@ -80,7 +80,7 @@ const Dashboard = () => {
 
                 {/* Title */}
                 <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                  Appraisal Details
+                  {recentAppraisal.title} - {recentAppraisal.type}
                 </h2>
 
                 {/* Dates */}

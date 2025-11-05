@@ -27,13 +27,13 @@ const Sidebar = () => {
   if (!user) return null;
 
   const menuItems = [
-    { name: "Dashboard", icon: <DashIcon />, path: user.role === ("employee" || "director") ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee", "director"] },
+    { name: "Dashboard", icon: <DashIcon />, path: (user.role === "employee" || user.role === "director") ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee", "director"]},
     { name: "Participants", icon: <Profile2Icon />, path: "/employees", roles: ["hr", "director"] },
     { name: "New Appraisal", icon: <CubeIcon />, path: "/forms", roles: ["hr"] },
     { name: "Manage Appraisals", icon: <EditIcon />, path: "/reviews", roles: ["hr", "director"] },
     { name: "Active Appraisals", icon: <FaWpforms />, path: "/employee/appraisal", roles: ["employee", "hr", "director"] },
     { name: "Reports", icon: <ReportIcon />, path: "/reports", roles: ["hr", "director"] },
-    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles: ["employee", "director"] },
+    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles: ["employee"] },
   ];
 
   return (

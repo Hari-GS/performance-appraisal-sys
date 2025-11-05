@@ -12,13 +12,13 @@ export default function ReviewCompletionChart({
     completionValue > 0;
 
   // Prevent invalid data
-  const inProgress = hasValidData ? completionValue : 0;
-  const completed = hasValidData ? 100 - completionValue : 0;
+  const completed = hasValidData ? completionValue : 0;
+  const notCompleted = hasValidData ? 100 - completionValue : 0;
 
   const data = hasValidData
     ? [
-        { name: "In progress", value: inProgress, color: "#FF6B6B" },
         { name: "Completed", value: completed, color: "#00FF66" },
+        { name: "Not completed", value: notCompleted, color: "#FF6B6B" }
       ]
     : [];
 
@@ -57,16 +57,16 @@ export default function ReviewCompletionChart({
           </div>
 
           {/* Legend */}
-          <div className="flex justify-center gap-10 mt-5 text-gray-600 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-sm bg-[#FF6B6B]" />
-              <span>In progress</span>
-              <span className="ml-1">{inProgress}%</span>
-            </div>
+          <div className="flex justify-center gap-10 mt-8 text-gray-600 text-sm">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-sm bg-[#00FF66]" />
               <span>Completed</span>
               <span className="ml-1">{completed}%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-sm bg-[#FF6B6B]" />
+              <span>Not Completed</span>
+              <span className="ml-1">{notCompleted}%</span>
             </div>
           </div>
         </>
