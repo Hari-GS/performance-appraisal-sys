@@ -6,6 +6,8 @@ import { getAuthToken } from "../helpers/axios_helpers";
 import { loginUser } from "../redux/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../context/AuthContext";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { fetchUser } = useAuth();
+  const location = useLocation();
 
   const { error, loading } = useSelector((state) => state.auth);
 
@@ -46,7 +49,18 @@ const Login = () => {
     }
   };
 
+  const handleOrganizationLogin = () => {
+      const params = new URLSearchParams(location.search);
+      const status = params.get("status");
+      if (status === "success") {
+        toast.success("Your organization has been verified successfully!");
+      } else if (status === "expired") {
+        toast.error("Verification link has expired. Please register again.");
+      }
+  }
+
   useEffect(() => {
+    handleOrganizationLogin();
     const token = getAuthToken();
   
     if (token) {

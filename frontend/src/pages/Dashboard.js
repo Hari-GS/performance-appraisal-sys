@@ -61,7 +61,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <TopHeader/>
+      <TopHeader breadcrumbs={["Dashboard"]}/>
     
       <div className="flex bg-primary">
         {/* Sidebar */}

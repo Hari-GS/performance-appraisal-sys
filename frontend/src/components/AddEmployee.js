@@ -16,7 +16,6 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const [formData, setFormData] = useState({
     name: "",
     employeeId: "",

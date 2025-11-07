@@ -12,8 +12,8 @@ export default function ReviewCompletionChart({
     completionValue > 0;
 
   // Prevent invalid data
-  const completed = hasValidData ? completionValue : 0;
-  const notCompleted = hasValidData ? 100 - completionValue : 0;
+  const completed = hasValidData ? parseFloat(completionValue.toFixed(0)) : 0;
+  const notCompleted = hasValidData ?  parseFloat((100 - completionValue).toFixed(0)) : 0;
 
   const data = hasValidData
     ? [

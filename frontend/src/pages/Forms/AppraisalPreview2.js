@@ -13,10 +13,13 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
   const navigate = useNavigate();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   const handleSubmit = async () => {
+    setShowConfirmModal(false);
     setIsSubmitting(true);
-
+    setIsLoading(true);
     const payload = {
       title: basicInfo.title,
       type: basicInfo.type,
@@ -53,14 +56,24 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
       console.error("Submission failed:", err);
       toast.error('An unexpected error occurred.');
     } finally {
+      setIsLoading(false);
       setIsSubmitting(false);
-      setShowConfirmModal(false);
     }
   };
 
   return (
     <div className="bg-primary-dark rounded-xl shadow p-6 space-y-6">
-
+      {/* Loader Overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white px-6 py-4 rounded-2xl shadow-md flex flex-col items-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent mb-3"></div>
+            <p className="text-gray-700 font-medium">
+              Creating Appraisal, Please Wait..
+            </p>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-black flex items-center gap-2">

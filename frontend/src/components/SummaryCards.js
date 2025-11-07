@@ -56,13 +56,13 @@ export default function SummaryCards() {
   // Safely compute completion rates only if values are numbers
   const selfCompletionRate =
     typeof totalEmployees === "number" && totalEmployees > 0
-      ? ((selfReviewsCompleted / totalEmployees) * 100).toFixed(1)
+      ? ((selfReviewsCompleted / totalEmployees) * 100).toFixed(0)
       : "_";
 
   const reportingCompletionRate =
     typeof totalReportingReviewsToDo === "number" &&
     totalReportingReviewsToDo > 0
-      ? ((reportingReviewsCompleted / totalReportingReviewsToDo) * 100).toFixed(1)
+      ? ((reportingReviewsCompleted / totalReportingReviewsToDo) * 100).toFixed(0)
       : "_";
 
   const cards = [
