@@ -5,6 +5,7 @@ import { request } from '../helpers/axios_helpers';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { SyncLoader } from 'react-spinners';
+import ProtectedView from './ProtectedView';
 
 const stageDisplayMap = {
   CREATED: 'Created',
@@ -97,7 +98,7 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
   };
 
   return (
-    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-28">
+    <div className="bg-primary text-black font-sans py-6 px-10">
       
       {/* Loader Overlay */}
       {loading && (
@@ -110,9 +111,9 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
       )}
 
       {/* Header */}
-      <div className="bg-primary-dark rounded-2xl p-6 shadow-lg mb-8">
+      <div className="bg-primary border-2 rounded-2xl p-6 mb-12">
         <div className="text-black space-y-3">
-          <h1 className="text-3xl font-bold">{appraisal.title}</h1>
+          <h1 className="text-3xl font-bold">{appraisal.title} - {appraisal.type}</h1>
 
           <p className="text-sm text-gray-700">
             <span className="font-semibold">Created On:</span> {appraisal.createdAt}
@@ -136,16 +137,18 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
         </div>
 
         {/* Force Move Button */}
-        {nextStage && (
-          <div className="mt-6">
-            <button
-              className="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition"
-              onClick={() => setShowModal(true)}
-            >
-              Force Move to Next Phase
-            </button>
-          </div>
-        )}
+        <ProtectedView allowedRoles={["hr"]}>
+          {nextStage && (
+            <div className="mt-6">
+              <button
+                className="bg-accent text-white px-5 py-2 rounded-xl hover:bg-accent-dark transition"
+                onClick={() => setShowModal(true)}
+              >
+                Move to Next Phase
+              </button>
+            </div>
+          )}
+        </ProtectedView>
       </div>
 
       {/* Confirmation Modal */}
@@ -161,16 +164,16 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
 
       {/* 🧾 Reporting Review Table (only in REPORTING_REVIEW stage) */}
       {(appraisal.stage === 'REPORTING_REVIEW' || appraisal.stage === 'HR_REVIEW' || appraisal?.stage === 'CLOSED') && (
-        <div className="bg-primary-dark rounded-2xl p-6 shadow-lg mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-black">Reporting Person Review</h2>
+        <div className="bg-primary mb-12">
+          <h2 className="text-lg font-semibold mb-4 text-black">Reporting Person Review Status</h2>
           {loadingReviewData ? (
             <p className="text-gray-600 text-sm">Loading...</p>
           ) : reportingReviewData.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="min-w-full text-left border-separate border-spacing-y-3">
-                <thead>
-                  <tr className="text-black">
-                    <th className="px-4 py-2">Reviewer Emp ID</th>
+              <table className="min-w-full text-left border border-gray-300 rounded-md">
+                <thead className="bg-gray-100">
+                  <tr className="text-gray-700 border-b border-gray-300">
+                    <th className="px-4 py-2">Reviewer Pt ID</th>
                     <th className="px-4 py-2">Reviewer Name</th>
                     <th className="px-4 py-2">Designation</th>
                     <th className="px-4 py-2">Total Assigned</th>
@@ -186,7 +189,7 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
                       ? 'IN_PROGRESS'
                       : 'NOT_STARTED';
                     return (
-                      <tr key={index} className="bg-primary rounded-xl">
+                      <tr key={index} className="border-b border-gray-200 transition-colors">
                         <td className="px-4 py-3">{rev.reviewerId}</td>
                         <td className="px-4 py-3">{rev.reviewerName}</td>
                         <td className="px-4 py-3">{rev.designation}</td>
@@ -207,33 +210,35 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
 
       {/* Employee Appraisals Table */}
       {appraisal.participants && (
-        <div className="bg-primary-dark rounded-2xl p-6 shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-black">Employee Self Appraisals</h2>
+        <div className="bg-primary">
+          <h2 className="text-lg font-semibold mb-4 text-black">Employees Self Appraisal Status</h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full text-left border-separate border-spacing-y-3">
-              <thead>
-                <tr className="text-black">
-                  <th className="px-4 py-2">Employee ID</th>
-                  <th className="px-4 py-2">Name</th>
-                  <th className="px-4 py-2">Role</th>
-                  <th className="px-4 py-2">Manager</th>
-                  <th className="px-4 py-2">Status</th>
+          <table className="min-w-full text-left border border-gray-300 rounded-md">
+            <thead className="bg-gray-100">
+              <tr className="text-gray-700 border-b border-gray-300">
+                <th className="px-4 py-2  border-gray-300">Participant ID</th>
+                <th className="px-4 py-2  border-gray-300">Name</th>
+                <th className="px-4 py-2  border-gray-300">Role</th>
+                <th className="px-4 py-2  border-gray-300">Manager</th>
+                <th className="px-4 py-2">Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {appraisal.participants.map((emp, index) => (
+                <tr
+                  key={index}
+                  className="border-b border-gray-200 transition-colors"
+                >
+                  <td className="px-4 py-3  border-gray-200">{emp.employeeId}</td>
+                  <td className="px-4 py-3  border-gray-200">{emp.employeeName}</td>
+                  <td className="px-4 py-3  border-gray-200">{emp.designation}</td>
+                  <td className="px-4 py-3  border-gray-200">{emp.managerName}</td>
+                  <td className="px-4 py-3">{renderStatusBadge(emp.selfAppraisalStatus)}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {appraisal.participants.map((emp, index) => (
-                  <tr key={index} className="bg-primary rounded-xl">
-                    <td className="px-4 py-3">{emp.employeeId}</td>
-                    <td className="px-4 py-3">{emp.employeeName}</td>
-                    <td className="px-4 py-3">{emp.designation}</td>
-                    <td className="px-4 py-3">{emp.managerName}</td>
-                    <td className="px-4 py-3">
-                      {renderStatusBadge(emp.selfAppraisalStatus)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))}
+            </tbody>
+          </table>
           </div>
         </div>
       )}

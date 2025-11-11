@@ -35,10 +35,10 @@ const Login = () => {
         const role = decoded.role;
 
         // ✅ Navigate based on role
-        if (role === "hr") {
-          navigate("/hr-dashboard");
-        } else if (role === "employee" || "director") {
+        if (role === "employee") {
           navigate("/employee-dashboard");
+        } else if (role === "hr" || "director") {
+          navigate("/hr-dashboard");
         } else {
           console.log("Invalid token role");
           navigate("/");
@@ -69,10 +69,10 @@ const Login = () => {
         const role = decoded.role;
   
         // Already logged in? Redirect to correct dashboard
-        if (role === "hr") {
-          navigate("/hr-dashboard");
-        } else if (role === "employee") {
+        if (role === "employee") {
           navigate("/employee-dashboard");
+        } else {
+          navigate("/hr-dashboard");
         }
       } catch (err) {
         console.error("Invalid token format:", err);

@@ -62,7 +62,7 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
   };
 
   return (
-    <div className="bg-primary-dark rounded-xl shadow p-6 space-y-6">
+    <div className="bg-primary border-2 rounded-xl p-6 space-y-6 shadow-[0_0_8px_rgba(0,0,0,0.15)]">
       {/* Loader Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
@@ -77,14 +77,13 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-black flex items-center gap-2">
-          <FaClipboardList className="text-orange-400" />
           Appraisal Form Preview
         </h2>
       </div>
 
       {/* Basic Info */}
-      <div className="bg-white rounded-xl shadow p-4 space-y-2">
-        <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 border-b pb-1">
+      <div className="bg-white rounded-xl border-2 p-4 space-y-2">
+        <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 border-b-2 pb-1">
           <FaFileAlt className="text-orange-400" /> Basic Information
         </h3>
         <p className="text-gray-600"><strong>Title:</strong> {basicInfo.title || '-'}</p>
@@ -96,8 +95,8 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
       </div>
 
       {/* Participants */}
-      <div className="bg-white rounded-xl shadow p-4 space-y-2">
-        <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 border-b pb-1">
+      <div className="bg-white rounded-xl border-2 p-4 space-y-2">
+        <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 border-b-2 pb-1">
           <FaUsers className="text-orange-400" /> Participants
         </h3>
         {participants.length === 0 ? (
@@ -114,9 +113,9 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
         )}
       </div>
       {/* Individual Questions by Participant */}
-      <div className="bg-white rounded-xl shadow p-4 space-y-6">
-        <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 border-b pb-1">
-          <FaQuestionCircle className="text-orange-400" /> Questions by Participant
+      <div className="bg-white rounded-xl border-2 p-4 space-y-6">
+        <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 border-b-2 pb-1">
+          <FaQuestionCircle className="text-orange-400" /> Self Appraisal Questions for Participants
         </h3>
 
         {participants.map((emp) => {
@@ -124,48 +123,31 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
 
           return (
             <div key={emp.employeeId} className="space-y-1">
-              <div className="flex items-center gap-2 font-semibold text-md text-gray-700 border-b pb-1 mt-3">
-                <FaFileSignature className="text-accent" />
+              <div className="flex items-center gap-2 font-semibold text-md text-gray-700 border-b-2 pb-1 mt-3">
                 {emp.name} ({emp.employeeId})
               </div>
 
-              {empQuestions.length === 0 ? (
-                <p className="text-gray-500 text-sm italic ml-6">No questions assigned.</p>
-              ) : (
-                <ol className="list-decimal ml-6 space-y-1 text-gray-700 text-sm">
-                  {empQuestions.map((q, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                        {idx + 1}
-                      </span>
-                      <div className="flex-1">
-                        {q.text || `Question ${idx + 1}`}
-                        {q.showPoints && (
-                          <span className="ml-2 bg-green-100 text-green-600 rounded-full text-xs px-2 py-0.5">
-                            Points Shown
-                          </span>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              )}
+              <p className="text-gray-700 text-sm ml-6">
+                Total Questions:{" "}
+                <span className="font-semibold">{empQuestions.length}</span>
+              </p>
             </div>
           );
         })}
+
       </div>
 
       {/* Action Buttons */}
       <div className="flex justify-end gap-4 mt-6">
         <button
           onClick={()=>navigate("/forms")}
-          className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-sm font-medium"
+          className=" px-4 py-2 rounded hover:bg-orange-50 text-sm font-medium border-2"
         >
           Cancel
         </button>
         <button
           onClick={() => setShowConfirmModal(true)}
-          className="bg-accent text-white px-5 py-2 rounded text-sm font-medium hover:bg-orange-600"
+          className="bg-accent text-white px-5 py-2 rounded text-sm font-medium hover:bg-accent-dark"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Creating..." : "Confirm & Create"}
@@ -175,7 +157,7 @@ const AppraisalPreview2 = ({ formData, onBack, onSubmit }) => {
       {showConfirmModal && (
         <ConfirmationModal
           title="Confirm Creation"
-          message="Are you sure you want to create this appraisal?"
+          message="Are you sure you want to create this appraisal? Email notifications will be sent for all participants"
           onConfirm={handleSubmit}
           onCancel={() => setShowConfirmModal(false)}
         />

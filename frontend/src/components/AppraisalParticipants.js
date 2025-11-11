@@ -42,21 +42,24 @@ const AppraisalParticipants = () => {
   };
 
   return (
-    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-24">
+    <div className="bg-primary text-black font-sans">
       {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-2xl font-bold mb-0 mt-0">Appraisal Participants</h1>
-        <p className="text-gray-700">
-          List of all employees participating in this appraisal cycle.
-        </p>
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Appraisal Participants
+          </h2>
+          <p className="text-sm text-gray-500">
+            — List of all participants participating in this appraisal cycle.
+          </p>
+        </div>
       </div>
-
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-8">
         {participants.map((p) => (
           <div
             key={p.employeeId}
-            className="bg-primary-dark rounded-2xl shadow-lg p-6 transition-transform transform hover:scale-[1.02] hover:shadow-xl"
+            className="bg-primary rounded p-6 border-2"
           >
             {/* Employee Name */}
             <h2 className="text-xl font-semibold mb-3 flex items-center">
@@ -66,34 +69,29 @@ const AppraisalParticipants = () => {
 
             {/* Employee ID */}
             <p className="text-sm flex items-center mb-1">
-              <AiOutlineIdcard className="text-accent mr-2" />
               <span className="font-semibold">Employee ID:</span>&nbsp;
               {p.employeeId}
             </p>
 
             {/* Designation */}
             <p className="text-sm flex items-center mb-1">
-              <AiOutlineIdcard className="text-accent mr-2" />
               <span className="font-semibold">Designation:</span>&nbsp;
               {p.designation}
             </p>
 
             {/* Manager Name */}
             <p className="text-sm flex items-center mb-3">
-              <AiOutlineTeam className="text-accent mr-2" />
-              <span className="font-semibold">Manager:</span>&nbsp;
+              <span className="font-semibold">Reporting Manager:</span>&nbsp;
               {p.managerName || "N/A"}
             </p>
 
             {/* Status Badges */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center">
-                <AiOutlineCheckCircle className="text-accent mr-2" />
                 <span className="font-semibold text-sm mr-2">Self Appraisal:</span>
                 {renderStatusBadge(p.selfAppraisalStatus)}
               </div>
               <div className="flex items-center">
-                <AiOutlineCheckCircle className="text-accent mr-2" />
                 <span className="font-semibold text-sm mr-2">Reporting Manager Review:</span>
                 {renderStatusBadge(p.reviewAppraisalStatus)}
               </div>

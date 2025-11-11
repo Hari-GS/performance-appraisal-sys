@@ -59,6 +59,15 @@ const Dashboard = () => {
     fetchRecentAppraisal();
   }, []);
 
+  function formatStageName(stage) {
+    if (!stage) return "";
+    return stage
+      .toLowerCase()
+      .split("_")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   return (
     <div>
       <TopHeader breadcrumbs={["Dashboard"]}/>
@@ -99,7 +108,7 @@ const Dashboard = () => {
                       : "bg-gray-200 text-gray-600"
                   }`}
                 >
-                  {recentAppraisal.stage}
+                  {formatStageName(recentAppraisal.stage)}
                 </span>
                 </div>
               ):
@@ -128,6 +137,7 @@ const Dashboard = () => {
             <ReviewCompletionChart
               title="Self Reviews Completion"
               totalEmployees={totalEmployees}
+              textLabel="Total Participants"
               completionValue={
                 totalEmployees > 0
                   ? (selfReviewsCompleted / totalEmployees) * 100
@@ -136,6 +146,8 @@ const Dashboard = () => {
             />
             <ReviewCompletionChart
               title="Reporting Reviews Completion"
+              totalEmployees={totalReportingReviewsToDo}
+              textLabel="Total Reporting Reviews"
               completionValue={
                 totalReportingReviewsToDo > 0
                   ? (reportingReviewsCompleted / totalReportingReviewsToDo) * 100

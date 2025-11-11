@@ -21,31 +21,33 @@ const SentAppraisalsList = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen">
-      <h1 className="text-black text-2xl font-bold mb-6 mt-16">Active Appraisals</h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div>
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Manage Appraisals
+          </h2>
+          <p className="text-sm text-gray-500">
+            — Track and manage active appraisals
+          </p>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-8">
         {appraisals.map((appraisal) => (
-          <div key={appraisal.id} className="bg-primary-dark rounded-xl shadow-lg p-5 transition">
+          <div key={appraisal.id} className="bg-primary rounded border-2 p-5 transition">
             
             <h2 className="text-black text-xl font-semibold mb-2 flex items-center">
-              <AiOutlineFileText className="mr-2 text-accent" />
-              {appraisal.title}
+              {appraisal.title} - {appraisal.type}
             </h2>
-
-            <p className="text-black text-sm mb-1 flex items-center">
-              <AiOutlineTag className="mr-2 text-accent" />
-              Type: {appraisal.type}
-            </p>
-
             <p className="text-black text-sm mb-1 flex items-center">
               <AiOutlineCalendar className="mr-2 text-accent" />
-              Start: {appraisal.startDate}
+              Starts at {appraisal.startDate}
             </p>
 
             <p className="text-black text-sm mb-4 flex items-center">
               <AiOutlineCalendar className="mr-2 text-accent" />
-              End: {appraisal.endDate}
+              Ends at {appraisal.endDate}
             </p>
 
             <button

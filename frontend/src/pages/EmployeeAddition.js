@@ -2,17 +2,20 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import AddEmployee from '../components/AddEmployee'
+import TopHeader from '../components/TopHeader'
 
 function EmployeeAddition() {
     return (
-        <div className="flex min-h-screen">
-            {/* Sidebar */}
-            <Sidebar role={"hr"}/>
-            
-            {/* Main Content */}
-            <div className="flex flex-col flex-grow pl-72 p-6 pt-20 bg-gray-100">
-                <Navbar title="Participants"/>
-                <AddEmployee/>
+        <div>
+            <TopHeader breadcrumbs={["Participants","Edit Participants"]}/>
+            <div className="flex">
+                {/* Sidebar */}
+                <Sidebar role={"hr"}/>
+                
+                {/* Main Content */}
+                <div className="flex flex-col flex-grow pl-64 m-8">
+                    <AddEmployee/>
+                </div>
             </div>
         </div>
     )

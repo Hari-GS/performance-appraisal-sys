@@ -75,17 +75,25 @@ const TemplatesListPage = () => {
   
 
   return (
-    <div className="bg-primary min-h-screen p-6 pt-10 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-black">Templates</h1>
+    <div className="bg-primary space-y-6">
+      {/* Header Section */}
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Templates
+          </h2>
+          <p className="text-sm text-gray-500">
+            — Different self appraisal question templates for different designations
+          </p>
+        </div>
         <button
           onClick={addNewTemplate}
-          className="bg-accent rounded-full text-white px-4 py-2 hover:bg-accent-dark flex items-center gap-2"
+          className=" rounded-md px-3 py-1 hover:bg-orange-50 flex items-center border-2 gap-2 text-accent"
         >
-          <FaPlus /> New Template
+          <FaPlus /><p className="text-black">New Template</p> 
         </button>
       </div>
-
+      <div className="px-8 py-0">
       {loading ? (
         <p className="text-center text-gray-600">Loading templates...</p>
       ) : templates.length === 0 ? (
@@ -95,7 +103,7 @@ const TemplatesListPage = () => {
         {templates.map((template) => (
             <div
               key={template.id}
-              className="bg-primary-dark p-4 rounded shadow border hover:shadow-lg hover:scale-[1.01] transition-all duration-150 flex justify-between items-center"
+              className="p-4 rounded border-2 transition-all duration-150 flex justify-between items-center"
             >
               <div>
                 <h2 className="font-semibold text-black">
@@ -125,6 +133,7 @@ const TemplatesListPage = () => {
           ))}
         </div>
       )}
+      </div>
        {/* Delete Confirmation Modal */}
        {confirmDeleteId && (
         <div className="fixed inset-0 z-20 bg-black bg-opacity-40 flex justify-center items-center">
@@ -134,7 +143,7 @@ const TemplatesListPage = () => {
             <div className="flex justify-center gap-4 pt-4">
               <button
                 onClick={cancelDelete}
-                className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-sm"
+                className="px-4 py-2 rounded hover:bg-orange-50 border-2 text-sm"
               >
                 Cancel
               </button>

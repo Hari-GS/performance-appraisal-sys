@@ -17,8 +17,9 @@ function EmployeeDashboard() {
 			    {/* Main Content */}
 			    <div className="flex flex-col flex-grow pl-64 pt-0">
 				    <Header/>
-					<div className='flex flex-row space-x-10'>
-						<EmployeeAppraisalOverviewCard/>
+					<EmployeeAppraisalOverviewCard/>
+					<div className='flex flex-row'>
+						<SelfAppraisalProgressCard/>
 						<SelfAppraisalProgressCard/>
 					</div>
 					<EvaluatorsCard/>

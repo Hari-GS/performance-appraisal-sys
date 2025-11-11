@@ -107,15 +107,14 @@ const SelfAppraisal = ({ currentAppraisal }) => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="relative max-w-4xl p-4 mt-20">
-      <h2 className="text-xl font-bold mb-4">Self Appraisal Questions For You</h2>
+    <div className="relative max-w-4xl p-4">
       {/* Info Note */}
       {
         currentPage==1 ?
-        (<div className="mb-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-md text-sm flex items-center gap-2">
+        (<div className="mb-8 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-md text-sm flex items-center gap-2">
           <FaInfoCircle className="text-yellow-600" />
           <span>
-            Saving with blank text fields will be treated as no answers. You can exit the appraisal and come back later to complete it.
+            Saving with blank text fields will be treated as no answers. You can also exit the appraisal and come back later to complete it.
           </span>
         </div>):""
       }
@@ -128,7 +127,7 @@ const SelfAppraisal = ({ currentAppraisal }) => {
         return (
           <div
             key={q.id}
-            className="mb-6 p-4 border rounded-2xl shadow-sm bg-primary-dark"
+            className="mb-6 p-4 border-2 rounded  bg-primary"
           >
             <div className="flex items-center justify-between mb-2">
               <label
@@ -162,7 +161,7 @@ const SelfAppraisal = ({ currentAppraisal }) => {
                 id={`question-${q.id}`}
                 value={answers[q.id] || ""}
                 onChange={(e) => handleChange(q.id, e.target.value)}
-                className="border rounded px-3 py-2 w-full mt-3"
+                className="border rounded px-3 py-2 w-full mt-3 bg-gray-50"
                 rows="3"
                 placeholder="Type your answer..."
                 required
@@ -173,7 +172,7 @@ const SelfAppraisal = ({ currentAppraisal }) => {
       })}
 
       {/* Pagination + Save */}
-      <div className=" sticky bottom-0 bg-white p-4 border-t flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+      <div className=" sticky bottom-0 bg-white p-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
         
         {/* Pagination */}
         <div className="flex items-center gap-4">
@@ -181,7 +180,7 @@ const SelfAppraisal = ({ currentAppraisal }) => {
             type="button"
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium text-base rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-1 text-base border-2 rounded disabled:opacity-50 hover:bg-orange-50"
           >
             <FaArrowLeft/> Previous
           </button>
@@ -192,7 +191,7 @@ const SelfAppraisal = ({ currentAppraisal }) => {
             type="button"
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium text-base rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-1 text-base border-2 rounded disabled:opacity-50 hover:bg-orange-50"
             
           >
             Next <FaArrowRight/>
@@ -201,7 +200,7 @@ const SelfAppraisal = ({ currentAppraisal }) => {
 
         {/* Save Button */}
         <button
-          className="flex items-center justify-center gap-2 px-6 py-2 bg-accent text-white font-semibold rounded-xl shadow hover:bg-accent-dark transition-all duration-300"
+          className="flex items-center justify-center gap-2 px-6 py-2 bg-accent text-white font-semibold rounded hover:bg-accent-dark transition-all duration-300"
           disabled={submitting}
           onClick={() => handleSubmit(appraisal)}
         >

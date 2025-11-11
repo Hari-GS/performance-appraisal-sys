@@ -6,18 +6,26 @@ const AppraisalForm = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-8 space-y-8 bg-primary min-h-screen">
-      {/* Title Section */}
-      <h1 className="text-2xl font-bold text-black">Appraisal Tools</h1>
-
+    <div className="space-y-8 bg-primary">
+      {/* Header Section */}
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            New Appraisal
+          </h2>
+          <p className="text-sm text-gray-500">
+            — Make sure you have required templates and participants before starting appraisal  
+          </p>
+        </div>
+      </div>
       {/* Action Cards */}
-      <div className="grid sm:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 gap-6 p-8">
         {/* Create Appraisal Form Card */}
         <div
           role="button"
           aria-label="Start new appraisal form"
           onClick={() => navigate('/forms/create-appraisal')}
-          className="group bg-primary-dark/80 backdrop-blur-md border border-gray-200 py-10 px-8 rounded-xl shadow-md cursor-pointer hover:scale-[1.02] hover:shadow-xl transition-all duration-200 w-full"
+          className="group border border-gray-300 py-10 px-8 rounded-xl cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] transition-all duration-200 w-full"
         >
           <div className="flex justify-between items-center">
             <div>
@@ -33,7 +41,7 @@ const AppraisalForm = () => {
           role="button"
           aria-label="View templates"
           onClick={() => navigate('/forms/templates')}
-          className="group bg-primary-dark/80 backdrop-blur-md border border-gray-200 py-10 px-8 rounded-xl shadow-md cursor-pointer hover:scale-[1.02] hover:shadow-xl transition-all duration-200 w-full"
+          className="group border border-gray-300 py-10 px-8 rounded-xl cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] transition-all duration-200 w-full"
         >
           <div className="flex justify-between items-center">
             <div>

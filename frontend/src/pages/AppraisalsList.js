@@ -2,21 +2,22 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import SentAppraisalsList from '../components/SentAppraisalsList'
+import TopHeader from '../components/TopHeader'
 
 function AppraisalsList() {
     return (
         
         <div>
-            <div className="flex min-h-screen">
+            <TopHeader breadcrumbs={["Manage Appraisals"]}/>
+            <div className="flex">
                 {/* Sidebar */}
                 <Sidebar role={"hr"}/>
                 
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-72 p-6 bg-primary">
+                <div className="flex flex-col flex-grow pl-64 bg-primary">
                     <SentAppraisalsList/>
                 </div>
             </div>
-            <Navbar title="Manage Appraisals"/>
         </div>
     )
 }

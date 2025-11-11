@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import SelfAppraisal from '../components/SelfAppraisal'
 import { useLocation } from 'react-router-dom'
+import TopHeader from '../components/TopHeader'
 
 function SelfAppraisalPage() {
 
@@ -12,7 +13,8 @@ function SelfAppraisalPage() {
     return (
         
         <div>
-            <div className="flex min-h-screen">
+            <TopHeader breadcrumbs={["Participate Appraisals","Appraisal","Self Appraisal"]}/>
+            <div className="flex">
                 {/* Sidebar */}
                 <Sidebar role={"employee"}/>
                 
@@ -21,7 +23,6 @@ function SelfAppraisalPage() {
                     <SelfAppraisal currentAppraisal={appraisal}/>
                 </div>
             </div>
-            <Navbar title="Active Appraisals"/>
         </div>
     )
 }

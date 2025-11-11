@@ -43,8 +43,8 @@ const AppraisalDetailsForEmployee = () => {
   };
 
   const getButtonLabel = () => {
-    if (appraisal.stage === "SELF_REVIEW") return "Go to Self Appraisal";
-    if (appraisal.stage === "REPORTING_REVIEW") return "Go to Reporting Review";
+    if (appraisal.stage === "SELF_REVIEW") return "Proceed to Self Appraisal";
+    if (appraisal.stage === "REPORTING_REVIEW") return "Proceed to Manager Review";
     return null;
   };
 
@@ -65,17 +65,21 @@ const AppraisalDetailsForEmployee = () => {
   }
 
   return (
-    <div className="p-8 mt-14 w-full mx-auto">
+    <div className="w-full mx-auto">
       {/* Header */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
-          <FaClipboardList className="text-accent text-xl" />
-          Appraisal Overview
-        </h2>
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Participate Appraisal
+          </h2>
+          <p className="text-sm text-gray-500">
+            — Complete your assigned self or managerial appraisals.
+          </p>
+        </div>
       </div>
 
       {/* Appraisal Details Card */}
-      <div className="bg-primary-dark shadow-md rounded-xl p-6 grid gap-y-4 gap-x-8 grid-cols-1 sm:grid-cols-2 text-gray-800">
+      <div className="bg-primary rounded p-6 grid gap-y-4 gap-x-8 m-8 grid-cols-1 sm:grid-cols-2 border-2">
         <div>
           <p className="text-sm text-gray-500 mb-1 flex items-center gap-2">
             <FaClipboardList /> Title
@@ -147,7 +151,7 @@ const AppraisalDetailsForEmployee = () => {
           <div className="sm:col-span-2 mt-6 flex justify-center">
             <button
               onClick={handleNavigate}
-              className="flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold text-base rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 transform hover:scale-105"
+              className="flex items-center justify-center gap-2 px-6 py-2 bg-accent text-white font-semibold text-base rounded hover:bg-accent-dark"
             >
               {getButtonLabel()}
               <FaArrowRight className="w-5 h-5" />
@@ -157,11 +161,11 @@ const AppraisalDetailsForEmployee = () => {
       </div>
       {/* Note for CREATED stage */}
       {appraisal.stage === "CREATED" && (
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+        <div className="mt-6 mx-8 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
           <FaInfoCircle className="text-blue-600 mt-1" />
           <p className="text-gray-700 text-sm">
             <strong>Note:</strong> During the <em>Self Review</em> and{" "}
-            <em>Reporting Person Review</em> stages (if assigned), a <strong>“Go To”</strong>{" "}
+            <em>Manager Review</em> stages (if assigned), a <strong>“Go To”</strong>{" "}
             button will appear to take you to your appraisal form.
           </p>
         </div>

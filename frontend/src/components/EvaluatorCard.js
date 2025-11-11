@@ -30,14 +30,14 @@ const EvaluatorsCard = () => {
 
   if (loading) {
     return (
-      <div className="bg-primary-dark rounded-2xl shadow-md p-6 flex flex-col items-center justify-center w-full mt-6 text-gray-500">
+      <div className="bg-primary rounded shadow p-6 flex flex-col items-center justify-center w-full mt-6 text-gray-500">
         Loading evaluator details...
       </div>
     );
   }
 
   return (
-    <div className="bg-primary-dark rounded-2xl shadow-md p-6 flex flex-col gap-4 w-full mt-6">
+    <div className="bg-primary p-6 flex flex-col gap-4 w-full border-t-2">
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <FaUserTie className="text-black text-2xl" />

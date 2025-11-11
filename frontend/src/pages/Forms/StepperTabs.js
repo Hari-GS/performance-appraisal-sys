@@ -10,13 +10,13 @@ const StepperTabs = ({ currentStep, setCurrentStep, validatedSteps }) => {
   };
 
   return (
-    <div className="w-full space-y-2">
+    <div className="w-full space-y-2 px-8 pt-8">
       <h2 className="text-xl font-semibold">Create Appraisal Cycle</h2>
 
       {/* Progress Bar */}
       <div className="w-full h-2 bg-[#082148] rounded-full relative">
         <div
-          className="h-2 bg-orange-400 rounded-full transition-all duration-300 ease-in-out"
+          className="h-2 bg-accent rounded-full transition-all duration-300 ease-in-out"
           style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
         />
       </div>
@@ -36,7 +36,7 @@ const StepperTabs = ({ currentStep, setCurrentStep, validatedSteps }) => {
                 isCompleted
                   ? 'text-green-600 hover:text-green-700'
                   : isActive
-                  ? 'text-orange-600 font-semibold text-base'
+                  ? 'text-accent font-semibold text-base'
                   : 'text-gray-400 cursor-not-allowed'
               }`}
             >

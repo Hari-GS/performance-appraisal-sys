@@ -42,9 +42,9 @@ const AppraisalParticipants = ({ formData, setFormData, onNext }) => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-primary-dark p-6 rounded-md shadow-inner">
+      <div className="bg-primary p-6 rounded-md shadow-[0_0_8px_rgba(0,0,0,0.15)] border-2">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold text-black">Appraisal Participants:</h3>
+          <h3 className="text-xl font-semibold text-black">Appraisal Participants :</h3>
           <span className="text-green-600 font-semibold">
             Total {participants.length} Participants Found
           </span>
@@ -53,17 +53,17 @@ const AppraisalParticipants = ({ formData, setFormData, onNext }) => {
 
         {/* Search Bar */}
         <div className="flex justify-end my-4">
-          <input
+          {/* <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by Employee ID or Name"
-            className="border px-3 py-2 rounded text-sm w-[550px]"
-          />
+            className="border px-3 py-2 rounded text-sm w-[550px] bg-gray-50"
+          /> */}
         </div>
 
         {/* Participants List */}
-        <div className="bg-white border rounded overflow-y-auto max-h-80">
+        <div className="bg-white border-2 rounded overflow-y-auto max-h-80">
           {filteredParticipants.map((p) => (
             <div key={p.employeeId} className="flex items-center border-b px-4 py-3">
               <img
@@ -92,9 +92,9 @@ const AppraisalParticipants = ({ formData, setFormData, onNext }) => {
       <div className="w-full flex justify-end">
         <button
           onClick={handleNext}
-          className="bg-accent text-white px-5 py-2 rounded flex items-center gap-2 hover:bg-orange-600"
+          className="bg-accent text-white px-5 py-2 rounded flex items-center gap-2 hover:bg-accent-dark"
         >
-          Next: Questions Mapping <FaArrowRight />
+          Next <FaArrowRight />
         </button>
       </div>
     </div>

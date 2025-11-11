@@ -5,6 +5,7 @@ export default function ReviewCompletionChart({
   title,
   totalEmployees,
   completionValue,
+  textLabel
 }) {
   const hasValidData =
     typeof completionValue === "number" &&
@@ -51,7 +52,7 @@ export default function ReviewCompletionChart({
 
             {/* Center Text */}
             <div className="absolute top-[110px] text-center">
-              <p className="text-gray-500 text-sm">Total Participants</p>
+              <p className="text-gray-500 text-sm">{textLabel}</p>
               <p className="text-2xl font-semibold text-black">{totalEmployees}</p>
             </div>
           </div>

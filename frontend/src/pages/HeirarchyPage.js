@@ -3,12 +3,14 @@ import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import OrganizationalChart from '../components/OrganizationalChart'
 import OrganizationEditor from '../components/OrganizationEditor'
+import TopHeader from '../components/TopHeader'
 
 function HeirarchyPage() {
     return (
         
         <div>
-            <div className="flex min-h-screen">
+            <TopHeader breadcrumbs={["Participants","Heirarchy"]}/>
+            <div className="flex">
                 {/* Sidebar */}
                 <Sidebar role={"hr"}/>
                 
@@ -17,7 +19,6 @@ function HeirarchyPage() {
                     <OrganizationEditor/>
                 </div>
             </div>
-            <Navbar title="Participants"/>
         </div>
     )
 }

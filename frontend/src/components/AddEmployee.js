@@ -113,7 +113,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
 
   return (
     
-    <div className="p-8">
+    <div className=" bg-white">
       {/* Loader Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
@@ -126,15 +126,11 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
         </div>
       )}
 
-      <div className="text-black text-2xl font-bold mb-8">
-        {isEdit ? "Edit Participant" : "Add New Participant"}
-      </div>
-
       <div className="flex items-center gap-6 mb-12">
         <img
           src={formData.photo || defaultPreview}
           alt="Profile"
-          className="w-28 h-28 rounded-full object-cover border-2 border-orange-400"
+          className="w-28 h-28 rounded-full object-cover border-2"
         />
         <p className="text-sm text-gray-500 italic">
           Profile image can be only updated by the respective user
@@ -142,7 +138,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
       </div>
 
       {/* Form Inputs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mb-12">
         {["name", "employeeId", "designation", "email"].map((field) => (
           <div key={field}>
             <label className="block text-gray-700 font-medium mb-2 capitalize">
@@ -154,7 +150,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
               value={formData[field]}
               onChange={handleChange}
               readOnly={field === "employeeId" && isEdit}
-              className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-orange-500 ${
+              className={`w-full border rounded-lg px-4 py-2 ${
                 field === "employeeId" && isEdit
                   ? "bg-gray-100 cursor-not-allowed"
                   : ""
@@ -184,7 +180,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
               onChange={(e) =>
                 setFormData({ ...formData, isDirector: e.target.checked })
               }
-              className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+              className="w-5 h-5 text-orange-500 border-gray-300 rounded"
             />
             <span className="text-gray-800">He/She is a Director</span>
           </div>
@@ -203,7 +199,7 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
             name="managerId"
             value={formData.managerId || ""}
             onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-3 bg-white focus:ring-2 focus:ring-orange-500"
+            className="w-full border rounded-lg px-4 py-3 bg-white"
           >
             <option value="">None (Reports to no one)</option>
             {employees
@@ -227,13 +223,13 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
       <div className="flex justify-end gap-4">
         <button
           onClick={() => navigate("/employees")}
-          className="bg-gray-200 px-8 py-3 rounded-3xl font-semibold hover:bg-gray-300"
+          className="px-4 py-2 rounded-md font-semibold  border-2  hover:bg-orange-50"
         >
           Cancel
         </button>
         <button
           onClick={handleSubmit}
-          className="bg-accent text-white px-8 py-3 font-semibold rounded-3xl hover:bg-accent-dark"
+          className="bg-accent text-white px-6 py-0 font-semibold rounded-md hover:bg-accent-dark"
         >
           {isEdit ? "Update" : "Submit"}
         </button>

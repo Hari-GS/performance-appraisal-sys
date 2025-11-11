@@ -10,16 +10,18 @@ import CreateAppraisalFormPage from "./CreateAppraisalFormPage";
 import TemplatesPage from "./TemplatesPage";
 import TemplatesListPage from "./TemplatesListPage";
 import TemplateEditPage from "./TemplateEditPage";
+import TopHeader from "../../components/TopHeader";
 
 const FormsPage = () => {
 
   return (
     <div>
-		<div className="flex min-h-screen">
+    <TopHeader breadcrumbs={["New Appraisal"]}/>
+		<div className="flex">
 			{/* Sidebar */}
 			<Sidebar role={"hr"}/>
 			{/* Main Content */}
-			<div className="flex flex-col flex-grow pl-72 p-6 pt-20 bg-primary">
+			<div className="flex flex-col flex-grow pl-64 bg-primary">
                 <Routes>
                     <Route path="/" element={<AppraisalForm/>} />
                     {/* <Route path="/participants" element={<ParticipantsPage/>} />
@@ -31,7 +33,6 @@ const FormsPage = () => {
                 </Routes>
 			</div>
 		</div>
-		<Navbar title="New Appraisal"/>
     </div>
     
   );

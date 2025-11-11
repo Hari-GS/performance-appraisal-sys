@@ -46,7 +46,7 @@ const SelfAppraisalProgressCard = () => {
   const percentage = Math.round((answered / total) * 100);
 
   return (
-    <div className="bg-primary-dark rounded-2xl shadow-md p-6 flex flex-col gap-4 w-[50%] mt-6">
+    <div className="bg-primary p-6 flex flex-col gap-4 w-[50%] ">
       {/* Header */}
       <div className="flex items-center gap-3">
         <FaTasks className="text-secondary text-2xl" />

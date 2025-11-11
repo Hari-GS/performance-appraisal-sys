@@ -7,12 +7,12 @@ import TopHeader from '../components/TopHeader'
 function Employees() {
     return (
         <div>
-            <TopHeader/>
+            <TopHeader breadcrumbs={["Participants"]}/>
             {/* Sidebar */}
             <Sidebar role={"hr"}/>
     
             {/* Main Content */}
-            <div className="flex flex-col flex-grow pl-72 p-6 pt-0 bg-primary">
+            <div className="flex flex-col flex-grow pl-64 p-0 pt-0 bg-primary">
                 {/* <Navbar title="Participants"/> */}
                 <EmployeeProfiles/>
             </div>

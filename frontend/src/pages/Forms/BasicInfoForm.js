@@ -55,7 +55,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-primary-dark p-6 rounded-md space-y-4 shadow-inner">
+      <div className="bg-primary p-6 rounded-md space-y-4 border-2 shadow-[0_0_8px_rgba(0,0,0,0.15)]">
         <div>
           <h3 className="text-xl font-semibold text-black">Basic Information:</h3>
           <p className="text-sm text-gray-700 mt-1">
@@ -73,7 +73,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               value={basicInfo.title}
               onChange={handleChange}
               placeholder="Eg: 2025 Appraisal"
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+              className="w-full mt-1 px-3 py-2 border rounded text-sm bg-gray-50"
             />
             {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
           </div>
@@ -87,7 +87,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               value={basicInfo.type}
               onChange={handleChange}
               placeholder="Eg: Mid-Year"
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+              className="w-full mt-1 px-3 py-2 border rounded text-sm bg-gray-50"
             />
             {errors.type && <p className="text-red-500 text-xs mt-1">{errors.type}</p>}
           </div>
@@ -99,7 +99,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               name="startDate"
               value={basicInfo.startDate}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+              className="w-full mt-1 px-3 py-2 border rounded text-sm bg-gray-50"
             />
             {errors.startDate && <p className="text-red-500 text-xs mt-1">{errors.startDate}</p>}
           </div>
@@ -112,7 +112,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               name="selfAppraisalEndDate"
               value={basicInfo.selfAppraisalEndDate}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+              className="w-full mt-1 px-3 py-2 border rounded text-sm bg-gray-50"
             />
             {errors.selfAppraisalEndDate && (
               <p className="text-red-500 text-xs mt-1">{errors.selfAppraisalEndDate}</p>
@@ -129,7 +129,7 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               name="endDate"
               value={basicInfo.endDate}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+              className="w-full mt-1 px-3 py-2 border rounded text-sm bg-gray-50"
             />
             {errors.endDate && <p className="text-red-500 text-xs mt-1">{errors.endDate}</p>}
           </div>
@@ -143,9 +143,9 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
               name="description"
               value={basicInfo.description}
               onChange={handleChange}
-              placeholder="Brief welcome message and description guide to attend this appraisal"
+              placeholder="Brief welcome message and description guide to attend this appraisal (optional)"
               rows={8}
-              className="w-full mt-1 px-3 py-2 border rounded text-sm"
+              className="w-full mt-1 px-3 py-2 border rounded text-sm bg-gray-50"
             ></textarea>
           </div>
         </div>
@@ -155,9 +155,9 @@ const BasicInfoForm = ({ formData, setFormData, onNext }) => {
       <div className="w-full flex justify-end mt-4">
         <button
           onClick={handleNext}
-          className="bg-accent text-white px-5 py-2 rounded flex items-center gap-2 hover:bg-orange-600"
+          className="bg-accent text-white px-5 py-2 rounded flex items-center gap-2 hover:bg-accent-dark"
         >
-          Next: View Participants <FaArrowRight />
+          Next <FaArrowRight />
         </button>
       </div>
     </div>

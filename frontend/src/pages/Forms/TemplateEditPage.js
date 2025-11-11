@@ -101,19 +101,13 @@ const TemplateEditPage = () => {
     return <p className="text-center mt-10 text-gray-600">Loading template...</p>;
 
   return (
-    <div className="bg-primary min-h-screen pb-10">
+    <div className="bg-primary pb-10">
       {/* Sticky Header */}
       <div className="sticky top-0 z-10 bg-primary py-4 mt-4 px-6 border-gray-300 flex justify-between items-center">
         <div className="flex items-center gap-4">
-          <button
-            onClick={() => {
-              saveAll();
-              navigate("/forms/templates");
-            }}
-            className="text-sm text-gray-700 flex items-center gap-1 hover:underline"
-          >
-            <FaArrowLeft /> Back
-          </button>
+          <p className=" text-lg text-gray-700 flex items-center gap-1">
+            Template Name :
+          </p>
           <input
             ref={titleInputRef}
             placeholder="Enter template title..."
@@ -128,7 +122,7 @@ const TemplateEditPage = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setRearrangeMode(!rearrangeMode)}
-            className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-dark text-sm"
+            className="px-4 py-2 rounded hover:bg-orange-50 border-2 text-sm"
           >
             {rearrangeMode ? "Done Rearranging" : "Rearrange"}
           </button>
@@ -137,7 +131,7 @@ const TemplateEditPage = () => {
               saveAll();
               navigate("/forms/templates");
             }}
-            className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-dark text-sm"
+            className="bg-accent text-white px-6 py-2 rounded hover:bg-accent-dark text-sm"
           >
             Save
           </button>
@@ -160,7 +154,7 @@ const TemplateEditPage = () => {
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          className="bg-primary-dark p-4 rounded shadow-inner border space-y-2 mb-4"
+                          className="bg-primary shadow-[0_0_8px_rgba(0,0,0,0.15)] p-4 rounded border-2 space-y-2 mb-4"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2 mb-1">
@@ -193,7 +187,7 @@ const TemplateEditPage = () => {
                                 saveAll();
                               }}
                             />
-                            Numerical Rating Question
+                            Numerical answer only (range: 1–10)
                           </label>
                           <button
                             onClick={() => removeQuestion(idx)}
@@ -215,7 +209,7 @@ const TemplateEditPage = () => {
             {template.questions.map((q, idx) => (
               <div
                 key={idx}
-                className="bg-primary-dark p-4 rounded shadow-inner border space-y-2"
+                className="bg-primary shadow-[0_0_8px_rgba(0,0,0,0.15)] p-4 rounded border-2 space-y-2"
               >
                 <div className="flex items-center gap-2 mb-1">
                   <div className="text-xs font-bold text-white bg-accent rounded-full w-6 h-6 flex items-center justify-center">
@@ -240,7 +234,7 @@ const TemplateEditPage = () => {
                       saveAll();
                     }}
                   />
-                  Numerical Rating Question
+                  Numerical answer only (range: 1–10)
                 </label>
                 <button
                   onClick={() => removeQuestion(idx)}

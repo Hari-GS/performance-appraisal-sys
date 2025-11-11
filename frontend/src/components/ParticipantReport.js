@@ -66,33 +66,39 @@ const ParticipantReport = () => {
     return <p className="text-center text-black mt-10">No data found.</p>;
 
   return (
-    <div className="p-6 pt-20 min-h-screen bg-primary text-black">
-      <h1 className="text-2xl font-bold mb-6">Appraisal Report</h1>
-
+    <div className=" bg-primary text-black">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Report
+          </h2>
+          <p className="text-sm text-gray-500">
+            — Appraisal Report of the participant
+          </p>
+        </div>
+      </div>
       {/* Participant Details */}
-      <div className="bg-primary-dark rounded-xl shadow-lg p-6 mb-10">
+      <div className="bg-primary rounded-xl p-6 m-10 border-2">
         <h2 className="text-xl font-semibold mb-3 flex items-center">
           <AiOutlineUser className="mr-2 text-accent" />
           {report.employeeName} ({report.employeeId})
         </h2>
 
         <p className="text-sm flex items-center mb-1">
-          <AiOutlineIdcard className="mr-2 text-accent" />
           Designation: {report.designation}
         </p>
 
         <p className="text-sm flex items-center mb-1">
-          <AiOutlineIdcard className="mr-2 text-accent" />
           Reporting Manager: {report.managerName}
         </p>
 
         <p className="text-sm flex items-center mb-1">
-          <AiOutlineIdcard className="mr-2 text-accent" />
-          Appraisal Title: {report.appraisalTitle} - {report.appraisalType}
+          Appraisal Cycle: {report.appraisalTitle} - {report.appraisalType}
         </p>
 
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pr-10">
       
       <button
         onClick={downloadPdf}
@@ -115,7 +121,7 @@ const ParticipantReport = () => {
       </div>
 
       {/* Question & Answers Section */}
-      <div className="bg-primary-dark rounded-xl shadow-lg p-6">
+      <div className="mx-10">
         <h3 className="text-accent text-lg font-bold mb-4">
           Review Summary
         </h3>
@@ -127,7 +133,7 @@ const ParticipantReport = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white p-4 rounded-xl shadow border border-gray-200"
+                  className="bg-white p-4 rounded border-2 border-gray-200"
                 >
                   <p className="font-semibold text-black mb-2">
                     Q{index + 1}. {self.question}
@@ -137,7 +143,7 @@ const ParticipantReport = () => {
                     {self.answer || "—"}
                   </p>
                   <p className="text-gray-700">
-                    🟡 <span className="font-medium">Manager Review:</span>{" "}
+                    🟡 <span className="font-medium">Manager:</span>{" "}
                     {manager?.answer || "—"}
                   </p>
                 </div>

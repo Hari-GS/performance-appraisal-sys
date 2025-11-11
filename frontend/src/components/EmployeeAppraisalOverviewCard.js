@@ -48,7 +48,7 @@ const EmployeeAppraisalOverviewCard = () => {
 
   if (loading) {
     return (
-      <div className="bg-primary-dark rounded-2xl shadow-md p-6 mt-6 w-[50%] text-gray-500 justify-center items-center">
+      <div className="bg-primary p-6 mt-6 w-[50%] text-gray-500 justify-center border-2 items-center">
         <p>Loading current appraisal...</p>
       </div>
     );
@@ -63,15 +63,15 @@ const EmployeeAppraisalOverviewCard = () => {
   }
 
   return (
-    <div className="bg-primary-dark rounded-2xl shadow-md p-6 flex flex-col gap-4 mt-6 w-[50%]">
+    <div className="bg-primary p-6 flex flex-col border-r-2 gap-4 w-[50%]">
       <div className="flex items-center gap-3">
         <FaRegFileAlt className="text-black text-2xl" />
         <h2 className="text-xl font-bold text-black">Latest Appraisal</h2>
       </div>
 
       <div className="space-y-2 pl-1">
-        <p className="text-sm text-gray-500">Appraisal Title</p>
-        <h3 className="text-lg font-semibold text-black">{appraisal.title}</h3>
+        <p className="text-sm text-gray-500">Appraisal Name</p>
+        <h3 className="text-lg font-semibold text-black">{appraisal.title} - {appraisal.type}</h3>
 
         <p className="text-sm text-gray-500 mt-3">Self Appraisal Deadline</p>
         <div className="flex items-center gap-2 text-black">

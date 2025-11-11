@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { request } from "../../helpers/axios_helpers";
 import { FiEdit } from "react-icons/fi";
 import TemplateEditModel2 from "./TemplateEditModel2";
+import { FaArrowRight } from "react-icons/fa";
 
 const TemplateMapper = ({ formData, setFormData, onNext  }) => {
   const [templates, setTemplates] = useState([]);
@@ -76,7 +77,7 @@ const TemplateMapper = ({ formData, setFormData, onNext  }) => {
       {formData.participants.map((emp) => (
         <div
           key={emp.employeeId}
-          className="border p-4 rounded-lg shadow-sm bg-primary-dark"
+          className="border-2 p-4 rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.15)] bg-primary"
         >
           <div className="flex justify-between items-center mb-2">
             <div>
@@ -85,7 +86,7 @@ const TemplateMapper = ({ formData, setFormData, onNext  }) => {
             </div>
             <div className="flex gap-3 items-center">
               <select
-                className="border px-2 py-1 rounded"
+                className="border-2 px-2 py-1 rounded"
                 value={emp.templateId?.toString() || ""}
                 onChange={(e) =>
                   handleTemplateChange(emp.employeeId, e.target.value)
@@ -101,10 +102,10 @@ const TemplateMapper = ({ formData, setFormData, onNext  }) => {
               <button
                 onClick={() => handleEditClick(emp.employeeId)}
                 disabled={!emp.questions?.length}
-                className={`flex items-center gap-1 px-3 py-1 rounded text-white text-sm ${
+                className={`flex items-center gap-1 px-3 py-1 rounded text-white border text-sm ${
                   emp.questions?.length
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-gray-400 cursor-not-allowed"
+                    ? "bg-accent hover:bg-accent-dark"
+                    : "bg-gray-300 cursor-not-allowed"
                 }`}
               >
                 <FiEdit />
@@ -125,7 +126,7 @@ const TemplateMapper = ({ formData, setFormData, onNext  }) => {
             <TemplateEditModel2
               isOpen={true}
               onClose={() => setEditingEmployeeId(null)}
-              employeeName={emp.employeeName}
+              employeeName={emp.name}
               questions={emp.questions}
               onSave={(updatedQuestions) =>
                 handleSaveEditedQuestions(emp.employeeId, updatedQuestions)
@@ -137,9 +138,9 @@ const TemplateMapper = ({ formData, setFormData, onNext  }) => {
       <div className="flex justify-end mt-6">
         <button
           onClick={onNext}
-          className="bg-accent text-white px-6 py-2 rounded hover:bg-accent-dark transition"
+          className="bg-accent text-white flex items-center px-6 py-2 rounded hover:bg-accent-dark transition gap-2"
         >
-          Next: Preview
+          Next <FaArrowRight />
         </button>
       </div>
 

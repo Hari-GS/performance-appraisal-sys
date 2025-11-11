@@ -62,25 +62,27 @@ const AllReports = () => {
   }
 
   return (
-    <div className="bg-primary min-h-screen text-black font-sans p-6 pt-24">
+    <div className="bg-primary text-black font-sans">
       {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-black text-2xl font-bold mb-0 mt-0">Closed Appraisals</h1>
-        <p className="text-gray-700">
-          View and access detailed reports of completed appraisal cycles.
-        </p>
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Closed Appraisals
+          </h2>
+          <p className="text-sm text-gray-500">
+            — View and download the appraisal reports of the participants
+          </p>
+        </div>
       </div>
-
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-8">
         {completedAppraisals.map((appraisal) => (
           <div
             key={appraisal.id}
-            className="bg-primary-dark rounded-2xl shadow-lg p-6 transition-transform transform hover:scale-[1.02] hover:shadow-xl"
+            className="bg-primary rounded p-6 border-2"
           >
             {/* Title */}
             <h2 className="text-xl font-semibold mb-3 flex items-center capitalize">
-              <AiOutlineFileText className="text-accent mr-2" />
               {appraisal.title} - {appraisal.type}
             </h2>
 
@@ -99,7 +101,6 @@ const AllReports = () => {
 
             {/* Status */}
             <div className="flex items-center mb-5">
-              <AiOutlineCheckCircle className="text-accent mr-2" />
               {renderStatusBadge(appraisal.stage)}
             </div>
 

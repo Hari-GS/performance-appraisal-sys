@@ -80,7 +80,7 @@ const TemplateEditModel2 = ({
     <div className="flex gap-2 pr-10">
       <button
         onClick={() => setRearrangeMode((prev) => !prev)}
-        className="bg-accent text-white text-sm px-3 py-1 rounded hover:bg-accent-dark flex items-center gap-2"
+        className=" border-2 text-sm px-3 py-1 rounded hover:bg-orange-50 flex items-center gap-2 mr-14"
       >
         {rearrangeMode ? (
           <>
@@ -94,14 +94,17 @@ const TemplateEditModel2 = ({
           </>
         )}
       </button>
-
-      <button
-        onClick={handleCleanupAndClose}
-        className="absolute top-4 right-1 text-gray-600 hover:text-red-500 transition"
-        title="Close"
-      >
-        <IoClose size={25} />
-      </button>
+      {rearrangeMode == false ? (
+        <button
+          onClick={handleCleanupAndClose}
+          className="absolute flex items-center top-4 gap-2 right-1 p-0.5 px-2 rounded text-primary bg-accent hover:bg-accent-dark transition"
+          title="Close"
+        >
+          <FaCheck className="text-sm" />
+          Done
+        </button>
+        ) : null
+        }
     </div>
   </div>
 </div>
@@ -123,7 +126,7 @@ const TemplateEditModel2 = ({
                           <div
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="bg-primary-dark p-4 rounded shadow-inner border space-y-2 mb-4"
+                            className="bg-primary p-4 rounded shadow-inner border space-y-2 mb-4"
                           >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2 mb-1">
@@ -180,7 +183,7 @@ const TemplateEditModel2 = ({
               {localQuestions.map((q, idx) => (
                 <div
                   key={idx}
-                  className="bg-primary-dark p-4 rounded shadow-inner border space-y-2"
+                  className="bg-primary border-2 p-4 rounded shadow-inner space-y-2"
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <div className="text-xs font-bold text-white bg-accent rounded-full w-6 h-6 flex items-center justify-center">
@@ -203,7 +206,7 @@ const TemplateEditModel2 = ({
                         updateQuestion(idx, "showPoints", e.target.checked)
                       }
                     />
-                    Show Points
+                    Numerical answer only (range: 1-10)
                   </label>
                   <button
                     onClick={() => removeQuestion(idx)}

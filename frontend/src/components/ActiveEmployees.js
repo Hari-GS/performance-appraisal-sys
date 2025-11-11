@@ -34,7 +34,7 @@ const ActiveEmployees = ({ employees, searchText, isEmployeeLoading, employeeErr
 
   if (filteredEmployees.length === 0) {
     return (
-      <div className="text-center pt-10 mt-10 text-gray-400 text-lg  min-h-[300px]">
+      <div className="text-center pt-10 mt-20 text-gray-400 text-base min-h-[300px]">
         No active participants found
       </div>
     );
@@ -42,11 +42,11 @@ const ActiveEmployees = ({ employees, searchText, isEmployeeLoading, employeeErr
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8 pl-5">
         {filteredEmployees.map((employee) => (
           <div
             key={employee.employeeId}
-            className="bg-primary-dark/80 backdrop-blur-md border text-center border-gray-200 py-4 px-4 rounded-xl shadow-md cursor-pointer hover:scale-[1.02] hover:shadow-xl transition-all duration-200"
+            className="border-2 text-center border-gray-200 py-4 px-4 rounded-xl cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] transition-all duration-200"
             onClick={() => setSelectedEmployee(employee)}
           >
             <img
@@ -55,8 +55,8 @@ const ActiveEmployees = ({ employees, searchText, isEmployeeLoading, employeeErr
               className="w-full h-32 object-cover rounded-lg"
             />
             <h3 className="text-lg font-semibold mt-2 capitalize">{employee.name}</h3>
-            <p className="text-gray-500">{employee.designation}</p>
             <p className="text-gray-500">{employee.employeeId}</p>
+            <p className="text-gray-500">{employee.designation}</p>
           </div>
         ))}
       </div>

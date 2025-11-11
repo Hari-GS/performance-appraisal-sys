@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import AppraisalDetailsForEmployee from '../components/AppraisalDetailsForEmployee'
 import { useLocation } from "react-router-dom";
+import TopHeader from '../components/TopHeader';
 
 function AppraisalDetails() {
     const location = useLocation();
@@ -11,16 +12,15 @@ function AppraisalDetails() {
     return (
         
         <div>
-            <div className="flex min-h-screen">
+            <TopHeader breadcrumbs={["Active Appraisals","Participate Appraisal"]}/>
+            <div className="flex">
                 {/* Sidebar */}
                 <Sidebar role={"employee"}/>
-                
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-72 p-6 bg-primary">
+                <div className="flex flex-col flex-grow pl-64 bg-primary">
                     <AppraisalDetailsForEmployee appraisal={appraisal}/>
                 </div>
             </div>
-            <Navbar title="Active Appraisal"/>
         </div>
     )
 }

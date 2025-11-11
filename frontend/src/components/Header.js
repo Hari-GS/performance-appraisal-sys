@@ -3,9 +3,12 @@ import { FaPlus, FaSyncAlt, FaCalendarAlt, FaCaretDown } from "react-icons/fa";
 import { request } from "../helpers/axios_helpers";
 import { ReactComponent as PlusIcon } from "../images/Appraisal-Icons/PlusSquare.svg";
 import { ReactComponent as CloudIcon } from "../images/Appraisal-Icons/CloudArrowDown.svg";
+import { useNavigate } from "react-router-dom";
+import ProtectedView from "./ProtectedView";
 
 export default function Header() {
   const [userInfo, setUserInfo] = useState("");
+  const navigate = useNavigate();
   const [year, setYear] = useState("2025");
 
   useEffect(() => {
@@ -32,17 +35,19 @@ export default function Header() {
 
       {/* Right: Action Buttons */}
       <div className="flex items-center space-x-3">
-        {/* Add New Cycle */}
-        <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-100 transition">
-          <PlusIcon/>
-          <span className="text-gray-500 font-medium text-sm">Add New Cycle</span>
-        </button>
-
+        <ProtectedView allowedRoles={["hr"]}>
+          {/* Add New Cycle */}
+          <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-100 transition" onClick={()=>navigate("/forms/create-appraisal")}>
+            <PlusIcon/>
+            <span className="text-gray-500 font-medium text-sm">Add New Cycle</span>
+          </button>
+        </ProtectedView>
+    
         {/* Export */}
-        <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-50 transition">
+        {/* <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-50 transition">
           <CloudIcon/>
           <span className="text-gray-500 font-medium text-sm">Export</span>
-        </button>
+        </button> */}
 
         {/* Year Selector */}
         {/* <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-50 transition">

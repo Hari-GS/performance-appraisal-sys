@@ -27,11 +27,11 @@ const Sidebar = () => {
   if (!user) return null;
 
   const menuItems = [
-    { name: "Dashboard", icon: <DashIcon />, path: (user.role === "employee" || user.role === "director") ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee", "director"]},
+    { name: "Dashboard", icon: <DashIcon />, path: user.role === "employee" ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee", "director"]},
     { name: "Participants", icon: <Profile2Icon />, path: "/employees", roles: ["hr", "director"] },
     { name: "New Appraisal", icon: <CubeIcon />, path: "/forms", roles: ["hr"] },
-    { name: "Manage Appraisals", icon: <EditIcon />, path: "/reviews", roles: ["hr", "director"] },
-    { name: "Active Appraisals", icon: <FaWpforms />, path: "/employee/appraisal", roles: ["employee", "hr", "director"] },
+    { name: user.role === "hr" ? "Manage Appraisals" : "Monitor Appraisals", icon: <EditIcon />, path: "/reviews", roles: ["hr", "director"] },
+    { name: "Participate Appraisals", icon: <FaWpforms />, path: "/employee/appraisal", roles: ["employee", "hr", "director"] },
     { name: "Reports", icon: <ReportIcon />, path: "/reports", roles: ["hr", "director"] },
     { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles: ["employee"] },
   ];
@@ -42,7 +42,7 @@ const Sidebar = () => {
       <div className="flex items-center justify-center space-x-1 w-[200px] h-[26px] ">
         <img src={citLogo} alt="cit-logo" className="h-[28px] w-auto pl-16"/>
       </div>
-      <div className="border border-gray-200 shadow-sm mt-3.5"></div>
+      <div className=" border mt-3.5"></div>
       {/* Navigation */}
       <nav className="flex flex-col space-y-2 mt-8">
         {menuItems
@@ -54,7 +54,7 @@ const Sidebar = () => {
               <button
                 key={item.name}
                 onClick={() => navigate(item.path)}
-                className={`relative flex items-center py-3 pl-12 pr-8 text-[15px] font-medium transition-all duration-300 overflow-visible 
+                className={`relative flex items-center py-3 pl-8 pr-8 text-[15px] font-medium transition-all duration-300 overflow-visible 
                   ${isActive
                     ? "text-accent hover:bg-orange-50"
                     : "text-gray-800 hover:text-accent hover:bg-orange-50"
