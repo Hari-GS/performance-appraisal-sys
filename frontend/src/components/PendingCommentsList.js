@@ -34,11 +34,11 @@ const PendingCommentsList = () => {
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-8">
         {people.map((person) => (
           <div
             key={person.id}
-            className="bg-primary-dark rounded-xl shadow-lg p-5 transition border border-gray-200"
+            className="bg-primary rounded p-5 transition border-2"
           >
             <div className="flex justify-between items-center mb-3">
               <h2 className="text-black text-xl font-semibold flex items-center">
@@ -59,12 +59,10 @@ const PendingCommentsList = () => {
             </div>
 
             <p className="text-black text-sm mb-1 flex items-center">
-              <AiOutlineIdcard className="mr-2 text-accent" />
               Employee ID: {person.employeeId}
             </p>
 
             <p className="text-black text-sm mb-4 flex items-center">
-              <AiOutlineIdcard className="mr-2 text-accent" />
               Designation: {person.designation}
             </p>
             <button onClick={() => navigate(`/employee/self-appraisal/comments/${appraisalId}/${person.employeeId}`)} 

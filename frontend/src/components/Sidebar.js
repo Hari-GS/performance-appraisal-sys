@@ -9,7 +9,8 @@ import { ReactComponent as CubeIcon } from "../images/Appraisal-Icons/3dcube.svg
 import { ReactComponent as DashIcon } from "../images/Appraisal-Icons/element-3.svg";
 import { ReactComponent as Profile2Icon } from "../images/Appraisal-Icons/profile-2user.svg";
 import { ReactComponent as EditIcon } from "../images/Appraisal-Icons/edit.svg";
-import { ReactComponent as ReportIcon } from "../images/Appraisal-Icons/directbox-default-2.svg";
+import { ReactComponent as Swatches } from "../images/Appraisal-Icons/Swatches.svg";
+import { ReactComponent as StackOverflowLogo } from "../images/Appraisal-Icons/StackOverflowLogo.svg";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -29,11 +30,11 @@ const Sidebar = () => {
   const menuItems = [
     { name: "Dashboard", icon: <DashIcon />, path: user.role === "employee" ? "/employee-dashboard" : "/hr-dashboard", roles: ["hr", "employee", "director"]},
     { name: "Participants", icon: <Profile2Icon />, path: "/employees", roles: ["hr", "director"] },
-    { name: "New Appraisal", icon: <CubeIcon />, path: "/forms", roles: ["hr"] },
-    { name: user.role === "hr" ? "Manage Appraisals" : "Monitor Appraisals", icon: <EditIcon />, path: "/reviews", roles: ["hr", "director"] },
-    { name: "Participate Appraisals", icon: <FaWpforms />, path: "/employee/appraisal", roles: ["employee", "hr", "director"] },
-    { name: "Reports", icon: <ReportIcon />, path: "/reports", roles: ["hr", "director"] },
-    { name: "Closed Appraisals", icon: <FaClipboardCheck />, path: "/employee/closed-appraisals", roles: ["employee"] },
+    { name: "New", icon: <CubeIcon />, path: "/forms", roles: ["hr"] },
+    { name: user.role === "hr" ? "Manage" : "Monitor", icon: <EditIcon />, path: "/reviews", roles: ["hr", "director"] },
+    { name: "Participate", icon: <Swatches />, path: "/employee/appraisal", roles: ["employee", "hr", "director"] },
+    { name: "Closed", icon: <StackOverflowLogo />, path: "/reports", roles: ["hr", "director"] },
+    { name: "Closed", icon: <StackOverflowLogo />, path: "/employee/closed-appraisals", roles: ["employee"] },
   ];
 
   return (
@@ -54,7 +55,7 @@ const Sidebar = () => {
               <button
                 key={item.name}
                 onClick={() => navigate(item.path)}
-                className={`relative flex items-center py-3 pl-8 pr-8 text-[15px] font-medium transition-all duration-300 overflow-visible 
+                className={`relative flex items-center py-3 pl-14 pr-8 text-[15px] font-medium transition-all duration-300 overflow-visible 
                   ${isActive
                     ? "text-accent hover:bg-orange-50"
                     : "text-gray-800 hover:text-accent hover:bg-orange-50"

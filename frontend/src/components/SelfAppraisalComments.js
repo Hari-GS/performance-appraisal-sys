@@ -45,8 +45,6 @@ const SelfAppraisalComments = () => {
 
   return (
     <div className=" p-6 min-h-screen bg-primary">
-      <h1 className="text-3xl font-bold text-black mb-8 mt-16">Self Appraisal Review</h1>
-
       {questions.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 pb-20">
           {questions.map((q) => (
@@ -77,8 +75,8 @@ const SelfAppraisalComments = () => {
           ))}
         </div>
       ) : (
-        <p className="text-black text-center mt-10">
-          No self appraisal data found.
+        <p className="text-gray-500 text-center mt-10">
+          This participant not answered any of his/her self appraisal questions
         </p>
       )}
 

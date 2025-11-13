@@ -24,7 +24,7 @@ export default function Header() {
   }, []);
 
   return (
-    <div className="flex justify-between items-center px-6 py-4 bg-white border border-gray-200 shadow-sm">
+    <div className="flex justify-between items-center px-6 py-4 bg-white border-b border-gray-200">
       {/* Left: Greeting */}
       <div>
         <h1 className="text-xl font-semibold text-gray-900">

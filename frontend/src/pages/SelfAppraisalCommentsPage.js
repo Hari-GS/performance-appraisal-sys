@@ -2,17 +2,20 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import SelfAppraisalComments from '../components/SelfAppraisalComments.js'
+import TopHeader from '../components/TopHeader.js'
 
 function SelfAppraisalCommentsPage() {
     return (
-        <div className="flex min-h-screen">
-            {/* Sidebar */}
-            <Sidebar role={"employee"}/>
-            
-            {/* Main Content */}
-            <div className="flex flex-col flex-grow pl-72 p-6 pt-6 bg-primary">
-                <Navbar title="Current Appraisal"/>
-                <SelfAppraisalComments/>
+        <div>
+            <TopHeader breadcrumbs={["Participate","Participate Appraisal","Comment Subordinates","Comment"]}/>
+            <div className="flex min-h-screen">
+                {/* Sidebar */}
+                <Sidebar role={"employee"}/>
+                
+                {/* Main Content */}
+                <div className="flex flex-col flex-grow pl-72 p-6 pt-6 bg-primary">
+                    <SelfAppraisalComments/>
+                </div>
             </div>
         </div>
     )

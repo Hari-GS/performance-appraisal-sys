@@ -6,6 +6,8 @@ import EmployeeAppraisalOverviewCard from './EmployeeAppraisalOverviewCard'
 import SelfAppraisalProgressCard from './SelfAppraisalProgressCard'
 import EvaluatorsCard from './EvaluatorCard'
 import TopHeader from './TopHeader'
+import EmployeeAppraisalCard from './EmployeeAppraisalCard'
+import ManagerReviewProgressCard from './ManagerReviewProgressCard'
 
 function EmployeeDashboard() {
     return (
@@ -17,10 +19,10 @@ function EmployeeDashboard() {
 			    {/* Main Content */}
 			    <div className="flex flex-col flex-grow pl-64 pt-0">
 				    <Header/>
-					<EmployeeAppraisalOverviewCard/>
+					<EmployeeAppraisalCard/>
 					<div className='flex flex-row'>
 						<SelfAppraisalProgressCard/>
-						<SelfAppraisalProgressCard/>
+						<ManagerReviewProgressCard/>
 					</div>
 					<EvaluatorsCard/>
 			    </div>

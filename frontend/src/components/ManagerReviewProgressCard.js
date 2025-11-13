@@ -1,19 +1,19 @@
-// SelfAppraisalProgressCard.jsx
+// ManagerReviewProgressCard.jsx
 import { FaTasks, FaArrowRight, FaClock } from "react-icons/fa";
 import React from "react";
 import { useState, useEffect } from "react";
 import { request } from "../helpers/axios_helpers";
 
-const SelfAppraisalProgressCard = () => {
+const ManagerReviewProgressCard = () => {
 
-  const [selfAppraisal, setSelfAppraisal] = useState(null);
+  const [managerAppraisal, setManagerAppraisal] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAppraisal = async () => {
       try {
-        const response = await request("GET", "/api/appraisals/current-participant");
-        setSelfAppraisal(response.data);
+        const response = await request("GET", "/api/appraisals/current-participant/manager-review-data");
+        setManagerAppraisal(response.data);
       } catch (error) {
         console.error("Failed to fetch appraisal details:", error);
       } finally {
@@ -33,7 +33,7 @@ const SelfAppraisalProgressCard = () => {
     );
   }
 
-  if (!selfAppraisal) {
+  if (!managerAppraisal) {
     return (
       <div className="bg-primary-dark rounded-2xl shadow-md p-6 flex justify-center items-center w-[50%] mt-6">
         <p className="text-gray-500">No active appraisal</p>
@@ -41,27 +41,27 @@ const SelfAppraisalProgressCard = () => {
     );
   }
   
-  const answered   = selfAppraisal.selfQnsAnswered;   // number of questions the employee has answered
-  const total      = selfAppraisal.totalSelfQns;  // total questions
+  const answered   = managerAppraisal.totalManagerReviewsDone;   // number of questions the employee has answered
+  const total      = managerAppraisal.totalManagerReviews;  // total questions
   const percentage = Math.round((answered / total) * 100);
 
   return (
-    <div className="bg-primary p-6 px-10 flex flex-col w-[50%] border-r-2">
+    <div className="bg-primary p-6 flex flex-col w-[50%] px-10 ">
       {/* Header */}
       <div className="flex items-center mb-4">
-        <h2 className=" text-lg font-semibold">Self Appraisal Progress</h2>
+        <h2 className=" text-lg font-semibold">Managerial Review Progress</h2>
       </div>
       <div className="flex items-center gap-2 mb-1">
         <FaClock className="text-gray-500 text-sm" />
         <p className="text-sm text-gray-500">Deadline</p>
       </div>
         <div className="flex items-center gap-2 text-black mb-4">
-          <span>{selfAppraisal.selfAppraisalEndDate}</span>
+          <span>{managerAppraisal.endDate}</span>
         </div>
 
       {/* Stats */}
       <p className="text-secondary-dark font-semibold mb-2">
-        {selfAppraisal.selfQnsAnswered} of {selfAppraisal.totalSelfQns} questions answered
+        {managerAppraisal.totalManagerReviewsDone} of {managerAppraisal.totalManagerReviews} participants completed
       </p>
 
       {/* Progress bar */}
@@ -89,4 +89,4 @@ const SelfAppraisalProgressCard = () => {
   );
 };
 
-export default SelfAppraisalProgressCard;
+export default ManagerReviewProgressCard;

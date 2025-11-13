@@ -40,8 +40,8 @@ const EvaluatorsCard = () => {
     <div className="bg-primary p-6 flex flex-col gap-4 w-full border-t-2">
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
-        <FaUserTie className="text-black text-2xl" />
-        <h2 className="text-xl font-bold text-black">Your Evaluators</h2>
+        <FaUserTie className="text-black text-xl" />
+        <h2 className="text-xl font-semibold text-black">Your Evaluators</h2>
       </div>
 
       {/* Evaluator list */}
@@ -52,11 +52,11 @@ const EvaluatorsCard = () => {
               </div>
               <div className="min-w-[180px]">
                 <p className="font-semibold">{evaluators?.reportingPerson == "_" ? "Not Assigned" : evaluators?.reportingPerson}</p>
-                <p className="text-sm text-gray-500">{evaluators?.reportingPersonDesignation == "_" ? "Not Assigned" : evaluators?.reportingPersonDesignation} (Reporting Person)</p>
+                <p className="text-sm text-gray-500">{evaluators?.reportingPersonDesignation == "_" ? "Not Assigned" : evaluators?.reportingPersonDesignation} (Reporting Manager)</p>
               </div>
       </div>
       
-      <hr className="my-3 border-gray-500" />
+      <hr className="my-3 border-gray-300" />
 
       {/* Appraisal Flow */}
       <div className="flex items-center justify-between gap-3 overflow-x-auto text-black text-sm">
@@ -69,23 +69,23 @@ const EvaluatorsCard = () => {
         <FaArrowRight className="text-gray-400 text-lg" />
 
         <div className="flex flex-col items-center min-w-[100px] text-center">
-          <FaRegComments className="text-accent-dark text-xl mb-1" />
+          <FaRegComments className="text-accent text-xl mb-1" />
           <span>Manager Comments</span>
-          <span className="text-xs text-gray-500">Reporting Person</span>
+          <span className="text-xs text-gray-500">by Reporting Manager</span>
         </div>
 
         <FaArrowRight className="text-gray-400 text-lg" />
 
         <div className="flex flex-col items-center min-w-[100px] text-center">
-          <FaRegComments className="text-secondary-dark text-xl mb-1" />
+          <FaRegComments className="text-accent text-xl mb-1" />
           <span>HR Review</span>
-          <span className="text-xs text-gray-500">HR Manager</span>
+          <span className="text-xs text-gray-500">by HR Manager</span>
         </div>
 
         <FaArrowRight className="text-gray-400 text-lg" />
 
         <div className="flex flex-col items-center min-w-[100px] text-center">
-          <FaClipboardCheck className="text-green-600 text-xl mb-1" />
+          <FaClipboardCheck className="text-accent text-xl mb-1" />
           <span>Submitted</span>
           <span className="text-xs text-gray-500">Final Report</span>
         </div>
