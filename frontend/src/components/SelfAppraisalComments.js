@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineComment, AiOutlineQuestionCircle } from 'react-icons/ai';
 import { request } from '../helpers/axios_helpers';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SelfAppraisalComments = () => {
   const [questions, setQuestions] = useState([]);
   const [comments, setComments] = useState({});
+  const [scores, setScores] = useState({});
   const { employeeId, appraisalId } = useParams();
   const navigate = useNavigate();
 
@@ -19,7 +21,22 @@ const SelfAppraisalComments = () => {
         'GET',
         `/api/reporting/self-appraisal/${appraisalId}/participants/${employeeId}/answers`
       );
-      setQuestions(response.data || []);
+      const data = response.data || [];
+
+      const initialComments = {};
+      const initialScores = {};
+
+      data.forEach((q) => {
+        initialComments[q.id] = q.reportingPersonComment || '';
+        initialScores[q.id] =
+          q.reportingPersonScore !== null && q.reportingPersonScore !== undefined
+            ? Number(q.reportingPersonScore)
+            : '';
+      });
+
+      setQuestions(data);
+      setComments(initialComments);
+      setScores(initialScores);
     } catch (error) {
       console.error('Failed to fetch self appraisal questions', error);
     }
@@ -29,45 +46,102 @@ const SelfAppraisalComments = () => {
     setComments((prev) => ({ ...prev, [id]: value }));
   };
 
+  const handleScoreChange = (id, value) => {
+    setScores((prev) => ({ ...prev, [id]: Number(value) }));
+  };
+
   const saveComments = async () => {
     try {
       const payload = questions.map((q) => ({
         answerId: q.id,
-        reportingPersonComment: comments[q.id] || q.reportingPersonComment,
+        reportingPersonComment: comments[q.id] || q.reportingPersonComment || '',
+        reportingPersonScore:
+          scores[q.id] !== '' && scores[q.id] !== null
+            ? Number(scores[q.id])
+            : null,
       }));
+
       await request('PUT', `/api/self-appraisal/reporting-person-comment`, payload);
-      alert('Comments saved successfully!');
-      navigate(`/employee/self-appraisal/comments/${appraisalId}`)
+      toast.success('Comments and scores saved successfully!');
+      navigate(`/employee/self-appraisal/comments/${appraisalId}`);
     } catch (error) {
+      toast.error("Failed to save comments or scores");
       console.error('Failed to save comments', error);
     }
   };
 
   return (
-    <div className=" p-6 min-h-screen bg-primary">
+    <div className="min-h-screen bg-primary">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-base font-semibold text-gray-800">
+            Manager Review
+          </h2>
+          <p className="text-sm text-gray-500">
+            — Add your comments and scores to this subordinate's self appraisal
+          </p>
+        </div>
+      </div>
+
       {questions.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 pb-20">
+        <div className="grid grid-cols-1 gap-6 pb-20 p-8 pt-10">
           {questions.map((q) => (
-            <div
-              key={q.id}
-              className="bg-primary-dark rounded-xl shadow-md p-5 hover:shadow-lg transition duration-300"
-            >
+            <div key={q.id} className="bg-primary rounded border-2 p-4">
+              {/* Question Text */}
               <h2 className="text-black text-lg font-semibold mb-2 flex items-center">
                 <AiOutlineQuestionCircle className="mr-2 text-accent" />
                 {q.questionText}
               </h2>
 
-              <p className="text-black text-sm mb-4">
-                <strong>Answer:</strong> {q.answerText}
-              </p>
+              {/* Self Appraisal Answer */}
+              <div className="text-black text-sm mb-4">
+                <p>
+                  <strong>Their Answer:</strong>{' '}
+                  {q.answerText || <em>No answer</em>}
+                </p>
+                {q.answerScore ? (
+                  <p className="mt-1">
+                    <strong>Their Score:</strong>{' '}
+                    <span className="text-accent font-semibold">{q.answerScore}</span> / 10
+                  </p>
+                ) : (
+                  <p className="mt-1 text-gray-500">
+                    <em>No self score provided</em>
+                  </p>
+                )}
+              </div>
 
+              {/* Manager Score Selection */}
+              <div className="mb-3">
+                <p className="text-sm font-semibold mb-1 text-gray-700">
+                  Your Score:
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => handleScoreChange(q.id, num)}
+                      className={`px-3 py-1 rounded-full border transition-all ${
+                        Number(scores[q.id]) === num
+                          ? 'bg-accent text-white border-accent'
+                          : 'bg-gray-100 hover:bg-gray-200 border-gray-300'
+                      }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Manager Comment */}
               <div className="flex items-start">
-                <AiOutlineComment className="mr-2 mt-1 text-accent" />
                 <textarea
                   className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
                   placeholder="Add your comment..."
                   rows={3}
-                  value={comments[q.id] || q.reportingPersonComment || ''}
+                  value={comments[q.id] || ''}
                   onChange={(e) => handleCommentChange(q.id, e.target.value)}
                 />
               </div>
@@ -76,16 +150,16 @@ const SelfAppraisalComments = () => {
         </div>
       ) : (
         <p className="text-gray-500 text-center mt-10">
-          This participant not answered any of his/her self appraisal questions
+          This participant has not answered any self-appraisal questions.
         </p>
       )}
 
       {questions.length > 0 && (
         <button
           onClick={saveComments}
-          className="fixed bottom-6 right-6 bg-accent text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-accent-dark transition duration-300"
+          className="fixed bottom-6 right-6 bg-accent text-white font-semibold px-4 py-2 rounded hover:bg-accent-dark transition duration-300"
         >
-          Save Comments
+          Save Comments & Scores
         </button>
       )}
     </div>

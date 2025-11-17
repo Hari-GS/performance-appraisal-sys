@@ -101,36 +101,44 @@ const TemplatesListPage = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
         {templates.map((template) => (
-            <div
-              key={template.id}
-              className="p-4 rounded border-2 transition-all duration-150 flex justify-between items-center"
-            >
-              <div>
-                <h2 className="font-semibold text-black">
-                  {template.title || "Untitled"}
-                </h2>
-                <p className="text-sm text-gray-500">
-                  {template.questions?.length || 0} questions
-                </p>
-              </div>
-              <div className="flex gap-4 text-sm">
-                <button
-                  onClick={() => navigate(`/forms/templates/${template.id}`)}
-                  className="text-blue-600 flex items-center gap-1 hover:underline"
-                  title="Edit Template"
-                >
-                  <FaPen /> Edit
-                </button>
+          <div
+            key={template.id}
+            className="p-4 rounded border-2 transition-all duration-150 flex justify-between items-center"
+          >
+            <div>
+              <h2 className="font-semibold text-black">
+                {template.title || "Untitled"}
+              </h2>
+              <p className="text-sm text-gray-500">
+                {template.questions?.length || 0} questions
+              </p>
+            </div>
+
+            <div className="flex gap-4 text-sm">
+
+              {/* 🔵 OPEN Button (replaced Edit) */}
+              <button
+                onClick={() => navigate(`/forms/templates/${template.id}`)}
+                className="text-blue-600 flex items-center gap-1 hover:underline"
+                title="Open Template"
+              >
+                Open
+              </button>
+
+              {/* 🔴 Hide Delete button if template.isDefault === true */}
+              {!template.isDefault && (
                 <button
                   onClick={() => confirmDelete(template.id)}
                   className="text-red-500 flex items-center gap-1 hover:underline"
                   title="Delete Template"
                 >
-                  <FaTrash /> Delete
+                  Delete
                 </button>
-              </div>
+              )}
             </div>
-          ))}
+          </div>
+        ))}
+
         </div>
       )}
       </div>

@@ -63,7 +63,7 @@ const ClosedAppraisals = () => {
           <p className="text-gray-600">No closed appraisals available.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
           {appraisals.map((appraisal) => {
             const progressPercent = Math.round(
               (appraisal.questionsAnswered / appraisal.totalQuestions) * 100
@@ -72,13 +72,13 @@ const ClosedAppraisals = () => {
             return (
               <div
                 key={appraisal.appraisalId}
-                className="bg-primary-dark rounded-xl p-4 shadow-sm border border-gray-200"
+                className="bg-primary rounded p-4  border-2"
               >
                 {/* Title */}
                 <div>
                   <p className="text-sm text-gray-500">Appraisal Title</p>
                   <h3 className="text-lg font-semibold text-gray-800">
-                    {appraisal.title}
+                    {appraisal.title} - {appraisal.type}
                   </h3>
                 </div>
 

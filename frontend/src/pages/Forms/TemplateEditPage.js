@@ -13,6 +13,8 @@ const TemplateEditPage = () => {
   const [saved, setSaved] = useState(false);
   const [rearrangeMode, setRearrangeMode] = useState(false);
 
+  const isDefault = template?.isDefault;
+
   const fetchTemplate = async () => {
     try {
       const res = await request("GET", `/api/templates/${id}`);
@@ -108,38 +110,47 @@ const TemplateEditPage = () => {
           <p className=" text-lg text-gray-700 flex items-center gap-1">
             Template Name :
           </p>
-          <input
-            ref={titleInputRef}
-            placeholder="Enter template title..."
-            value={template.title}
-            onChange={(e) =>
-              setTemplate({ ...template, title: e.target.value })
-            }
-            onBlur={saveAll}
-            className="text-xl font-semibold bg-transparent border-b border-gray-400 focus:outline-none"
-          />
+
+          {template.isDefault ? (
+            <p className="text-xl font-semibold text-gray-900">
+              {template.title}
+            </p>
+          ) : (
+            <input
+              ref={titleInputRef}
+              placeholder="Enter template title..."
+              value={template.title}
+              onChange={(e) => setTemplate({ ...template, title: e.target.value })}
+              onBlur={saveAll}
+              className="text-xl font-semibold bg-transparent border-b border-gray-400 focus:outline-none"
+            />
+          )}
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setRearrangeMode(!rearrangeMode)}
-            className="px-4 py-2 rounded hover:bg-orange-50 border-2 text-sm"
-          >
-            {rearrangeMode ? "Done Rearranging" : "Rearrange"}
-          </button>
-          <button
-            onClick={() => {
-              saveAll();
-              navigate("/forms/templates");
-            }}
-            className="bg-accent text-white px-6 py-2 rounded hover:bg-accent-dark text-sm"
-          >
-            Save
-          </button>
-        </div>
+
+        {!template.isDefault && (
+          <div className="flex gap-2">
+            <button
+              onClick={() => setRearrangeMode(!rearrangeMode)}
+              className="px-4 py-2 rounded hover:bg-orange-50 border-2 text-sm"
+            >
+              {rearrangeMode ? "Done Rearranging" : "Rearrange"}
+            </button>
+
+            <button
+              onClick={() => {
+                saveAll();
+                navigate("/forms/templates");
+              }}
+              className="bg-accent text-white px-6 py-2 rounded hover:bg-accent-dark text-sm"
+            >
+              Save
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="space-y-6 p-6">
-        {rearrangeMode ? (
+        {rearrangeMode && !template.isDefault ? (
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="questions">
               {(provided) => (
@@ -178,20 +189,9 @@ const TemplateEditPage = () => {
                             onBlur={saveAll}
                             className="w-full border-b border-gray-400 bg-transparent focus:outline-none placeholder-gray-400 italic"
                           />
-                          <label className="flex items-center gap-2 text-sm text-gray-700">
-                            <input
-                              type="checkbox"
-                              checked={q.showPoints}
-                              onChange={(e) => {
-                                updateQuestion(idx, "showPoints", e.target.checked);
-                                saveAll();
-                              }}
-                            />
-                            Numerical answer only (range: 1–10)
-                          </label>
                           <button
                             onClick={() => removeQuestion(idx)}
-                            className="text-red-500 text-xs hover:underline mt-1"
+                            className="text-red-500 text-xs hover:underline mt-3"
                           >
                             Remove Question
                           </button>
@@ -206,17 +206,22 @@ const TemplateEditPage = () => {
           </DragDropContext>
         ) : (
           <>
-            {template.questions.map((q, idx) => (
-              <div
-                key={idx}
-                className="bg-primary shadow-[0_0_8px_rgba(0,0,0,0.15)] p-4 rounded border-2 space-y-2"
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="text-xs font-bold text-white bg-accent rounded-full w-6 h-6 flex items-center justify-center">
-                    {idx + 1}
-                  </div>
-                  <span className="text-sm text-gray-600">Question</span>
+          {template.questions.map((q, idx) => (
+            <div
+              key={idx}
+              className="bg-primary shadow-[0_0_8px_rgba(0,0,0,0.15)] p-4 rounded border-2 space-y-2"
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <div className="text-xs font-bold text-white bg-accent rounded-full w-6 h-6 flex items-center justify-center">
+                  {idx + 1}
                 </div>
+                <span className="text-sm text-gray-600">Question</span>
+              </div>
+
+              {template.isDefault ? (
+                /* Show as plain text */
+                <p className="text-gray-800">{q.text}</p>
+              ) : (
                 <input
                   type="text"
                   placeholder={`Question ${idx + 1}`}
@@ -225,32 +230,27 @@ const TemplateEditPage = () => {
                   onBlur={saveAll}
                   className="w-full border-b border-gray-400 bg-transparent focus:outline-none placeholder-gray-400 italic"
                 />
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    checked={q.showPoints}
-                    onChange={(e) => {
-                      updateQuestion(idx, "showPoints", e.target.checked);
-                      saveAll();
-                    }}
-                  />
-                  Numerical answer only (range: 1–10)
-                </label>
+              )}
+
+              {!template.isDefault && (
                 <button
                   onClick={() => removeQuestion(idx)}
-                  className="text-red-500 text-xs hover:underline mt-1"
+                  className="text-red-500 text-xs hover:underline mt-3"
                 >
                   Remove Question
                 </button>
-              </div>
-            ))}
-            {/* Add New Question Panel */}
-            <div
-              onClick={addQuestion}
-              className="cursor-pointer border-2 border-dashed border-accent p-4 rounded text-accent text-center hover:bg-accent hover:text-white transition"
-            >
-              + Add New Question
+              )}
             </div>
+          ))}
+            {/* Add New Question Panel */}
+            {!template.isDefault && (
+              <div
+                onClick={addQuestion}
+                className="cursor-pointer border-2 border-dashed border-accent p-4 rounded text-accent text-center hover:bg-accent hover:text-white transition"
+              >
+                + Add New Question
+              </div>
+            )}
           </>
         )}
       </div>

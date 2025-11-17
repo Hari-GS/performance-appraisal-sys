@@ -70,7 +70,7 @@ const Sidebar = () => {
                 )}
 
                 {/* icon */}
-                <span className={`mr-3 text-lg ${isActive ? "text-accent" : "text-gray-700"}`}>
+                <span className={`mr-5 text-lg ${isActive ? "text-accent" : "text-gray-700"}`}>
                   {item.icon}
                 </span>
 

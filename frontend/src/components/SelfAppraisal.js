@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaSpinner, FaCheckCircle, FaArrowLeft, FaArrowRight, FaInfoCircle  } from "react-icons/fa";
+import {
+  FaSpinner,
+  FaCheckCircle,
+  FaArrowLeft,
+  FaArrowRight,
+  FaInfoCircle,
+} from "react-icons/fa";
 import { request } from "../helpers/axios_helpers";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const QUESTIONS_PER_PAGE = 5;
 
 const SelfAppraisal = ({ currentAppraisal }) => {
   const { appraisalId } = useParams();
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({}); // ✅ added answers state
+  const [textAnswers, setTextAnswers] = useState({});
+  const [scoreAnswers, setScoreAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -18,36 +25,41 @@ const SelfAppraisal = ({ currentAppraisal }) => {
 
   const appraisal = currentAppraisal;
 
-  // Fetch questions and saved answers
+  // ✅ Fetch questions and saved answers
   useEffect(() => {
     const fetchQuestionsAndAnswers = async () => {
       try {
         setLoading(true);
 
-        const questionsRes = await request(
-          "GET",
-          `/api/self-appraisal/${appraisalId}/questions`
-        );
+        const [questionsRes, answersRes] = await Promise.all([
+          request("GET", `/api/self-appraisal/${appraisalId}/questions`),
+          request("GET", `/api/self-appraisal/${appraisalId}/answers`),
+        ]);
 
-        const answersRes = await request(
-          "GET",
-          `/api/self-appraisal/${appraisalId}/answers`
-        );
-
-        // Map saved answers to object { questionId: answerText }
+        // savedAnswers: { questionId: { answerText, answerScore } }
         const savedAnswers = {};
         answersRes.data.forEach((ans) => {
-          savedAnswers[ans.questionId] = ans.answerText;
+          savedAnswers[ans.questionId] = {
+            answerText: ans.answerText || "",
+            // ✅ Convert to number if not null
+            answerScore:
+              ans.answerScore !== null && ans.answerScore !== undefined
+                ? Number(ans.answerScore)
+                : "",
+          };
         });
 
-        // Fill unanswered ones with empty string
-        const initialAnswers = {};
+        const initialTextAnswers = {};
+        const initialScoreAnswers = {};
+
         questionsRes.data.forEach((q) => {
-          initialAnswers[q.id] = savedAnswers[q.id] || "";
+          initialTextAnswers[q.id] = savedAnswers[q.id]?.answerText || "";
+          initialScoreAnswers[q.id] = savedAnswers[q.id]?.answerScore || "";
         });
 
         setQuestions(questionsRes.data);
-        setAnswers(initialAnswers); // ✅ now stored in state
+        setTextAnswers(initialTextAnswers);
+        setScoreAnswers(initialScoreAnswers);
       } catch (err) {
         console.error(err);
         setError("Failed to load questions or answers.");
@@ -59,10 +71,17 @@ const SelfAppraisal = ({ currentAppraisal }) => {
     fetchQuestionsAndAnswers();
   }, [appraisalId]);
 
-  const handleChange = (questionId, value) => {
-    setAnswers((prev) => ({
+  const handleTextChange = (questionId, value) => {
+    setTextAnswers((prev) => ({
       ...prev,
       [questionId]: value,
+    }));
+  };
+
+  const handleScoreChange = (questionId, value) => {
+    setScoreAnswers((prev) => ({
+      ...prev,
+      [questionId]: value, // keep as number
     }));
   };
 
@@ -70,9 +89,12 @@ const SelfAppraisal = ({ currentAppraisal }) => {
     try {
       setSubmitting(true);
 
-      const answersArray = Object.entries(answers).map(([id, text]) => ({
-        questionId: Number(id),
-        answerText: text,
+      const answersArray = questions.map((q) => ({
+        questionId: q.id,
+        answerText: textAnswers[q.id],
+        // ✅ Convert empty string to null for backend Integer
+        answerScore:
+          scoreAnswers[q.id] === "" ? null : Number(scoreAnswers[q.id]),
       }));
 
       await request(
@@ -80,10 +102,11 @@ const SelfAppraisal = ({ currentAppraisal }) => {
         `/api/self-appraisal/${appraisalId}/submit`,
         answersArray
       );
-      toast.success("Your answers saved successfully!")
+
+      toast.success("Your answers were saved successfully!");
       navigate(`/employee/appraisal/${appraisalId}`, { state: { appraisal } });
     } catch (err) {
-      toast.error("Unexpected error: could'nt save answers")
+      toast.error("Unexpected error: couldn't save answers");
     } finally {
       setSubmitting(false);
     }
@@ -109,26 +132,22 @@ const SelfAppraisal = ({ currentAppraisal }) => {
   return (
     <div className="relative max-w-4xl p-4">
       {/* Info Note */}
-      {
-        currentPage==1 ?
-        (<div className="mb-8 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-md text-sm flex items-center gap-2">
+      {currentPage === 1 && (
+        <div className="mb-8 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-md text-sm flex items-center gap-2">
           <FaInfoCircle className="text-yellow-600" />
           <span>
-            Saving with blank text fields will be treated as no answers. You can also exit the appraisal and come back later to complete it.
+            Saving with blank text fields will be treated as no answers. You can
+            exit the appraisal and return later to complete it.
           </span>
-        </div>):""
-      }
+        </div>
+      )}
+
       {paginatedQuestions.map((q, index) => {
         const isAnswered =
-          q.showPoints === true
-            ? answers[q.id] !== ""
-            : (answers[q.id] || "").trim() !== "";
+          textAnswers[q.id]?.trim() !== "" && scoreAnswers[q.id] !== "";
 
         return (
-          <div
-            key={q.id}
-            className="mb-6 p-4 border-2 rounded  bg-primary"
-          >
+          <div key={q.id} className="mb-6 p-4 border-2 rounded bg-primary">
             <div className="flex items-center justify-between mb-2">
               <label
                 htmlFor={`question-${q.id}`}
@@ -139,42 +158,37 @@ const SelfAppraisal = ({ currentAppraisal }) => {
               {isAnswered && <FaCheckCircle className="text-green-500 ml-2" />}
             </div>
 
-            {q.showPoints === true ? (
-              <div className="flex gap-2 mt-3 flex-wrap">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                  <button
-                    type="button"
-                    key={num}
-                    onClick={() => handleChange(q.id, String(num))} // ✅ store as string to match backend
-                    className={`px-4 py-2 rounded-full border transition ${
-                      answers[q.id] === String(num)
-                        ? "bg-accent text-white"
-                        : "bg-gray-100 hover:bg-gray-200"
-                    }`}
-                  >
-                    {num}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <textarea
-                id={`question-${q.id}`}
-                value={answers[q.id] || ""}
-                onChange={(e) => handleChange(q.id, e.target.value)}
-                className="border rounded px-3 py-2 w-full mt-3 bg-gray-50"
-                rows="3"
-                placeholder="Type your answer..."
-                required
-              />
-            )}
+            <div className="flex gap-2 mt-3 flex-wrap">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                <button
+                  type="button"
+                  key={num}
+                  onClick={() => handleScoreChange(q.id, num)} // ✅ pass number directly
+                  className={`px-4 py-2 rounded-full border transition ${
+                    scoreAnswers[q.id] === num
+                      ? "bg-accent text-white"
+                      : "bg-gray-100 hover:bg-gray-200"
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
+
+            <textarea
+              id={`question-${q.id}`}
+              value={textAnswers[q.id] || ""}
+              onChange={(e) => handleTextChange(q.id, e.target.value)}
+              className="border rounded px-3 py-2 w-full mt-3 bg-gray-50"
+              rows="3"
+              placeholder="Type your answer..."
+            />
           </div>
         );
       })}
 
       {/* Pagination + Save */}
-      <div className=" sticky bottom-0 bg-white p-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
-        
-        {/* Pagination */}
+      <div className="sticky bottom-0 bg-white p-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -182,23 +196,22 @@ const SelfAppraisal = ({ currentAppraisal }) => {
             disabled={currentPage === 1}
             className="flex items-center gap-2 px-3 py-1 text-base border-2 rounded disabled:opacity-50 hover:bg-orange-50"
           >
-            <FaArrowLeft/> Previous
+            <FaArrowLeft /> Previous
           </button>
           <p className="text-sm text-gray-700">
-            Page <span className="font-semibold">{currentPage}</span> of <span className="font-semibold">{totalPages}</span>
+            Page <span className="font-semibold">{currentPage}</span> of{" "}
+            <span className="font-semibold">{totalPages}</span>
           </p>
           <button
             type="button"
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
             className="flex items-center gap-2 px-3 py-1 text-base border-2 rounded disabled:opacity-50 hover:bg-orange-50"
-            
           >
-            Next <FaArrowRight/>
+            Next <FaArrowRight />
           </button>
         </div>
 
-        {/* Save Button */}
         <button
           className="flex items-center justify-center gap-2 px-6 py-2 bg-accent text-white font-semibold rounded hover:bg-accent-dark transition-all duration-300"
           disabled={submitting}
