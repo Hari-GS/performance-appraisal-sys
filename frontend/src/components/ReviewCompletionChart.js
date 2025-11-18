@@ -24,7 +24,7 @@ export default function ReviewCompletionChart({
     : [];
 
   return (
-    <div className="bg-white border border-gray-200 shadow-sm p-6 w-[640px] h-[380px]">
+    <div className="bg-white border border-gray-200 shadow-sm p-6 w-full md:w-[640px] h-auto ">
       {/* Title */}
       <h2 className="text-lg font-semibold text-gray-900 mb-2">{title}</h2>
 
@@ -58,7 +58,7 @@ export default function ReviewCompletionChart({
           </div>
 
           {/* Legend */}
-          <div className="flex justify-center gap-10 mt-8 text-gray-600 text-sm">
+          <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-10 mt-8 text-gray-600 text-sm">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-sm bg-[#00FF66]" />
               <span>Completed</span>

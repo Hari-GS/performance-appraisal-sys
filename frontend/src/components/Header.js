@@ -24,7 +24,7 @@ export default function Header() {
   }, []);
 
   return (
-    <div className="flex justify-between items-center px-6 py-4 bg-white border-b border-gray-200">
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-4 md:px-6 py-4 bg-white border-b border-gray-200 gap-6 md:gap-3">
       {/* Left: Greeting */}
       <div>
         <h1 className="text-xl font-semibold text-gray-900">
@@ -34,12 +34,12 @@ export default function Header() {
       </div>
 
       {/* Right: Action Buttons */}
-      <div className="flex items-center space-x-3">
+      <div className="flex flex-wrap md:flex-nowrap items-center gap-3 md:pb-0 pb-2">
         <ProtectedView allowedRoles={["hr"]}>
           {/* Add New Cycle */}
-          <button className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-orange-100 transition" onClick={()=>navigate("/forms/create-appraisal")}>
+          <button className="flex items-center space-x-2 border border-gray-300 px-3 md:px-4 py-2 rounded-md hover:bg-orange-100 transition" onClick={()=>navigate("/forms/create-appraisal")}>
             <PlusIcon/>
-            <span className="text-gray-500 font-medium text-sm">Add New Cycle</span>
+            <span className="text-gray-500 font-medium text-sm whitespace-nowrap">Add New Cycle</span>
           </button>
         </ProtectedView>
     

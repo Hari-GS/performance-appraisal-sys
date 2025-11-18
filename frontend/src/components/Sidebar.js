@@ -1,8 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  FaWpforms,
-  FaClipboardCheck
+  FaBars,
+  FaTimes
 } from "react-icons/fa";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import citLogo from "../images/cit-logo.jpg";
 import { ReactComponent as CubeIcon } from "../images/Appraisal-Icons/3dcube.svg";
@@ -16,15 +17,9 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const [open, setOpen] = useState(false); // MOBILE ONLY
 
-  if (loading) {
-    return (
-      <div className="w-64 h-screen bg-white text-gray-700 flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
+  if (loading) return null;
   if (!user) return null;
 
   const menuItems = [
@@ -38,57 +33,87 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col justify-start py-4">
-      {/* Logo */}
-      <div className="flex items-center justify-center space-x-1 w-[200px] h-[26px] ">
-        <img src={citLogo} alt="cit-logo" className="h-[28px] w-auto pl-16"/>
-      </div>
-      <div className=" border mt-3.5"></div>
-      {/* Navigation */}
-      <nav className="flex flex-col space-y-2 mt-8">
-        {menuItems
-          .filter((item) => item.roles.includes(user.role.toLowerCase()))
-          .map((item) => {
-            const isActive = location.pathname.startsWith(item.path);
+    <>
+      {/* === MOBILE HAMBURGER (Top Left) === */}
+      <button
+        className="md:hidden fixed top-3 left-3 z-50 bg-white p-2 rounded-md shadow"
+        onClick={() => setOpen(true)}
+      >
+        <FaBars className="text-xl text-gray-800" />
+      </button>
 
-            return (
-              <button
-                key={item.name}
-                onClick={() => navigate(item.path)}
-                className={`relative flex items-center py-3 pl-14 pr-8 text-[15px] font-medium transition-all duration-300 overflow-visible 
-                  ${isActive
-                    ? "text-accent hover:bg-orange-50"
-                    : "text-gray-800 hover:text-accent hover:bg-orange-50"
+      {/* === MOBILE OVERLAY MENU === */}
+      <div
+        className={`fixed top-0 left-0 h-full w-56 bg-white z-50 shadow-md border-r transform transition-transform duration-300 md:hidden
+        ${open ? "translate-x-0" : "-translate-x-full"}`
+        }
+      >
+        {/* Close Icon */}
+        <button
+          className="absolute right-3 top-3 text-xl text-gray-700"
+          onClick={() => setOpen(false)}
+        >
+          <FaTimes />
+        </button>
+
+        {/* Logo */}
+        <div className="flex items-center justify-center mt-10 mb-4">
+          <img src={citLogo} alt="logo" className="h-8" />
+        </div>
+
+        <nav className="flex flex-col space-y-2 mt-4 px-4">
+          {menuItems
+            .filter((item) => item.roles.includes(user.role.toLowerCase()))
+            .map((item) => {
+              const isActive = location.pathname.startsWith(item.path);
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    navigate(item.path);
+                    setOpen(false);
+                  }}
+                  className={`flex items-center gap-4 py-3 text-[15px] font-medium ${
+                    isActive
+                      ? "text-accent bg-orange-50"
+                      : "text-gray-800 hover:bg-orange-50"
                   }`}
-              >
-                {/* left curved pill (outside the button) */}
-                {isActive && (
-                  <span
-                    aria-hidden
-                    className="absolute -left-0 top-1/2 -translate-y-1/2 w-1 h-11 rounded-l-full rounded-r-[50%] bg-accent"
-                  />
-                )}
+                >
+                  <span className="text-lg">{item.icon}</span>
+                  {item.name}
+                </button>
+              );
+            })}
+        </nav>
+      </div>
 
-                {/* icon */}
-                <span className={`mr-5 text-lg ${isActive ? "text-accent" : "text-gray-700"}`}>
-                  {item.icon}
-                </span>
+      {/* === DESKTOP SIDEBAR (unchanged layout) === */}
+      <div className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white border-r flex-col py-4">
+        <div className="flex items-center justify-center">
+          <img src={citLogo} alt="cit-logo" className="h-8" />
+        </div>
+        <div className="border mt-3.5"></div>
 
-                {/* label */}
-                <span className="flex-1 text-left">{item.name}</span>
-
-                {/* right curved pill (outside the button) */}
-                {isActive && (
-                  <span
-                    aria-hidden
-                    className="absolute -right-0 top-1/2 -translate-y-1/2 w-1 h-11 rounded-r-full rounded-l-[50%] bg-accent"
-                  />
-                )}
-              </button>
-            );
-          })}
-      </nav>
-    </div>
+        <nav className="flex flex-col space-y-2 mt-8">
+          {menuItems
+            .filter((item) => item.roles.includes(user.role.toLowerCase()))
+            .map((item) => {
+              const isActive = location.pathname.startsWith(item.path);
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => navigate(item.path)}
+                  className={`relative flex items-center py-3 pl-14 pr-8 text-[15px] font-medium 
+                    ${isActive ? "text-accent" : "text-gray-800"}`}
+                >
+                  <span className={`mr-5`}>{item.icon}</span>
+                  <span>{item.name}</span>
+                </button>
+              );
+            })}
+        </nav>
+      </div>
+    </>
   );
 };
 

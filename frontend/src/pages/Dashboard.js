@@ -69,7 +69,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <div className="w-full min-h-screen">
       <TopHeader breadcrumbs={["Dashboard"]}/>
     
       <div className="flex bg-primary">
@@ -77,10 +77,10 @@ const Dashboard = () => {
         <Sidebar role={"hr"} /> 
 
         {/* Main Content */}
-        <div className="flex flex-col flex-grow pl-64 pt-0">          
+        <div className="flex flex-col flex-grow pt-0 pl-0 md:pl-64 transition-all">          
           <Header />
-          <div className="flex flex-row">
-            <div className="bg-white border border-gray-200 shadow-sm py-5 w-80">
+          <div className="flex flex-col md:flex-row md:items-start overflow-x-auto p-2 md:p-0">
+            <div className="bg-white border border-gray-200 shadow-sm py-5 w-full md:w-80 shrink-0">
               {recentAppraisal ? 
               (
                 <div className=" pl-6">
@@ -113,7 +113,7 @@ const Dashboard = () => {
                 </div>
               ):
               (
-                <div className="p-6 w-80 h-40 flex items-center justify-center text-center">
+                <div className="p-6 h-40 flex items-center justify-center text-center">
                   <p className="text-gray-600 text-sm font-medium">
                     No recent or ongoing appraisals found.
                   </p>
@@ -133,7 +133,7 @@ const Dashboard = () => {
           
 
           {/* Charts Section */}
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col md:flex-row justify-between md:p-0">
             <ReviewCompletionChart
               title="Self Reviews Completion"
               totalEmployees={totalEmployees}
