@@ -66,9 +66,10 @@ const AppraisalDetailsForEmployee = () => {
 
   return (
     <div className="w-full mx-auto">
+
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-200 px-4 sm:px-6 py-3 gap-1">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
           <h2 className="text-base font-semibold text-gray-800">
             Participate Appraisal
           </h2>
@@ -78,13 +79,14 @@ const AppraisalDetailsForEmployee = () => {
         </div>
       </div>
 
-      {/* Appraisal Details Card */}
-      <div className="bg-primary rounded p-6 grid gap-y-4 gap-x-8 m-8 grid-cols-1 sm:grid-cols-2 border-2">
+      {/* Content Card */}
+      <div className="bg-primary rounded p-4 sm:p-6 grid gap-y-4 gap-x-8 m-4 sm:m-8 grid-cols-1 sm:grid-cols-2 border-2">
+
         <div>
           <p className="text-sm text-gray-500 mb-1 flex items-center gap-2">
             <FaClipboardList /> Title
           </p>
-          <p className="text-base font-semibold">{appraisal.title}</p>
+          <p className="text-base font-semibold break-words">{appraisal.title}</p>
         </div>
 
         <div>
@@ -126,7 +128,7 @@ const AppraisalDetailsForEmployee = () => {
           <p className="text-sm text-gray-500 mb-1 flex items-center gap-2">
             <FaUser /> Created By
           </p>
-          <p className="text-base font-semibold">{appraisal.createdBy}</p>
+          <p className="text-base font-semibold break-words">{appraisal.createdBy}</p>
         </div>
 
         <div className="sm:col-span-2 space-y-4">
@@ -136,22 +138,11 @@ const AppraisalDetailsForEmployee = () => {
           <ProgressBar currentStage={appraisal.stage} />
         </div>
 
-        {/* <div>
-          <p className="text-sm text-gray-500 mb-1">Self Appraisal Questions Answered</p>
-          <p className="text-base font-semibold">{appraisal.selfQnsAnswered ?? "0"}</p>
-        </div>
-
-        <div>
-          <p className="text-sm text-gray-500 mb-1">Total Self Appraisal Questions</p>
-          <p className="text-base font-semibold">{appraisal.totalSelfQns}</p>
-        </div> */}
-
-        {/* Action Button */}
         {getButtonLabel() && (
-          <div className="sm:col-span-2 mt-6 flex justify-center">
+          <div className="sm:col-span-2 mt-4 flex justify-center">
             <button
               onClick={handleNavigate}
-              className="flex items-center justify-center gap-2 px-6 py-2 bg-accent text-white font-semibold text-base rounded hover:bg-accent-dark"
+              className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2 bg-accent text-white font-semibold text-base rounded hover:bg-accent-dark"
             >
               {getButtonLabel()}
               <FaArrowRight className="w-5 h-5" />
@@ -159,14 +150,14 @@ const AppraisalDetailsForEmployee = () => {
           </div>
         )}
       </div>
-      {/* Note for CREATED stage */}
+
+      {/* Note Section */}
       {appraisal.stage === "CREATED" && (
-        <div className="mt-6 mx-8 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+        <div className="mt-4 sm:mt-6 mx-4 sm:mx-8 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
           <FaInfoCircle className="text-blue-600 mt-1" />
           <p className="text-gray-700 text-sm">
             <strong>Note:</strong> During the <em>Self Review</em> and{" "}
-            <em>Manager Review</em> stages (if assigned), a <strong>“Go To”</strong>{" "}
-            button will appear to take you to your appraisal form.
+            <em>Manager Review</em> stages, a <strong>“Go To”</strong> button will appear.
           </p>
         </div>
       )}

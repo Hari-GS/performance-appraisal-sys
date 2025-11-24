@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { request } from "../helpers/axios_helpers";
 import {
   FaRegFileAlt,
-  FaClock,
   FaArrowRight,
   FaCheckCircle,
 } from "react-icons/fa";
@@ -47,9 +46,10 @@ const EmployeeCurrentAppraisalsCards = () => {
 
   return (
     <div className="w-full mt-0">
-     {/* Header Section */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
-        <div className="flex items-center gap-2">
+
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-200 px-4 md:px-6 py-3 md:py-2 gap-1">
+        <div className="flex flex-col md:flex-row md:items-center md:gap-2">
           <h2 className="text-base font-semibold text-gray-800">
             Active Appraisals
           </h2>
@@ -58,14 +58,20 @@ const EmployeeCurrentAppraisalsCards = () => {
           </p>
         </div>
       </div>
+
       {appraisals.length === 0 ? (
-        <p className="text-gray-600">No active appraisals available.</p>
+        <p className="text-gray-600 px-4">No active appraisals available.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
+        <div className="
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          lg:grid-cols-3 
+          gap-4 
+          p-4 
+          md:p-10
+        ">
           {appraisals.map((appraisal) => {
-            const progressPercent = Math.round(
-              (appraisal.questionsAnswered / appraisal.totalQuestions) * 100
-            );
 
             return (
               <div
@@ -73,11 +79,9 @@ const EmployeeCurrentAppraisalsCards = () => {
                 className="bg-primary rounded p-4 border-2"
               >
                 {/* Title */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {appraisal.title} - {appraisal.type}
-                  </h3>
-                </div>
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {appraisal.title} - {appraisal.type}
+                </h3>
 
                 {/* Deadline */}
                 <div className="mt-2">
@@ -87,7 +91,7 @@ const EmployeeCurrentAppraisalsCards = () => {
                   </div>
                 </div>
 
-                {/* Status Badge */}
+                {/* Stage */}
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">Current Stage</p>
                   <div
@@ -98,8 +102,11 @@ const EmployeeCurrentAppraisalsCards = () => {
                   </div>
                 </div>
 
-                {/* CTA Button */}
-                <button className="mt-4 flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-4 py-2 rounded-lg font-semibold transition-all group" onClick={() => handleGoTo(appraisal)}>
+                {/* Button */}
+                <button
+                  onClick={() => handleGoTo(appraisal)}
+                  className="mt-4 flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-4 py-2 rounded-lg font-semibold transition-all group w-full md:w-auto justify-center"
+                >
                   Go to Appraisal
                   <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>

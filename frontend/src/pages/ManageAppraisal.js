@@ -30,7 +30,7 @@ function ManageAppraisal() {
           <div className="flex">
             <Sidebar role={"hr"}/>
       
-            <div className="flex flex-col flex-grow pl-64 p-6 bg-primary">
+            <div className="flex flex-col flex-grow md:pl-64 pl-0 p-6 bg-primary">
               {appraisal ? (
                 <AppraisalOverview appraisal={appraisal} setAppraisal={setAppraisal} />
               ) : (

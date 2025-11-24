@@ -12,7 +12,7 @@ function Employees() {
             <Sidebar role={"hr"}/>
     
             {/* Main Content */}
-            <div className="flex flex-col flex-grow pl-64 p-0 pt-0 bg-primary">
+            <div className="flex flex-col flex-grow p-0 pt-0 bg-primary md:pl-64">
                 {/* <Navbar title="Participants"/> */}
                 <EmployeeProfiles/>
             </div>

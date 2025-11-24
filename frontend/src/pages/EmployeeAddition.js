@@ -13,7 +13,7 @@ function EmployeeAddition() {
                 <Sidebar role={"hr"}/>
                 
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-64 m-8">
+                <div className="flex flex-col flex-grow px-4 py-4 md:pl-64 md:px-0 md:py-0 m-0 md:m-8">
                     <AddEmployee/>
                 </div>
             </div>

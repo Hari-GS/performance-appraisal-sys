@@ -13,7 +13,7 @@ function SelfAppraisalCommentsPage() {
                 <Sidebar role={"employee"}/>
                 
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-64 bg-primary">
+                <div className="flex flex-col flex-grow md:pl-64 pl-0 bg-primary">
                     <SelfAppraisalComments/>
                 </div>
             </div>

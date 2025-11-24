@@ -76,11 +76,11 @@ const EmployeeProfiles = () => {
   return (
     <div className="p-0 bg-primary">
       {/* Header Section */}
-      <div className="flex justify-between items-center bg-white border border-gray-300 border-b-2 px-4 py-2">
+      <div className="flex flex-wrap gap-3 justify-between items-center bg-white border border-gray-300 border-b-2 px-3 py-2">
         {/* Left: Toggle Buttons + Title */}
         <div className="flex items-center gap-4">
           {/* Toggle */}
-          <div className="flex items-center bg-gray-100 rounded-md overflow-hidden">
+          <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
             <button
               onClick={() => setActiveTab("Active")}
               className={`px-3 py-1 text-sm font-medium ${
@@ -108,40 +108,67 @@ const EmployeeProfiles = () => {
         </div>
 
         {/* Right: Search + Hierarchy + Add */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3 w-full md:w-auto">
           {/* Search */}
           <div className="flex items-center border border-gray-300 rounded-md px-2 py-1 text-sm text-gray-600 focus-within:border-orange-400">
             <FaSearch className="text-accent mr-2 text-sm" />
             <input
               type="text"
               placeholder="Search by Employee ID or Name"
-              className="outline-none w-52 text-gray-700 placeholder-gray-400"
+              className="outline-none w-full md:w-52 text-gray-700 placeholder-gray-400"
               onChange={(e) => setSearchText(e.target.value)}
               value={searchText}
             />
           </div>
 
           {/* View Hierarchy */}
-          <button
-            className="flex items-center gap-2 border border-gray-300 text-sm text-gray-700 rounded-md px-3 py-1 hover:bg-orange-50 transition"
-            onClick={() => navigate("/heirarchy")}
-          >
-            <FaSitemap className="text-accent text-base" />
-            View Hierarchy
-          </button>
+          <div className="
+  flex 
+  flex-row 
+  items-center 
+  gap-2 
+  w-full
+  md:w-auto     /* desktop keeps original size */
+  md:flex-row   /* desktop unchanged */
+">
+  {/* View Hierarchy */}
+  <button
+    className="
+      flex items-center gap-2
+      border border-gray-300
+      text-sm text-gray-700
+      rounded-md px-3 py-1
+      hover:bg-orange-50
+      transition
+      w-1/2        /* mobile: take half width */
+      md:w-auto    /* desktop: normal size */
+    "
+    onClick={() => navigate("/heirarchy")}
+  >
+    <FaSitemap className="text-accent text-base" />
+    View Hierarchy
+  </button>
 
-          {/* Add Dropdown */}
-          <ProtectedView allowedRoles={["hr"]}>
-            <div>
-              <button
-                onClick={() => navigate("/addEmployee", { state: { employees } })}
-                className="flex items-center gap-2 border border-gray-300 text-sm rounded-md px-3 py-1 hover:bg-orange-50 transition"
-              >
-                <FiUserPlus className="text-accent" />
-                Add
-              </button>
-            </div>
-          </ProtectedView>
+  {/* Add Worker */}
+  <ProtectedView allowedRoles={["hr"]}>
+    <button
+      onClick={() => navigate("/addEmployee", { state: { employees } })}
+      className="
+        flex items-center gap-2
+        border border-gray-300
+        text-sm rounded-md px-3 py-1
+        hover:bg-orange-50
+        transition
+        w-1/2        /* mobile: take half width */
+        md:w-auto    /* desktop: normal size */
+      "
+    >
+      <FiUserPlus className="text-accent" />
+      Add
+    </button>
+  </ProtectedView>
+</div>
+
         </div>
       </div>
 

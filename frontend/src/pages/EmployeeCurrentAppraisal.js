@@ -13,7 +13,7 @@ const EmployeeCurrentAppraisal = () => {
 			{/* Sidebar */}
 			<Sidebar role={"employee"}/>
 			{/* Main Content */}
-			<div className="flex flex-col flex-grow pl-64 p-0 pt-0">
+			<div className="flex flex-col flex-grow md:pl-64 pl-0 p-0 pt-0">
 				<EmployeeCurrentAppraisalsCards/>
 			</div>
 		</div>

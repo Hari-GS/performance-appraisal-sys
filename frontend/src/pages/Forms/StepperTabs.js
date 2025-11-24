@@ -10,7 +10,7 @@ const StepperTabs = ({ currentStep, setCurrentStep, validatedSteps }) => {
   };
 
   return (
-    <div className="w-full space-y-2 px-8 pt-8">
+    <div className="pt-0 space-y-6 px-4 md:px-6 max-w-screen-sm md:max-w-none mx-auto w-full">
       <h2 className="text-xl font-semibold">Create Appraisal Cycle</h2>
 
       {/* Progress Bar */}

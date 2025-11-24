@@ -14,7 +14,7 @@ function AppraisalsList() {
                 <Sidebar role={"hr"}/>
                 
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-64 bg-primary">
+                <div className="flex flex-col flex-grow md:pl-64 pl-0 bg-primary">
                     <SentAppraisalsList/>
                 </div>
             </div>

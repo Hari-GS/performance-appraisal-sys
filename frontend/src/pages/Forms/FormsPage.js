@@ -21,7 +21,7 @@ const FormsPage = () => {
 			{/* Sidebar */}
 			<Sidebar role={"hr"}/>
 			{/* Main Content */}
-			<div className="flex flex-col flex-grow pl-64 bg-primary">
+			<div className="flex flex-col flex-grow md:pl-64 pl-0 bg-primary">
                 <Routes>
                     <Route path="/" element={<AppraisalForm/>} />
                     {/* <Route path="/participants" element={<ParticipantsPage/>} />

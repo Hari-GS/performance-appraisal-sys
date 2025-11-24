@@ -22,52 +22,84 @@ const PendingCommentsList = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
+      
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
-        <div className="flex items-center gap-2">
-          <h2 className="text-base font-semibold text-gray-800">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-200 px-6 py-2 gap-1">
+        <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
+          <h2 className="text-base md:text-base font-semibold text-gray-800">
             Comment Subordinates
           </h2>
-          <p className="text-sm text-gray-500">
+
+          <p className="text-xs md:text-sm text-gray-500">
             — Give comment to your subordinate's self appraisal
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-8">
+
+      {/* Cards Grid */}
+      <div className="
+        grid 
+        grid-cols-1 
+        sm:grid-cols-2 
+        md:grid-cols-3 
+        gap-4 
+        md:gap-6 
+        p-4 
+        md:p-8
+      ">
         {people.map((person) => (
           <div
             key={person.id}
-            className="bg-primary rounded p-5 transition border-2"
+            className="bg-primary rounded p-4 md:p-5 border-2 transition"
           >
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-black text-xl font-semibold flex items-center">
+            {/* Title + Status */}
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-3 gap-2">
+              
+              <h2 className="text-black text-lg md:text-xl font-semibold flex items-center">
                 <AiOutlineUser className="mr-2 text-accent" />
                 {person.employeeName}
               </h2>
 
-              {/* ✅ Status badge */}
+              {/* Status */}
               {person.reviewAppraisalStatus === 'SUBMITTED' ? (
-                <span className="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                <span className="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full w-fit">
                   Completed
                 </span>
               ) : (
-                <span className="bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full">
+                <span className="bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full w-fit">
                   Pending
                 </span>
               )}
             </div>
 
-            <p className="text-black text-sm mb-1 flex items-center">
+            {/* Employee ID */}
+            <p className="text-black text-sm mb-1">
               Employee ID: {person.employeeId}
             </p>
 
-            <p className="text-black text-sm mb-4 flex items-center">
+            {/* Designation */}
+            <p className="text-black text-sm mb-4">
               Designation: {person.designation}
             </p>
-            <button onClick={() => navigate(`/employee/self-appraisal/comments/${appraisalId}/${person.employeeId}`)} 
-            className="bg-accent text-white font-semibold px-4 py-2 rounded-md hover:bg-accent-dark transition" > 
-              Give Comment 
+
+            {/* Button */}
+            <button
+              onClick={() =>
+                navigate(`/employee/self-appraisal/comments/${appraisalId}/${person.employeeId}`)
+              }
+              className="
+                bg-accent 
+                text-white 
+                font-semibold 
+                px-4 py-2 
+                rounded-md 
+                hover:bg-accent-dark 
+                transition 
+                w-full md:w-auto
+              "
+            >
+              Give Comment
             </button>
           </div>
         ))}

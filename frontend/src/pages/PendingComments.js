@@ -12,7 +12,7 @@ function PendingComments() {
                 {/* Sidebar */}
                 <Sidebar role={"employee"}/>
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-64 pt-0 bg-primary">
+                <div className="flex flex-col flex-grow md:pl-64 pl-0 pt-0 bg-primary">
                     <PendingCommentsList/>
                 </div>
             </div>

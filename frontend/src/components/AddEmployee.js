@@ -199,9 +199,10 @@ const AddEmployee = () => {  // Pass all employees as prop for dropdown
             name="managerId"
             value={formData.managerId || ""}
             onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-3 bg-white"
+            className="w-full md:w-full border rounded-lg px-3 py-2 bg-white text-sm md:text-base"
           >
-            <option value="">None (Reports to no one)</option>
+            <option className="whitespace-normal break-words text-sm leading-tight"
+ value="">None (Reports to no one)</option>
             {employees
               .filter((emp) => emp.employeeId !== formData.employeeId)
               .map((emp) => (

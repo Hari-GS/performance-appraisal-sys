@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SummaryCard({ icon, title, value, sub }) {
   return (
-    <div className="bg-white border border-gray-200 shadow-sm p-5 w-full md:w-80">
+    <div className="bg-white border border-gray-200 shadow-sm p-6 w-full md:w-80">
       <div>
         <div className="text-3xl pr-4">{icon}</div>
         <h2 className="text-lg font-medium mt-2">{title}</h2>

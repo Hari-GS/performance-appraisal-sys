@@ -107,7 +107,7 @@ const CreateAppraisalFormPage = () => {
   };
 
   return (
-    <div className="p-6 pt-0 space-y-6">
+    <div className="pt-3 space-y-6 px-4 md:px-6 max-w-screen-sm md:max-w-none mx-auto w-full">
       <StepperTabs
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}

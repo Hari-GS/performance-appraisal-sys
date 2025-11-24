@@ -34,6 +34,8 @@ const Dashboard = () => {
     const fetchSummary = async () => {
       try {
         const response = await request("GET", "/api/dashboard/summary");
+        console.log(response.data);
+        
         setSummary(response.data);
       } catch (error) {
         console.error("Failed to fetch dashboard summary", error);

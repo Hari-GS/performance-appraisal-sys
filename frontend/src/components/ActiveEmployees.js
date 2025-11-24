@@ -3,7 +3,7 @@ import { SyncLoader } from "react-spinners";
 import { useState, useEffect } from "react";
 import ProfileCard from "./ProfileCard";
 
-const ActiveEmployees = ({ employees, searchText, isEmployeeLoading, employeeError , reload}) => {
+const ActiveEmployees = ({ employees, searchText, isEmployeeLoading, employeeError , reload }) => {
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
@@ -42,7 +42,7 @@ const ActiveEmployees = ({ employees, searchText, isEmployeeLoading, employeeErr
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8 pl-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8 px-5">
         {filteredEmployees.map((employee) => (
           <div
             key={employee.employeeId}

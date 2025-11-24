@@ -44,13 +44,13 @@ const Sidebar = () => {
 
       {/* === MOBILE OVERLAY MENU === */}
       <div
-        className={`fixed top-0 left-0 h-full w-56 bg-white z-50 shadow-md border-r transform transition-transform duration-300 md:hidden
+        className={`fixed top-0 left-0 h-full w-full bg-white z-50 shadow-md border-r transform transition-transform duration-300 md:hidden
         ${open ? "translate-x-0" : "-translate-x-full"}`
         }
       >
         {/* Close Icon */}
         <button
-          className="absolute right-3 top-3 text-xl text-gray-700"
+          className="absolute right-3 top-3 text-xl text-gray-700 pr-3"
           onClick={() => setOpen(false)}
         >
           <FaTimes />
@@ -61,7 +61,7 @@ const Sidebar = () => {
           <img src={citLogo} alt="logo" className="h-8" />
         </div>
 
-        <nav className="flex flex-col space-y-2 mt-4 px-4">
+        <nav className="flex flex-col space-y-4  pl-10">
           {menuItems
             .filter((item) => item.roles.includes(user.role.toLowerCase()))
             .map((item) => {
@@ -73,13 +73,13 @@ const Sidebar = () => {
                     navigate(item.path);
                     setOpen(false);
                   }}
-                  className={`flex items-center gap-4 py-3 text-[15px] font-medium ${
+                  className={`flex items-center gap-4 py-4 text-lg font-semibold ${
                     isActive
                       ? "text-accent bg-orange-50"
                       : "text-gray-800 hover:bg-orange-50"
                   }`}
                 >
-                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-xl">{item.icon}</span>
                   {item.name}
                 </button>
               );
@@ -88,7 +88,7 @@ const Sidebar = () => {
       </div>
 
       {/* === DESKTOP SIDEBAR (unchanged layout) === */}
-      <div className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white border-r flex-col py-4">
+      <div className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white border-r flex-col py-2.5">
         <div className="flex items-center justify-center">
           <img src={citLogo} alt="cit-logo" className="h-8" />
         </div>
