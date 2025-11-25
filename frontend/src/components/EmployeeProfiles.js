@@ -80,28 +80,37 @@ const EmployeeProfiles = () => {
         {/* Left: Toggle Buttons + Title */}
         <div className="flex items-center gap-4">
           {/* Toggle */}
-          <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
+        <div className="flex items-center justify-center md:justify-start">
+          <div className="flex border border-gray-300 rounded-lg overflow-hidden px-2 py-1">
+            
             <button
               onClick={() => setActiveTab("Active")}
-              className={`px-3 py-1 text-sm font-medium ${
-                activeTab === "Active"
+              className={`
+                px-3 py-1 text-sm font-medium transition rounded-lg
+                ${activeTab === "Active"
                   ? "bg-accent text-white"
-                  : "text-gray-600 hover:bg-gray-200"
-              } transition`}
+                  : "bg-white text-gray-500"
+                }
+              `}
             >
               Active
             </button>
+
             <button
               onClick={() => setActiveTab("Inactive")}
-              className={`px-3 py-1 text-sm font-medium ${
-                activeTab === "Inactive"
+              className={`
+                px-3 py-1 text-sm font-medium transition rounded-lg
+                ${activeTab === "Inactive"
                   ? "bg-accent text-white"
-                  : "text-gray-600 hover:bg-gray-200"
-              } transition`}
+                  : "bg-white text-gray-500"
+                }
+              `}
             >
               Inactive
             </button>
+            
           </div>
+        </div>
 
           {/* Title */}
           <h2 className="text-lg font-semibold text-gray-900">Participants</h2>
@@ -122,27 +131,11 @@ const EmployeeProfiles = () => {
           </div>
 
           {/* View Hierarchy */}
-          <div className="
-  flex 
-  flex-row 
-  items-center 
-  gap-2 
-  w-full
-  md:w-auto     /* desktop keeps original size */
-  md:flex-row   /* desktop unchanged */
-">
+          <div className="  flex flex-row  items-center gap-2  w-full md:w-auto  /* desktop keeps original size */ md:flex-row   /* desktop unchanged */">
   {/* View Hierarchy */}
-  <button
-    className="
-      flex items-center gap-2
-      border border-gray-300
-      text-sm text-gray-700
-      rounded-md px-3 py-1
-      hover:bg-orange-50
-      transition
-      w-1/2        /* mobile: take half width */
-      md:w-auto    /* desktop: normal size */
-    "
+  <button className=" flex items-center gap-2 border border-gray-300  text-sm text-gray-700
+      rounded-md px-3 py-1 hover:bg-orange-50  transition w-1/2        /* mobile: take half width */
+      md:w-auto    /* desktop: normal size */  "
     onClick={() => navigate("/heirarchy")}
   >
     <FaSitemap className="text-accent text-base" />

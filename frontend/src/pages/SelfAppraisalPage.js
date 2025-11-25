@@ -19,7 +19,7 @@ function SelfAppraisalPage() {
                 <Sidebar role={"employee"}/>
                 
                 {/* Main Content */}
-                <div className="flex flex-col flex-grow pl-72 p-6 bg-primary">
+                <div className="flex flex-col flex-grow md:pl-64 pl-0 p-6 bg-primary">
                     <SelfAppraisal currentAppraisal={appraisal}/>
                 </div>
             </div>
