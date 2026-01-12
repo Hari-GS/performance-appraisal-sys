@@ -98,7 +98,7 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
   };
 
   return (
-    <div className="bg-primary text-black font-sans py-6 px-10 ">
+    <div className="bg-primary text-black font-sans py-6 px-10">
       
       {/* Loader Overlay */}
       {loading && (
@@ -169,7 +169,7 @@ export default function AppraisalOverview({ appraisal, setAppraisal }) {
           {loadingReviewData ? (
             <p className="text-gray-600 text-sm">Loading...</p>
           ) : reportingReviewData.length > 0 ? (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto sm:overflow-visible">
               <table className="min-w-full text-left border border-gray-300 rounded-md ">
                 <thead className="bg-gray-100">
                   <tr className="text-gray-700 border-b border-gray-300">

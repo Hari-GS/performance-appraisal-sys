@@ -24,7 +24,7 @@ export default function ReviewCompletionChart({
     : [];
 
   return (
-    <div className="bg-white border border-gray-200 shadow-sm p-6 w-full md:w-[640px] h-auto ">
+    <div className="bg-white border border-gray-200 shadow-sm p-6 w-full md:w-[640px] ">
       {/* Title */}
       <h2 className="text-lg font-semibold text-gray-900 mb-2">{title}</h2>
 
