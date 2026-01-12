@@ -61,7 +61,7 @@ const Sidebar = () => {
           <img src={citLogo} alt="logo" className="h-8" />
         </div>
 
-        <nav className="flex flex-col space-y-4  pl-10">
+        <nav className="flex flex-col space-y-4">
           {menuItems
             .filter((item) => item.roles.includes(user.role.toLowerCase()))
             .map((item) => {
@@ -73,10 +73,10 @@ const Sidebar = () => {
                     navigate(item.path);
                     setOpen(false);
                   }}
-                  className={`flex items-center gap-4 py-4 text-lg font-semibold ${
+                  className={`flex items-center gap-4 py-4 px-10  text-lg font-semibold ${
                     isActive
                       ? "text-accent bg-orange-50"
-                      : "text-gray-800 hover:bg-orange-50"
+                      : "text-gray-800 "
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
@@ -104,7 +104,8 @@ const Sidebar = () => {
                   key={item.name}
                   onClick={() => navigate(item.path)}
                   className={`relative flex items-center py-3 pl-14 pr-8 text-[15px] font-medium 
-                    ${isActive ? "text-accent" : "text-gray-800"}`}
+                    ${isActive ? "text-accent bg-orange-50"  : 
+                      "text-gray-800 hover:bg-orange-50 hover:text-accent"}`}
                 >
                   <span className={`mr-5`}>{item.icon}</span>
                   <span>{item.name}</span>

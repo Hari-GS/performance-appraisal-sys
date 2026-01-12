@@ -75,73 +75,92 @@ const TemplatesListPage = () => {
   
 
   return (
-    <div className="bg-primary space-y-6">
-      {/* Header Section */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-2">
-        <div className="flex items-center gap-2">
-          <h2 className="text-base font-semibold text-gray-800">
-            Templates
-          </h2>
-          <p className="text-sm text-gray-500">
-            — Different self appraisal question templates for different designations
-          </p>
-        </div>
-        <button
-          onClick={addNewTemplate}
-          className=" rounded-md px-3 py-1 hover:bg-orange-50 flex items-center border-2 gap-2 text-accent"
+        <div className="bg-primary space-y-6">
+          {/* Header Section */}
+          {/* Header Section */}
+    <div className="
+        flex flex-col sm:flex-row 
+        sm:items-center sm:justify-between 
+        border-b border-gray-200 
+        px-4 sm:px-6 py-2 gap-2
+    ">
+      {/* Left Section */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+        <h2 className="text-base font-semibold text-gray-800">
+          Templates
+        </h2>
+        <p className="text-sm text-gray-500">
+          — Different self appraisal question templates for different designations
+        </p>
+      </div>
+
+      {/* Right Section - stays same visually */}
+      <button
+        onClick={addNewTemplate}
+        className="
+            rounded-md px-3 py-1 
+            hover:bg-orange-50 
+            flex items-center justify-center 
+            border-2 gap-2 text-accent
+            w-full sm:w-auto
+        "
+      >
+        <FaPlus />
+        <p className="text-black">New Template</p>
+      </button>
+    </div>
+
+     <div className="px-4 sm:px-8 py-0 overflow-x-hidden">
+  {loading ? (
+    <p className="text-center text-gray-600">Loading templates...</p>
+  ) : templates.length === 0 ? (
+    <p className="text-center text-gray-500">No templates found.</p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 w-full overflow-x-hidden">
+      {templates.map((template) => (
+        <div
+          key={template.id}
+          className="
+            p-4 rounded border-2 
+            transition-all duration-150 
+            flex justify-between items-center
+            w-full
+          "
         >
-          <FaPlus /><p className="text-black">New Template</p> 
-        </button>
-      </div>
-      <div className="px-8 py-0">
-      {loading ? (
-        <p className="text-center text-gray-600">Loading templates...</p>
-      ) : templates.length === 0 ? (
-        <p className="text-center text-gray-500">No templates found.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-        {templates.map((template) => (
-          <div
-            key={template.id}
-            className="p-4 rounded border-2 transition-all duration-150 flex justify-between items-center"
-          >
-            <div>
-              <h2 className="font-semibold text-black">
-                {template.title || "Untitled"}
-              </h2>
-              <p className="text-sm text-gray-500">
-                {template.questions?.length || 0} questions
-              </p>
-            </div>
-
-            <div className="flex gap-4 text-sm">
-
-              {/* 🔵 OPEN Button (replaced Edit) */}
-              <button
-                onClick={() => navigate(`/forms/templates/${template.id}`)}
-                className="text-blue-600 flex items-center gap-1 hover:underline"
-                title="Open Template"
-              >
-                Open
-              </button>
-
-              {/* 🔴 Hide Delete button if template.isDefault === true */}
-              {!template.isDefault && (
-                <button
-                  onClick={() => confirmDelete(template.id)}
-                  className="text-red-500 flex items-center gap-1 hover:underline"
-                  title="Delete Template"
-                >
-                  Delete
-                </button>
-              )}
-            </div>
+          <div className="w-full">
+            <h2 className="font-semibold text-black break-words">
+              {template.title || "Untitled"}
+            </h2>
+            <p className="text-sm text-gray-500">
+              {template.questions?.length || 0} questions
+            </p>
           </div>
-        ))}
 
+          <div className="flex gap-4 text-sm">
+            <button
+              onClick={() => navigate(`/forms/templates/${template.id}`)}
+              className="text-blue-600 flex items-center gap-1 hover:underline"
+              title="Open Template"
+            >
+              Open
+            </button>
+
+            {!template.isDefault && (
+              <button
+                onClick={() => confirmDelete(template.id)}
+                className="text-red-500 flex items-center gap-1 hover:underline"
+                title="Delete Template"
+              >
+                Delete
+              </button>
+            )}
+          </div>
         </div>
-      )}
-      </div>
+      ))}
+    </div>
+  )}
+</div>
+
        {/* Delete Confirmation Modal */}
        {confirmDeleteId && (
         <div className="fixed inset-0 z-20 bg-black bg-opacity-40 flex justify-center items-center">
